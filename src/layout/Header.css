@@ -27,9 +27,6 @@
 .container-search input {
     width: 100%;
     padding: .3rem .5rem;
-    border: 1px solid black;
-    border-radius: 10px  0 0 10px;
-    border-right: none;
 }
 .container-icon-search {
     display: flex;
@@ -58,15 +55,19 @@
     gap: 3rem;
 }
 
-.container-buttons a {
+.signin-btn {
+    background-color: green;
+     padding: .8rem 2rem;
+    text-decoration: none;
+    border-radius: 4px;
+    color: #020202;
+    font-weight: 500;
+}
+.signup-btn {
     padding: .8rem 2rem;
     background-color: #e2e2e2;
     text-decoration: none;
     border-radius: 4px;
     color: #020202;
     font-weight: 500;
-}
-
-.container-buttons a:hover {
-    border: 2px solid black;
 }
