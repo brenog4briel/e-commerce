@@ -1,34 +1,40 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 .header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 0 1.5rem;
-    max-height: 9rem;
+    padding: 0 1rem;
+    max-height: 100px;
     background-color: ghostwhite;
     gap: 5rem;
 }
 
 .logo {
     max-width: 10rem;
-    height: 90%;
+    height: 80px;
     border-radius: 50%;
     transition: transform ease-in 0.2s;
     cursor: pointer;
 }
 .logo:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
-.container-search {
+.container_search {
     display: flex;
     width: 40rem;
     background-color: white;
 }
 
-.container-search input {
+.container_search input {
     width: 100%;
     padding: .3rem .5rem;
 }
-.container-icon-search {
+.container_icon-search {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,35 +45,39 @@
     cursor: pointer;
 }
 
-.menu-navegacao {
+.menu_navegacao {
     display: flex;
     gap: 5rem;
 }
 
-.menu-navegacao a {
+.menu_navegacao a {
     text-decoration: none;
     color: #020202;
-    font-size: 18px;
+    font-size: 16px;
+    text-wrap: nowrap;
 }
 
-.container-buttons {
+.container_buttons {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 3rem;
 }
 
-.signin-btn {
+.signin_btn {
     background-color: green;
-     padding: .8rem 2rem;
+    padding: .8rem 2rem;
     text-decoration: none;
     border-radius: 4px;
     color: #020202;
     font-weight: 500;
 }
-.signup-btn {
+.signup_btn {
     padding: .8rem 2rem;
     background-color: #e2e2e2;
     text-decoration: none;
     border-radius: 4px;
     color: #020202;
     font-weight: 500;
+    text-wrap: nowrap;
 }
