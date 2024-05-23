@@ -1,11 +1,10 @@
-import styles from "./Header.module.css"
-import logo from "../assets/mercearia-logo.png"
+import styles from "./header.module.css"
+import logo from "../../assets/mercearia-logo.png"
 import { AiOutlineSearch } from "react-icons/ai";
 import { InputAdornment, TextField } from "@mui/material";
 
 export default function Header() {
   return (
-    <div className={styles.container}>
       <header className={styles.header}>
           <img className={styles.logo} src={logo} alt="" />
           <div className={styles.container_search}>
@@ -27,7 +26,5 @@ export default function Header() {
               <a className={styles.signup_btn} href="">Registre-se</a>
           </div>
       </header>
-    </div>
-
   )
 }
