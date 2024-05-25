@@ -35,7 +35,7 @@ export default function Header() {
          </div>
       
          <div className={styles.search}>
-            <input type="search" name="" id="" placeholder="Digite o nome do produto que deseja buscar"/>
+            <input type="search" name="" id="" placeholder="Ex.: Escova de dentes"/>
          </div>
          
          <div>
@@ -49,7 +49,7 @@ export default function Header() {
 
      </header>
    
-        <div className={isActive ? styles.drawer_navigation_mobile_online : styles.drawer_navigation_mobile_offline}>
+        <div className={isActive ? styles.navigation_mobile_online : styles.navigation_mobile_offline}>
                   <Link className={styles.link} to="/"><p>Página inicial</p></Link>
                   <Link className={styles.link} to="/"><p>Categorias</p></Link>
                   <Link className={styles.link} to="/"><p>Sobre</p></Link>

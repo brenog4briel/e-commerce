@@ -21,33 +21,27 @@
     align-items: center;
     justify-content: center;
     width: 30%;
-    background-color: yellow;
-   
 }
 .search input {
     width: 100%;
-    padding: 5px;
+    padding: 5px 5% 5px 5px;
     border-radius: 5px;
     border: 1px solid gainsboro;
     outline: none;
     font-size: 16px;
+    background: url("../../assets/search-icon.png") no-repeat right;
+    background-size: 40px
 }
-.icon {
-    border-radius: 0 5px 5px 0px;
-    border: 1px solid gainsboro;
-    border-left: none;
-    background-color: white;
 
-}
 .menu_navegacao {
     display: flex;
 }
 .menu_navegacao_mobile {
     display: none;
 }
- .drawer_navigation_mobile_offline {
-        display: none;
-    }
+ .navigation_mobile_offline {
+    display: none;
+}
 
 .link {
     text-decoration: none;
@@ -97,11 +91,11 @@
     .menu_navegacao_mobile > *:hover{
         color: #444444;
     }
-    .drawer_navigation_mobile_offline {
+    .navigation_mobile_offline {
         display: none;
     }
 
-    .drawer_navigation_mobile_online {
+    .navigation_mobile_online {
         display: flex;
         flex-direction: column;
         margin: 2% 5%;
@@ -124,7 +118,7 @@
         opacity: .7;
         background-color: #cccccc;
     }
-    .drawer_navigation_mobile_online p{
+    .navigation_mobile_online p{
         font-size: 18px;
         color: #111111;
         text-transform: capitalize;
@@ -136,14 +130,23 @@
 }
 
  /* Medium devices (tablets, 768px and up) */
-@media (576px < width <= 800px) {  
-    
+@media (576px < width <= 900px) {  
+    .search,
+    .btn {
+            display: none;
+        }   
+
+    .menu_navegacao {
+        width: 100%;
+    }
 
 }
 
  /* Large devices (desktops, 992px and up) */
-@media (800px < width <= 1200px) { 
-   
+@media (900px < width <= 1200px) { 
+    .btn {
+            display: none;
+        }   
  }
 
  @media (1200px < width <= 1400px) { 
