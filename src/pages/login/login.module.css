@@ -1,0 +1,71 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    background-color: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login {
+    width: 500px;
+    height: 400px;
+    border-radius: 5px;
+    background-color: #e2e2e2;
+}
+.title {
+    text-align: center;
+    font-weight: 800;
+    font-size: 36px;
+    padding: 20px 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 10px;
+}
+.form input {
+    width: 90%;
+    padding: 12px 2px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid black;
+
+}
+.form a {
+    width: 50%;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: gainsboro;
+    background-color: black;
+}
+.func_buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+.btn_forgot {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #0000ee;
+    border-radius: 7px;
+}
+.btn_register {
+    padding: 10px 0;
+    width: 25%;
+    text-decoration: none;
+    color: #222222;
+    border-radius: 7px;
+    background-color: green;
+    text-align: center;
+}
