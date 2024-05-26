@@ -33,7 +33,7 @@
     background-size: 40px
 }
 
-.menu_navegacao {
+.menu_navegacao_desktop {
     display: flex;
 }
 .menu_navegacao_mobile {
@@ -48,14 +48,14 @@
     padding: 0 24px;
     
 }
-.menu_navegacao p {
+.menu_navegacao_desktop p {
     font-size: 12px;
     color: #222222;
     text-transform: uppercase;
     padding: 5px 0;
     border: 1px solid transparent;
 }
-.menu_navegacao p:hover {
+.menu_navegacao_desktop p:hover {
     border-bottom-color: #010101;
 }
 .btn {
@@ -76,7 +76,7 @@
 @media (width <= 576px) { 
 
     .search,
-    .menu_navegacao,
+    .menu_navegacao_desktop,
     .btn {
             display: none;
         }   
@@ -136,7 +136,7 @@
             display: none;
         }   
 
-    .menu_navegacao {
+    .menu_navegacao_desktop {
         width: 100%;
     }
 
