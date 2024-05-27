@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import styles from "./login.module.css"
+import logo from "../../assets/mercearia-logo.png"
 
 export function Login() {
   return (
     <div className={styles.container}>
         <div className={styles.login}>
-            <p className={styles.title}>Bem vindo ao E-commerce</p>
+            <div className={styles.container_title}>
+              <p className={styles.title}>Bem vindo ao E-commerce</p>
+              <img src={logo} alt="" className={styles.logo}/>
+            </div>
             <form className={styles.form} action="">
                 <input type="text" placeholder="Email ou número"/>
                 <input type="password" placeholder="Senha"/>

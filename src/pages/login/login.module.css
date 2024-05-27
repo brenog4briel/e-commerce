@@ -13,10 +13,20 @@
     border-radius: 5px;
     background-color: #e2e2e2;
 }
+.logo {
+    border-radius: 50%;
+    width: 15%;
+}
+.container_title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .title {
     text-align: center;
     font-weight: 800;
-    font-size: 36px;
+    font-size: 32px;
     padding: 20px 0;
 }
 
@@ -27,11 +37,11 @@
     justify-content: center;
     width: 100%;
     gap: 20px;
-    padding: 20px 10px;
+    padding: 10px;
 }
 .form input {
     width: 90%;
-    padding: 12px 2px;
+    padding: 8px 2px;
     border-radius: 4px;
     outline: none;
     border: 1px solid black;
@@ -47,12 +57,14 @@
     color: gainsboro;
     background-color: black;
 }
+.form a:hover{
+    opacity: 0.8;
+}
 .func_buttons {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 10px 0;
+    gap: 5px;
 }
 .btn_forgot {
     padding: 10px 20px;
@@ -66,6 +78,22 @@
     text-decoration: none;
     color: #222222;
     border-radius: 7px;
-    background-color: green;
     text-align: center;
+    background-color: #39e75f;
+}
+
+@media (width < 600px) {
+    .login {
+        width: 90%;
+        height: 400px;
+    }
+    .logo {
+        width: 25%;
+    }
+    .title {
+        font-size: 26px;
+    }
+    .btn_register {
+        width: 35%;
+    }
 }
