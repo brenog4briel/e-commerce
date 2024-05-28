@@ -5,8 +5,49 @@ import { FiAlignJustify } from "react-icons/fi";
 import {  useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useMediaQuery } from "react-responsive";
+import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Inbox, Mail } from "@mui/icons-material";
+import { GrMenu } from "react-icons/gr";
 
 export default function Header() {
+
+
+   const [open, setOpen] = useState(false);
+ 
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
+   
+  const DrawerList = (
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <Inbox /> : <Mail />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <Inbox /> : <Mail />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
 
    const [isActive,setIsActive] = useState<boolean>(false);
 
@@ -52,7 +93,15 @@ export default function Header() {
          </Link>
 
      </header>
-   
+
+      <div>
+        <Button onClick={toggleDrawer(true)}><GrMenu size={20} color="black"/><p style={{color:"black", marginLeft:"5px"}}>Opções</p></Button>
+          <Drawer open={open} onClose={toggleDrawer(false)}>
+            {DrawerList}
+          </Drawer>
+      </div>
+
+
         <div className={isActive ? styles.navigation_mobile_online : styles.navigation_mobile_offline}>
             <Link className={styles.link} to="/" onClick={closeNavBarOptions}><p>Página inicial</p></Link>
             <Link className={styles.link} to="/categorias" onClick={closeNavBarOptions}><p>Categorias</p></Link>
