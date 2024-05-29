@@ -84,7 +84,7 @@ export default function Header() {
          </div>
          
          <div>
-            <a href="" className={styles.btn}>Entrar</a>
+            <a href="/login" className={styles.btn}>Entrar</a>
             <a href="" className={styles.btn}>Cadastre-se</a>
          </div>
 
