@@ -17,7 +17,7 @@ export function Login() {
             </form>
             <div className={styles.func_buttons}>
                 <Link className={styles.btn_forgot} to="">Esqueceu sua senha?</Link>
-                <Link className={styles.btn_register} to="">Registre-se</Link>
+                <Link className={styles.btn_register} to="/register">Registre-se</Link>
             </div>
         </div>
     </div>

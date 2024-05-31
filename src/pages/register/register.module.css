@@ -9,7 +9,7 @@
 }
 .login {
     width: 500px;
-    height: 400px;
+    height: 500px;
     border-radius: 5px;
     background-color: #e2e2e2;
 }
@@ -55,30 +55,10 @@
     text-decoration: none;
     color: gainsboro;
     background-color: black;
+    margin-top: 15px;
 }
 .form a:hover{
     opacity: 0.8;
-}
-.func_buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-.btn_forgot {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #0000ee;
-    border-radius: 7px;
-}
-.btn_register {
-    padding: 10px 0;
-    width: 25%;
-    text-decoration: none;
-    color: #222222;
-    border-radius: 7px;
-    text-align: center;
-    background-color: #39e75f;
 }
 
 @media (width < 600px) {
@@ -86,13 +66,7 @@
         width: 90%;
         height: 400px;
     }
-    .logo {
-        width: 25%;
-    }
     .title {
         font-size: 26px;
-    }
-    .btn_register {
-        width: 35%;
     }
 }
