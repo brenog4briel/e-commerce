@@ -42,13 +42,13 @@ export function Home() {
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+        // onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log('slide change')}
         autoplay={{delay:2000}}
         className={styles.slider_wrapper}>
           {
-            carrosDestaques.map((destaque) => (
-              <SwiperSlide>
+            carrosDestaques.map((destaque,index) => (
+              <SwiperSlide key={index}>
                 <div className={styles.slider_items}>
                   <img src={destaque} alt=""/>
                 </div>
@@ -65,8 +65,8 @@ export function Home() {
 
       <div className={styles.list_products}>
         {
-          carros.map((carro) => (
-            <div className={styles.products}>
+          carros.map((carro,index) => (
+            <div className={styles.products} key={index}>
              <img src={carro} alt="" />
             </div>
           ))

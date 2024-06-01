@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./register.module.css"
+import { useNavigate } from "react-router-dom";
 
 const url = "https://e-commerce-api-5sxy.onrender.com";
 
@@ -14,7 +15,13 @@ interface UsuarioData {
 
 export function Register() {
 
-  async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : UsuarioData) {
+
+  const [,setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  async function RegisterUser(e: React.FormEvent<HTMLFormElement>,{nome,senha,email,endereco,CEP,imagem} : UsuarioData) {
+    e.preventDefault();
+    setLoading(true);
     fetch(`${url}/usuarios`,{
       method:"post",
       headers:{
@@ -23,8 +30,11 @@ export function Register() {
       },
       body: JSON.stringify({nome,senha,email,endereco,CEP,imagem})
     })
-    .then((res) => console.log(res.json()))
-    .then(() => console.log("Usuário cadastrado com sucesso"))
+    .then(() => {
+      console.log("Usuário cadastrado com sucesso"); 
+      setLoading(false); 
+      navigate("/")
+    })
     .catch((err) => console.log(err))
   }
 
@@ -41,14 +51,14 @@ export function Register() {
             <div className={styles.container_title}>
               <p className={styles.title}>Cadastro</p>
             </div>
-            <form className={styles.form} action="" onSubmit={() => RegisterUser({nome,senha,email,endereco,CEP,imagem})}>
+            <form className={styles.form} action="" onSubmit={(e) => RegisterUser(e,{nome,senha,email,endereco,CEP,imagem})}>
                 <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
                 <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="text" placeholder="Endereço" value={endereco} onChange={(e) => setEndereco(e.target.value)}/>
                 <input type="text" placeholder="CEP" value={CEP} onChange={(e) => setCEP(e.target.value)}/>
                 <input type="text" placeholder="Imagem" value={imagem} onChange={(e) => setImagem(e.target.value)}/>
-                <a href="">Registrar</a>
+                <input type="submit" value="Registrar" />
             </form>
         </div>
     </div>
