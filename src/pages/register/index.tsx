@@ -1,8 +1,7 @@
 import { useState } from "react";
 import styles from "./register.module.css"
 import { useNavigate } from "react-router-dom";
-
-const url = "https://e-commerce-api-5sxy.onrender.com";
+import AxiosInstance from "../../axiosInstance";
 
 interface UsuarioData {
    nome: string;
@@ -22,21 +21,17 @@ export function Register() {
   async function RegisterUser(e: React.FormEvent<HTMLFormElement>,{nome,senha,email,endereco,CEP,imagem} : UsuarioData) {
     e.preventDefault();
     setLoading(true);
-    fetch(`${url}/usuarios`,{
-      method:"post",
-      headers:{
-        'Accept': 'application/json',
-        'Content-type':'application/json'
-      },
-      body: JSON.stringify({nome,senha,email,endereco,CEP,imagem})
-    })
+    AxiosInstance.post('/usuarios', {nome,senha,email,endereco,CEP,imagem})
     .then(() => {
       console.log("Usuário cadastrado com sucesso"); 
       setLoading(false); 
       navigate("/")
     })
-    .catch((err) => console.log(err))
+    .catch((error) => {
+      console.error(error);
+    });
   }
+    
 
   const [nome,setNome] = useState<string>("");
   const [senha,setSenha] = useState<string>("");

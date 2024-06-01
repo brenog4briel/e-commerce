@@ -2,9 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.css"
 import logo from "../../assets/mercearia-logo.png"
 import { useState } from "react";
-
-const url = "https://e-commerce-api-5sxy.onrender.com";
-
+import AxiosInstance from "../../axiosInstance";
 interface LoginData {
   email:string;
   senha:string;
@@ -18,22 +16,17 @@ export function Login() {
   const navigate = useNavigate();
 
   async function Authenticate(e: React.FormEvent<HTMLFormElement>,{email,senha} : LoginData) {
-    e.preventDefault();
+     e.preventDefault();
     setLoading(true);
-    fetch(`${url}/usuarios/login`,{
-      method:"post",
-      headers:{
-        'Accept': 'application/json',
-        'Content-type':'application/json'
-      },
-      body: JSON.stringify({email,senha})
-    })
+    AxiosInstance.post('/usuarios/login', {email,senha})
     .then(() => {
-      console.log("Autenticação realizada com sucesso!"); 
+      console.log("Usuário cadastrado com sucesso"); 
       setLoading(false); 
       navigate("/")
     })
-    .catch((err) => console.log(err))
+    .catch((error) => {
+      console.error(error);
+    });
   }
   
   return (
