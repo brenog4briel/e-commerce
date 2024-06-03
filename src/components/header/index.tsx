@@ -1,5 +1,5 @@
 import styles from "./header.module.css"
-import logo from "../../assets/mercearia-logo.png"
+import logo from "../../assets/header/mercearia-logo.png"
 import { Link } from "react-router-dom"
 import { FiAlignJustify } from "react-icons/fi";
 import {  useEffect, useState } from "react";
@@ -85,7 +85,7 @@ export default function Header() {
          
          <div>
             <a href="/login" className={styles.btn}>Entrar</a>
-            <a href="" className={styles.btn}>Cadastre-se</a>
+            <a href="/register" className={styles.btn}>Cadastre-se</a>
          </div>
 
           <Link to="">
@@ -94,7 +94,7 @@ export default function Header() {
 
      </header>
 
-      <div>
+      <div className={styles.drawer}>
         <Button onClick={toggleDrawer(true)}><GrMenu size={20} color="black"/><p style={{color:"black", marginLeft:"5px"}}>Opções</p></Button>
           <Drawer open={open} onClose={toggleDrawer(false)}>
             {DrawerList}

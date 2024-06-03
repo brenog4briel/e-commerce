@@ -44,7 +44,10 @@
     border-radius: 4px;
     outline: none;
     border: 1px solid black;
-
+}
+.form input[type=submit] {
+    width: 50%;
+    cursor: pointer;
 }
 .form a {
     width: 50%;

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.css"
-import logo from "../../assets/mercearia-logo.png"
+import logo from "../../assets/header/mercearia-logo.png"
 import { useState } from "react";
 import AxiosInstance from "../../axiosInstance";
 interface LoginData {
