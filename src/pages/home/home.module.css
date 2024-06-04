@@ -51,6 +51,7 @@
     border-radius: 10px;
     overflow: hidden;
     transition: .1s ease-in;
+    cursor: pointer;
 }
 .products img{
     object-fit: fill;
@@ -69,6 +70,8 @@
     text-decoration: none;
     color: #222222;
 }
+
 .moreProducts_btn:hover {
-    opacity: 0.9;
+    color: #e2e2e2;
+    
 }

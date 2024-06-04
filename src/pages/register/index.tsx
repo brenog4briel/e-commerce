@@ -2,15 +2,9 @@ import { useState } from "react";
 import styles from "./register.module.css"
 import { useNavigate } from "react-router-dom";
 import AxiosInstance from "../../axiosInstance";
-
-interface UsuarioData {
-   nome: string;
-   senha:string;
-   email:string;
-   endereco:string;
-   CEP:string;
-   imagem:string;
-}
+import {z} from "zod"
+import {useForm} from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function Register() {
 
@@ -18,8 +12,43 @@ export function Register() {
   const [,setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  async function RegisterUser(e: React.FormEvent<HTMLFormElement>,{nome,senha,email,endereco,CEP,imagem} : UsuarioData) {
-    e.preventDefault();
+  const registroSchema = z.object({
+    nome: z
+        .string({required_error:"O nome é obrigatório"})
+        .trim()
+        .min(3,{message:"Nome inválido"})
+        .max(255,{message:"O nome não pode possuir mais de 255 caracteres"}),
+    senha: z
+        .string({required_error:"A senha é obrigatória"})
+        .trim()
+        .min(6,{message:"A senha precisa ser mais robusta"})
+        .max(255,{message:"A senha não pode possuir mais de 255 caracteres"}),
+    email: z
+        .string({required_error:"O email é obrigatório"})
+        .trim()
+        .min(10,{message:"O email precisa ter no mínimo 10 caracteres"})
+        .max(255,{message:"O email não pode possuir mais de 255 caracteres"}),
+    endereco: z
+        .string({required_error:"O endereco é obrigatória"})
+        .trim()
+        .min(10,{message:"Endereço inválido"})
+        .max(50,{message:"O endereco não pode possuir mais de 50 caracteres"}),
+    CEP: z
+        .string({required_error:"O CEP é obrigatório"})
+        .trim()
+        .min(14,{message:"CEP inválido"}),
+    imagem: z
+        .string({required_error:"A senha é obrigatória"})
+        .trim()
+})
+
+  type RegistroSchema = z.infer<typeof registroSchema>;
+
+  const {register,handleSubmit} = useForm<RegistroSchema>({
+    resolver: zodResolver(registroSchema)
+  });
+
+  async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSchema) {
     setLoading(true);
     AxiosInstance.post('/usuarios', {nome,senha,email,endereco,CEP,imagem})
     .then(() => {
@@ -32,39 +61,22 @@ export function Register() {
     });
   }
     
-
-  const [nome,setNome] = useState<string>("");
-  const [senha,setSenha] = useState<string>("");
-  const [email,setEmail] = useState<string>("");
-  const [endereco,setEndereco] = useState<string>("");
-  const [CEP,setCEP] = useState<string>("");
-  const [imagem,setImagem] = useState<string>("");
-
   return (
     <div className={styles.container}>
         <div className={styles.login}>
             <div className={styles.container_title}>
               <p className={styles.title}>Cadastro</p>
             </div>
-            <form className={styles.form} action="" onSubmit={(e) => RegisterUser(e,{nome,senha,email,endereco,CEP,imagem})}>
-                <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
-                <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <input type="text" placeholder="Endereço" value={endereco} onChange={(e) => setEndereco(e.target.value)}/>
-                <input type="text" placeholder="CEP" value={CEP} onChange={(e) => setCEP(e.target.value)}/>
-                <input type="text" placeholder="Imagem" value={imagem} onChange={(e) => setImagem(e.target.value)}/>
+            <form className={styles.form} action="" onSubmit={handleSubmit(RegisterUser)}>
+                <input type="text" placeholder="Nome" {...register("nome")}/>
+                <input type="password" placeholder="Senha" {...register("senha")}/>
+                <input type="email" placeholder="Email" {...register("email")}/>
+                <input type="text" placeholder="Endereço" {...register("endereco")}/>
+                <input type="text" placeholder="CEP" {...register("CEP")}/>
+                <input type="text" placeholder="Imagem" {...register("imagem")}/>
                 <input type="submit" value="Registrar" />
             </form>
         </div>
     </div>
-
-//     {
-//     "nome": "Breno Gabriel",
-//     "senha": "breno1234",
-//     "email": "brenosacerdote@academico.ufs.br",
-//     "endereco": "rua 163, numero 07",
-//     "CEP": "49160-000",
-//     "imagem":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwxHB3OlxYvP_KFwnmxs1F2yuCKr2gKx2Xmw&s"
-// }
   )
 }
