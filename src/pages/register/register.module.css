@@ -8,8 +8,10 @@
     justify-content: center;
 }
 .login {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
     width: 500px;
-    height: 500px;
     border-radius: 5px;
     background-color: #e2e2e2;
 }
@@ -30,17 +32,24 @@
     padding: 20px 0;
 }
 
+.input_error_message {
+    color: red;
+    font-size: 12px;
+    align-self: flex-start;
+    margin-left: 24px;
+}
+
 .form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 20px;
 }
 .form input {
     width: 90%;
     padding: 8px 2px;
+    margin: 5px 0;
     border-radius: 4px;
     outline: none;
     border: 1px solid black;
@@ -67,7 +76,6 @@
 @media (width < 600px) {
     .login {
         width: 90%;
-        height: 400px;
     }
     .title {
         font-size: 26px;

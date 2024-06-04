@@ -44,7 +44,7 @@ export function Register() {
 
   type RegistroSchema = z.infer<typeof registroSchema>;
 
-  const {register,handleSubmit} = useForm<RegistroSchema>({
+  const {register,handleSubmit,formState:{errors}} = useForm<RegistroSchema>({
     resolver: zodResolver(registroSchema)
   });
 
@@ -69,11 +69,17 @@ export function Register() {
             </div>
             <form className={styles.form} action="" onSubmit={handleSubmit(RegisterUser)}>
                 <input type="text" placeholder="Nome" {...register("nome")}/>
+                {errors.nome && <p className={styles.input_error_message}>{errors.nome.message}</p>}
                 <input type="password" placeholder="Senha" {...register("senha")}/>
+                {errors.senha && <p className={styles.input_error_message}>{errors.senha.message}</p>}
                 <input type="email" placeholder="Email" {...register("email")}/>
+                {errors.email && <p className={styles.input_error_message}>{errors.email.message}</p>}
                 <input type="text" placeholder="Endereço" {...register("endereco")}/>
+                {errors.endereco && <p className={styles.input_error_message}>{errors.endereco.message}</p>}
                 <input type="text" placeholder="CEP" {...register("CEP")}/>
+                {errors.CEP && <p className={styles.input_error_message}>{errors.CEP.message}</p>}
                 <input type="text" placeholder="Imagem" {...register("imagem")}/>
+                {errors.imagem && <p className={styles.input_error_message}>{errors.imagem.message}</p>}
                 <input type="submit" value="Registrar" />
             </form>
         </div>

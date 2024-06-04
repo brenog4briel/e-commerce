@@ -27,7 +27,7 @@ export function Login() {
 
   type LoginSchema = z.infer<typeof loginSchema>;
 
-  const {register,handleSubmit} = useForm<LoginSchema>({
+  const {register,handleSubmit,formState:{errors}} = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
   });
 
@@ -53,7 +53,9 @@ export function Login() {
             </div>
             <form className={styles.form} action="" onSubmit={handleSubmit(Authenticate)}>
                 <input type="text" placeholder="Email ou número" {...register("email")}/>
+                {errors.email && <p className={styles.input_error_message}>{errors.email.message}</p>}
                 <input type="password" placeholder="Senha" {...register("senha")}/>
+                {errors.senha && <p className={styles.input_error_message}>{errors.senha.message}</p>}
                 <input type="submit" value="Entrar" />
             </form>
             <div className={styles.func_buttons}>
