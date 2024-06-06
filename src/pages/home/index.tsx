@@ -1,11 +1,7 @@
 import styles from "./home.module.css"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y , Autoplay} from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import 'swiper/css/autoplay';
+import { Secao_Continua } from "../../components/secao/secao_continua";
+import { Secao_Espacada } from "../../components/secao/secao_espacada";
+import { SwiperItems } from "../../components/swiper";
 
 export function Home() {
   
@@ -24,6 +20,7 @@ export function Home() {
     "https://midias.vrum.com.br/_midias/jpg/2023/12/29/740x420/1_renault_kardian-33797374.jpg",
     "https://static.bancointer.com.br/blog/images/4e2d0ffd95c447af877ce2dffbe80d5b_renault-kwid-zen-10_.png",
   ]
+
   const carrosDestaques = [
     "https://nxboats.com.br/wp-content/uploads/2023/11/bugatti.jpg",
     "https://nxboats.com.br/wp-content/uploads/2023/11/Lamborghini.jpg",
@@ -31,33 +28,27 @@ export function Home() {
     "https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/03/639410.jpg?w=293",
     "https://drivon.com.br/wp-content/uploads/2023/08/Mundo-dos-Carros-de-Luxo.png",
     "https://fotos-jornaldocarro-estadao.nyc3.cdn.digitaloceanspaces.com/wp-content/uploads/2021/10/07143040/mercedes-amg_gt_43_4matic_4-door_coupe_35-1160x653.jpeg"]
-
-  return (
+  
+    const sessaoEspacada = [
+      "https://nxboats.com.br/wp-content/uploads/2023/11/bugatti.jpg",
+      "https://nxboats.com.br/wp-content/uploads/2023/11/Lamborghini.jpg",
+      "https://img.odcdn.com.br/wp-content/uploads/2021/06/Lamborghini-Aventador-SVJ-1-990x557-1.jpg",
+      "https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/03/639410.jpg?w=293",
+    ]
+    return (
     
     <div className={styles.container}>
-      <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
-        // spaceBetween={100}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log('slide change')}
-        autoplay={{delay:2000}}
-        className={styles.slider_wrapper}>
-          {
-            carrosDestaques.map((destaque,index) => (
-              <SwiperSlide key={index}>
-                <div className={styles.slider_items}>
-                  <img src={destaque} alt=""/>
-                </div>
-              </SwiperSlide>
-            ))
-          }
-    </Swiper>
+      
+      <SwiperItems altura="400px" slides={1} data={carrosDestaques}/>
+      
+      <Secao_Continua title="Tecnologia"/> 
+      <Secao_Espacada data={sessaoEspacada}/>  
+      <Secao_Continua title="Cozinha"/>  
+      <Secao_Espacada data={sessaoEspacada}/>  
+      <Secao_Continua title="Eletrônica"/>  
+      <Secao_Espacada data={sessaoEspacada}/>  
 
-
+      
       <div className={styles.texts}>
         <h1>Os melhores produtos para cama, mesa e banho!</h1>
         <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h4>

@@ -1,0 +1,26 @@
+.secao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    width: 95%;
+    height: 300px;
+    background-color: yellow;
+    text-align: start;
+}
+.secao_title {
+    font-size: 20px;
+    margin-left: 20px;
+}
+.secao_content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 250px;
+}
+.secao_item {
+    width: 20%;
+    height: 100%;
+    background-color: red;
+}
