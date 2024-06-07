@@ -1,64 +1,66 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import AxiosInstance from "../axiosInstance";
-import {z} from "zod"
-import { useNavigate } from "react-router-dom";
+import { LoginSchema } from "../validations/login";
 
 interface Usuario {
+    usuario_id: string;
     nome: string;
     senha: string;
     email: string;
     endereco: string;
     imagem:string;
     CEP: string;
+    criadoEm: string;
+    atualizadoEm: string;
 }
 
 interface AuthContextProps {
   autenticado: boolean;
-  Login({email,senha}:LoginSchema): Promise<void>; 
   usuario: Usuario | null;
+  Authenticate({email,senha}:LoginSchema): Promise<void>; 
+  Logout(): void
 }
-
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
-const loginSchema = z.object({
-    email: z
-        .string({required_error:"O email é obrigatório"})
-        .trim()
-        .min(10,{message:"O email precisa ter no mínimo 10 caracteres"})
-        .max(255,{message:"O email não pode possuir mais de 255 caracteres"}),
-    senha: z
-        .string({required_error:"A senha é obrigatória"})
-        .trim()
-        .min(10,{message:"A senha precisa ter no mínimo 10 caracteres"})
-        .max(255,{message:"A senha não pode possuir mais de 255 caracteres"})
-})
+export const AuthProvider: React.FC<{children:React.ReactNode}> = ({children}) => {
 
-type LoginSchema = z.infer<typeof loginSchema>;
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
 
-export const AuthProvider: React.FC = ({children}) => {
+  useEffect(() => {
 
-    const [usuario, setUsuario] = useState<Usuario | null>(null);
-    const [,setLoading] = useState<boolean>(false);
-    const navigate = useNavigate();
+    const storedUser = sessionStorage.getItem("@App:usuario");
+    const storedToken = sessionStorage.getItem("@App:token");
 
-  async function Login({email,senha}: LoginSchema) {
-    setLoading(true);
-    AxiosInstance.post('/usuarios/login', {email,senha})
-    .then(() => {
-      console.log("Usuário cadastrado com sucesso"); 
-      setLoading(false); 
-      navigate("/")
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    if (storedUser && storedToken) {
+      setUsuario(JSON.parse(storedUser));
+      AxiosInstance.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+    }
+  },[])
+
+  async function Authenticate({email,senha}: LoginSchema) {
+    const result = await AxiosInstance.post('/usuarios/login', {email,senha})
+    setUsuario(result.data.usuario)
+    AxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${result.data.token}`;
+
+    sessionStorage.setItem("@App:usuario",JSON.stringify(result.data.usuario))
+    sessionStorage.setItem("@App:token",result.data.token)
   }
 
+  function Logout() {
+    setUsuario(null);
+    sessionStorage.clear();
+  }
+
+
     return (
-        <AuthContext.Provider value={{Login,autenticado:Boolean(usuario),usuario}}>
+        <AuthContext.Provider value={{autenticado:Boolean(usuario),usuario,Authenticate,Logout}}>
             {children}
         </AuthContext.Provider>
     );
 }
 
+export function useAuth() {
+  const context = useContext(AuthContext)
+  return context;
+}
