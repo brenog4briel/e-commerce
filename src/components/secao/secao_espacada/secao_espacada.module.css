@@ -7,6 +7,8 @@
     background-color: yellow;
     text-align: start;
     gap: 1%;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .secao_item {

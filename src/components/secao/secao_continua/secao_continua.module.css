@@ -7,6 +7,8 @@
     height: 300px;
     background-color: yellow;
     text-align: start;
+    border-radius: 10px;
+    overflow: hidden;
 }
 .secao_title {
     font-size: 20px;
@@ -20,7 +22,7 @@
     height: 250px;
 }
 .secao_item {
-    width: 20%;
+    width: 25%;
     height: 100%;
     background-color: red;
 }
