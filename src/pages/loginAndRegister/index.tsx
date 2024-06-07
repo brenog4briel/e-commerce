@@ -11,7 +11,7 @@ import { CircularProgress, Tab, Tabs } from "@mui/material";
 import { RegistroSchema, registroSchema } from "../../validations/register";
 import AxiosInstance from "../../axiosInstance";
 
-export function Login() {
+export function LoginAndRegister() {
 
   const navigate = useNavigate();
   const {Authenticate} = useAuth();

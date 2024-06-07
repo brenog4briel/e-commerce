@@ -5,7 +5,7 @@ import { NotFound } from "./pages/notfound";
 import { Sobre } from "./pages/sobre";
 import { Contato } from "./pages/contato";
 import { Categorias } from "./pages/categorias";
-import { Login } from "./pages/loginAndRegister";
+import { LoginAndRegister } from "./pages/loginAndRegister";
 
 const router = createBrowserRouter([
     {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     }
     ,
     {
-        element:<Login/>,
+        element:<LoginAndRegister/>,
         path:"/login"
     }
 ])
