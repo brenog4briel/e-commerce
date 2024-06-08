@@ -39,7 +39,7 @@ const handleChange = (event: React.SyntheticEvent, tab: number) => {
 };
 
 
-const {register:register,handleSubmit:handleSubmitRegister,formState:{errors:register_errors}} = useForm<RegistroSchema>({
+const {register:signupRegister,handleSubmit:handleSubmitRegister,formState:{errors:register_errors}} = useForm<RegistroSchema>({
   resolver: zodResolver(registroSchema)
 });
 
@@ -75,8 +75,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSch
               {login_errors.email && <p className={styles.input_error_message}>{login_errors.email.message}</p>}
               <input type="password" placeholder="Senha" {...loginRegister("senha")}/>
               {login_errors.senha && <p className={styles.input_error_message}>{login_errors.senha.message}</p>}
-                {!loginLoading && <input type="submit" value="Entrar"/>} 
-                {loginLoading && <CircularProgress size={25} />}
+              {(tabValue === 0 && !loginLoading) && <button type="submit" name="Entrar">Entrar</button>} 
+              {(tabValue === 0 && loginLoading) && <CircularProgress size={25} />}
           </form>
           <div className={styles.func_buttons}>
             <Link className={styles.btn_forgot} to="#">Esqueceu sua senha?</Link>
@@ -89,21 +89,21 @@ async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSch
             <p className={styles.userTitle}>Cadastro</p>
           </div>
           <form className={styles.form} action="" onSubmit={handleSubmitRegister(RegisterUser)}>
-              <input type="text" placeholder="Nome" {...register("nome")}/>
+              <input type="text" placeholder="Nome" {...signupRegister("nome")}/>
               {register_errors.nome && <p className={styles.input_error_message}>{register_errors.nome.message}</p>}
-              <input type="password" placeholder="Senha" {...register("senha")}/>
+              <input type="password" placeholder="Senha" {...signupRegister("senha")}/>
               {register_errors.senha && <p className={styles.input_error_message}>{register_errors.senha.message}</p>}
-              <input type="email" placeholder="Email" {...register("email")}/>
+              <input type="email" placeholder="Email" {...signupRegister("email")}/>
               {register_errors.email && <p className={styles.input_error_message}>{register_errors.email.message}</p>}
-              <input type="text" placeholder="Endereço" {...register("endereco")}/>
+              <input type="text" placeholder="Endereço" {...signupRegister("endereco")}/>
               {register_errors.endereco && <p className={styles.input_error_message}>{register_errors.endereco.message}</p>}
-              <input type="text" placeholder="CEP" {...register("CEP")}/>
+              <input type="text" placeholder="CEP" {...signupRegister("CEP")}/>
               {register_errors.CEP && <p className={styles.input_error_message}>{register_errors.CEP.message}</p>}
-              <input type="text" placeholder="Imagem" {...register("imagem")}/>
+              <input type="text" placeholder="Imagem" {...signupRegister("imagem")}/>
               {register_errors.imagem && <p className={styles.input_error_message}>{register_errors.imagem.message}</p>}
 
-              {!registerLoading && <input type="submit" value="Registrar"/>} 
-              {registerLoading && <CircularProgress size={25} />}
+              {(tabValue === 1 && !registerLoading) && <button type="submit">Registrar</button>} 
+              {(tabValue === 1 && registerLoading) && <CircularProgress size={25} />}
           </form>
         </>
       }

@@ -7,16 +7,16 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 
-export const SwiperItems:React.FC<{data:Array<any>,altura:string,slides:number}> = ({data,altura,slides}) => {
+export const SwiperItems:React.FC<{data:Array<any>,altura:string,slides:number,largura:string,autoplay:boolean}> = ({data,altura,slides,largura,autoplay}) => {
     return( 
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
                 slidesPerView={slides}
-                style={{height:altura}}
+                style={{height:altura,width:largura}}
                 navigation
                 pagination={{ clickable: true }}
                 scrollbar={{ draggable: true }}
-                autoplay={{delay:2000}}
+                autoplay={autoplay ? {delay:2000} : autoplay}
                 className={styles.slider_wrapper}>
                 
                 {data.map((element,index) => (

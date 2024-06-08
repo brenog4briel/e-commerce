@@ -4,7 +4,6 @@
     justify-content: space-between;
     width: 95%;
     height: 300px;
-    background-color: yellow;
     text-align: start;
     gap: 1%;
     border-radius: 10px;
@@ -14,7 +13,6 @@
 .secao_item {
     width: 25%;
     height: 100%;
-    background-color: red;
 }
 .secao_item img {
     height: 100%;

@@ -1,9 +1,14 @@
 import styles from "./home.module.css"
 import { Secao_Continua } from "../../components/secao/secao_continua";
-import { Secao_Espacada } from "../../components/secao/secao_espacada";
+// import { Secao_Espacada } from "../../components/secao/secao_espacada";
 import { SwiperItems } from "../../components/swiper";
-
+import { GamesImages } from "../../assets/games";
+import { LivrosImage } from "../../assets/livros"
+import { MobiliaImages } from "../../assets/mobilia"
+import { TecnologiaImages } from '../../assets/tecnologia'
 export function Home() {
+  
+
   
 
   const carros = [
@@ -29,29 +34,25 @@ export function Home() {
     "https://drivon.com.br/wp-content/uploads/2023/08/Mundo-dos-Carros-de-Luxo.png",
     "https://fotos-jornaldocarro-estadao.nyc3.cdn.digitaloceanspaces.com/wp-content/uploads/2021/10/07143040/mercedes-amg_gt_43_4matic_4-door_coupe_35-1160x653.jpeg"]
   
-    const sessaoEspacada = [
-      "https://nxboats.com.br/wp-content/uploads/2023/11/bugatti.jpg",
-      "https://nxboats.com.br/wp-content/uploads/2023/11/Lamborghini.jpg",
-      "https://img.odcdn.com.br/wp-content/uploads/2021/06/Lamborghini-Aventador-SVJ-1-990x557-1.jpg",
-      "https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/03/639410.jpg?w=293",
-    ]
     return (
     
     <div className={styles.container}>
       
-      <SwiperItems altura="400px" slides={1} data={carrosDestaques}/>
+      <SwiperItems altura="400px" slides={1} data={carrosDestaques} largura="95%" autoplay={true}/>
       
-      <Secao_Continua title="Tecnologia"/> 
-      <Secao_Espacada data={sessaoEspacada}/>  
-      <Secao_Continua title="Cozinha"/>  
-      <Secao_Espacada data={sessaoEspacada}/>  
-      <Secao_Continua title="Eletrônica"/>  
-      <Secao_Espacada data={sessaoEspacada}/>  
+      <Secao_Continua title="Tecnologia" data={TecnologiaImages}/> 
+      {/* <Secao_Espacada data={TecnologiaImages} number_items={5}/>   */}
+      <Secao_Continua title="Livros" data={LivrosImage}/>  
+      {/* <Secao_Espacada data={LivrosImage} number_items={5}/>   */}
+      <Secao_Continua title="Mobília" data={MobiliaImages}/>  
+      {/* <Secao_Espacada data={MobiliaImages} number_items={5}/>   */}
+      <Secao_Continua title="Games" data={GamesImages}/>  
+      {/* <Secao_Espacada data={GamesImages} number_items={5}/>   */}
 
       
       <div className={styles.texts}>
-        <h1>Os melhores produtos para cama, mesa e banho!</h1>
-        <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h4>
+        <h1>Mais vendidos da semana!</h1>
+        {/* <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h4> */}
       </div>
 
       <div className={styles.list_products}>

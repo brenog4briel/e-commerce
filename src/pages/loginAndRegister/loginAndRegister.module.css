@@ -54,9 +54,14 @@
     outline: none;
     border: 1px solid black;
 }
-.form input[type=submit] {
+.form button[type=submit] {
     width: 50%;
-   cursor: pointer;
+    padding: 8px 2px;
+    border-radius: 4px;
+    margin: 5px 0;
+    outline: none;
+    border: 1px solid black;
+    cursor: pointer;
 }
 .form a {
     width: 50%;
