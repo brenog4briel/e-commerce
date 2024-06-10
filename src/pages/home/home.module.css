@@ -16,7 +16,9 @@
     margin: 30px 0;
 }
 .texts > * {
+    font-size: 48px;
     padding: 10px 20px;
+    color: #222222;
 }
 
 .list_products {
@@ -30,6 +32,7 @@
 }
 .products {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 25%;
@@ -38,6 +41,7 @@
     overflow: hidden;
     transition: .1s ease-in;
     cursor: pointer;
+    background-color: #cdcdcd;
 }
 .products img{
     object-fit: fill;
