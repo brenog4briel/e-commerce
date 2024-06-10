@@ -11,8 +11,9 @@ import { CircularProgress, Tab, Tabs } from "@mui/material";
 import { RegistroSchema, registroSchema } from "../../validations/register";
 import AxiosInstance from "../../axiosInstance";
 
-export function LoginAndRegister() {
 
+export function LoginAndRegister() {
+  
   const navigate = useNavigate();
   const {Authenticate} = useAuth();
   const [loginLoading,setLoginLoading] = useState<boolean>(false);
@@ -70,7 +71,7 @@ async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSch
           <p className={styles.userTitle}>Bem vindo ao E-commerce</p>
           <img src={logo} alt="" className={styles.logo}/>
           </div>
-          <form className={styles.form} action="" onSubmit={handleSubmitLogin(Auth)}>
+          <form className={styles.form} method="post" onSubmit={handleSubmitLogin(Auth)}>
               <input type="text" placeholder="Email ou número" {...loginRegister("email")}/>
               {login_errors.email && <p className={styles.input_error_message}>{login_errors.email.message}</p>}
               <input type="password" placeholder="Senha" {...loginRegister("senha")}/>
@@ -88,7 +89,7 @@ async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSch
           <div className={styles.containerUserTitle}>
             <p className={styles.userTitle}>Cadastro</p>
           </div>
-          <form className={styles.form} action="" onSubmit={handleSubmitRegister(RegisterUser)}>
+          <form className={styles.form} method="post" onSubmit={handleSubmitRegister(RegisterUser)}>
               <input type="text" placeholder="Nome" {...signupRegister("nome")}/>
               {register_errors.nome && <p className={styles.input_error_message}>{register_errors.nome.message}</p>}
               <input type="password" placeholder="Senha" {...signupRegister("senha")}/>
@@ -99,9 +100,12 @@ async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSch
               {register_errors.endereco && <p className={styles.input_error_message}>{register_errors.endereco.message}</p>}
               <input type="text" placeholder="CEP" {...signupRegister("CEP")}/>
               {register_errors.CEP && <p className={styles.input_error_message}>{register_errors.CEP.message}</p>}
-              <input type="text" placeholder="Imagem" {...signupRegister("imagem")}/>
-              {register_errors.imagem && <p className={styles.input_error_message}>{register_errors.imagem.message}</p>}
-
+              <div className={styles.upload_container}>
+                <form action="" method="post" encType="multipart/form-data">
+                  <input type="file" {...signupRegister("imagem")}/>
+                  {register_errors.imagem && <p className={styles.input_error_message}>{register_errors.imagem.message}</p>}
+                </form>
+              </div>
               {(tabValue === 1 && !registerLoading) && <button type="submit">Registrar</button>} 
               {(tabValue === 1 && registerLoading) && <CircularProgress size={25} />}
           </form>

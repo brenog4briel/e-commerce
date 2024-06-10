@@ -84,8 +84,7 @@ export default function Header() {
          </div>
          
          <div>
-            <a href="/login" className={styles.btn}>Entrar</a>
-            <a href="/register" className={styles.btn}>Cadastre-se</a>
+            <a href="/login" className={styles.btn}>Faça seu login</a>
          </div>
 
           <Link to="">
@@ -95,7 +94,7 @@ export default function Header() {
      </header>
 
       <div className={styles.drawer}>
-        <Button onClick={toggleDrawer(true)}><GrMenu size={20} color="black"/><p style={{color:"black", marginLeft:"5px"}}>Opções</p></Button>
+        <Button onClick={toggleDrawer(true)}><GrMenu size={20} color="black"/><p style={{color:"black", marginLeft:"5px", fontSize:"12px"}}>Opções</p></Button>
           <Drawer open={open} onClose={toggleDrawer(false)}>
             {DrawerList}
           </Drawer>

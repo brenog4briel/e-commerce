@@ -6,11 +6,10 @@ import { GamesImages } from "../../assets/games";
 import { LivrosImage } from "../../assets/livros"
 import { MobiliaImages } from "../../assets/mobilia"
 import { TecnologiaImages } from '../../assets/tecnologia'
+
+
 export function Home() {
   
-
-  
-
   const carros = [
     "https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/09-images/onix-hatch-showroom-1920x960.jpg?imwidth=960",
     "https://storage.googleapis.com/movida-public-images/modelos/3210_image.jpg",
@@ -60,8 +59,10 @@ export function Home() {
           carros.map((carro,index) => (
             <div className={styles.products} key={index}>
              <img src={carro} alt="" />
+             <div>
              <p>Produto {index}</p>
-             <p>Preço {index + 50}</p>
+             <p>Preço 1</p>
+             </div>
             </div>
           ))
         }

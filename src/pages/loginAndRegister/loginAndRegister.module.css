@@ -88,6 +88,18 @@
     color: #0000ee;
     border-radius: 7px;
 }
+.upload_container {
+    width:90%;
+}
+.upload_container form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.upload_container input {
+    width: 100%;
+}
 .btn_register {
     padding: 10px 0;
     width: 25%;

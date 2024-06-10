@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 
-export const SwiperItems:React.FC<{data:Array<any>,altura:string,slides:number,largura:string,autoplay:boolean}> = ({data,altura,slides,largura,autoplay}) => {
+export const SwiperItems:React.FC<{data:Array<string>,altura:string,slides:number,largura:string,autoplay:boolean}> = ({data,altura,slides,largura,autoplay}) => {
     return( 
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
