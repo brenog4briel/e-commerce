@@ -24,10 +24,7 @@ export const registroSchema = z.object({
     CEP: z
         .string({required_error:"O CEP é obrigatório"})
         .trim()
-        .min(14,{message:"CEP inválido"}),
-    imagem: z
-        .string({required_error:"A senha é obrigatória"})
-        .trim()
+        .min(8,{message:"CEP inválido"}),
 })
 
 export type RegistroSchema = z.infer<typeof registroSchema>;

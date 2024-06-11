@@ -44,9 +44,9 @@ const {register:signupRegister,handleSubmit:handleSubmitRegister,formState:{erro
   resolver: zodResolver(registroSchema)
 });
 
-async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSchema) {
+async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
   setRegisterLoading(true);
-  AxiosInstance.post('/usuarios', {nome,senha,email,endereco,CEP,imagem})
+  AxiosInstance.post('/usuarios', {nome,senha,email,endereco,CEP})
   .then(() => {
     console.log("Usuário cadastrado com sucesso"); 
     setRegisterLoading(false); 
@@ -100,15 +100,16 @@ async function RegisterUser({nome,senha,email,endereco,CEP,imagem} : RegistroSch
               {register_errors.endereco && <p className={styles.input_error_message}>{register_errors.endereco.message}</p>}
               <input type="text" placeholder="CEP" {...signupRegister("CEP")}/>
               {register_errors.CEP && <p className={styles.input_error_message}>{register_errors.CEP.message}</p>}
-              <div className={styles.upload_container}>
-                <form action="" method="post" encType="multipart/form-data">
-                  <input type="file" {...signupRegister("imagem")}/>
-                  {register_errors.imagem && <p className={styles.input_error_message}>{register_errors.imagem.message}</p>}
-                </form>
-              </div>
+              {/* <div className={styles.upload_container}>
+                  <input type="file" form="upload_form"/>
+              </div> */}
               {(tabValue === 1 && !registerLoading) && <button type="submit">Registrar</button>} 
               {(tabValue === 1 && registerLoading) && <CircularProgress size={25} />}
           </form>
+
+          {/* <form id="upload_form" action="" method="post" encType="multipart/form-data"></form> */}
+
+
         </>
       }
              
