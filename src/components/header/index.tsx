@@ -8,11 +8,11 @@ import { useMediaQuery } from "react-responsive";
 import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Inbox, Mail } from "@mui/icons-material";
 import { GrMenu } from "react-icons/gr";
-
+import { useNavigate } from "react-router-dom";
 export default function Header() {
 
-
-   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
  
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -21,9 +21,9 @@ export default function Header() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Meu perfil', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate("/perfil")}>
               <ListItemIcon>
                 {index % 2 === 0 ? <Inbox /> : <Mail />}
               </ListItemIcon>

@@ -6,6 +6,7 @@ import { Sobre } from "./pages/sobre";
 import { Contato } from "./pages/contato";
 import { Categorias } from "./pages/categorias";
 import { LoginAndRegister } from "./pages/loginAndRegister";
+import { Perfil } from "./pages/perfil";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path:"/categorias",
                 element:<Categorias/>
+            },
+            {
+                path:"/perfil",
+                element:<Perfil/>
             },
             {
                 path:"*",
