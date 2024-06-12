@@ -8,7 +8,7 @@ const AxiosInstance = axios.create({
   timeout: 60 * 1000, //60sec
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Origin": "*",
 },
 });
 
