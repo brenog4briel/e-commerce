@@ -30,6 +30,9 @@ export function LoginAndRegister() {
       console.log(res);
       navigate("/")
     })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   
@@ -54,6 +57,7 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
   })
   .catch((error) => {
     console.error(error);
+    throw new Error("Houve um erro ao cadastrar o usuário")
   });
 }
 
@@ -100,16 +104,9 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
               {register_errors.endereco && <p className={styles.input_error_message}>{register_errors.endereco.message}</p>}
               <input type="text" placeholder="CEP" {...signupRegister("CEP")}/>
               {register_errors.CEP && <p className={styles.input_error_message}>{register_errors.CEP.message}</p>}
-              {/* <div className={styles.upload_container}>
-                  <input type="file" form="upload_form"/>
-              </div> */}
               {(tabValue === 1 && !registerLoading) && <button type="submit">Registrar</button>} 
               {(tabValue === 1 && registerLoading) && <CircularProgress size={25} />}
           </form>
-
-          {/* <form id="upload_form" action="" method="post" encType="multipart/form-data"></form> */}
-
-
         </>
       }
              

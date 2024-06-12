@@ -7,12 +7,16 @@
 
 .user_profile {
     display: flex;
-    height: 300px;
+    min-height: 300px;
     width: 800px;
     margin: 20px;
-    padding: 0 10px;
     background-color: #dddddd;
     border-radius: 10px;
+}
+.user_profile form {
+    display: flex;
+    width: 100%;
+    padding: 0 10px;
 
 }
 .user_photo {
@@ -23,6 +27,7 @@
     width: 50%;
     gap: 20px;
 }
+
 .user_photo input {
     width: 100%;
     font-size: 14px;
@@ -32,14 +37,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
     width: 50%;
 }
-.user_info input{
+
+.user_info input,.user_info button{
     width: 90%;
     padding: 5px;
     font-size: 14px;
     border-radius: 4px;
     outline: none;
     border: 1px solid gainsboro;
+    margin: 10px 0;
+}
+.user_info button {
+    cursor: pointer;
+}
+
+.input_error_message {
+    color: red;
+    font-size: 12px;
+    align-self: flex-start;
+    margin-left: 24px;
 }
