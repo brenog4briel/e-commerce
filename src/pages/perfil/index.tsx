@@ -12,6 +12,8 @@ export function Perfil() {
 
     const navigate = useNavigate()
     const [loading,setLoading] = useState<boolean>(false);
+    const [file,setFile] = useState<File>();
+
     const {register:changeProfileRegister,handleSubmit:handleSubmitChangeProfile,formState:{errors:changeProfileErrors}} = useForm<ChangeProfileSchema>({
         resolver: zodResolver(changeProfileSchema)
     })
@@ -30,15 +32,40 @@ export function Perfil() {
         })
     }
 
+    async function handleSubmitImage() {
+        const storedUser = sessionStorage.getItem("@App:usuario");
+        const usuario_id = JSON.parse(storedUser!).usuario_id;
+        console.log(usuario_id)
+        console.log(file)
+        AxiosInstance.post("/upload",{usuario_id,file})
+        .then(() => {
+            console.log("Upload de imagem realizado com sucesso")
+        })
+        .catch((err) => {
+            console.log(err);
+            throw new Error("Houve um erro ao realizar o upload da imagem")
+        })
+    }
+
+    function onChangeImage(e:React.ChangeEvent<HTMLInputElement>) {
+        e.preventDefault()
+        const {files} = e.target;
+        const selectedFile = files as FileList;
+        setFile(selectedFile?.[0]);
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.user_profile}>
-            <form action="" method="post" encType="multipart/form-data" onSubmit={handleSubmitChangeProfile(changeUserInfo)}>
                 <div className={styles.user_photo}>
                     <img src={user_default} alt="" />
-                    <input type="file" name="file"/>
+                    <form action="" encType="multipart/form-data">
+                        <input type="file" name="file" onChange={(e) => onChangeImage(e)}/>
+                        <button type="button" onClick={handleSubmitImage}>Alterar foto</button>
+                    </form>
                 </div>
                 <div className={styles.user_info}>
+                    <form action="" method="post" onSubmit={handleSubmitChangeProfile(changeUserInfo)}>
                         <input type="text" placeholder="Nome" {...changeProfileRegister("nome")}/>
                         {changeProfileErrors.nome && <p className={styles.input_error_message}>{changeProfileErrors.nome.message}</p>}
                         <input type="text" placeholder="Email" {...changeProfileRegister("email")}/>
@@ -49,8 +76,8 @@ export function Perfil() {
                         {changeProfileErrors.CEP && <p className={styles.input_error_message}>{changeProfileErrors.CEP.message}</p>}
                         {!loading && <button type="submit">Alterar</button>}
                         {loading && <CircularProgress size={25}/>}
+                    </form>
                 </div>
-            </form>
             </div>
         </div>
     );
