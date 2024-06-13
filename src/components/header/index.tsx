@@ -9,14 +9,28 @@ import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemI
 import { Inbox, Mail } from "@mui/icons-material";
 import { GrMenu } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 export default function Header() {
 
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
- 
+  const [open, setOpen] = useState<boolean>(false);
+  const [isAuth,setIsAuth] = useState<boolean>(false)
+
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+  useEffect(() => {
+
+    const storedUser = sessionStorage.getItem("@App:usuario");
+    const storedToken = sessionStorage.getItem("@App:token");
+
+    if (storedUser) {
+      setIsAuth(true)
+    }
+  },[])
+
+  const {Logout} = useAuth();
    
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -83,9 +97,11 @@ export default function Header() {
             <input type="search" name="" id="" placeholder="Ex.: Escova de dentes"/>
          </div>
          
-         <div>
+         {!isAuth ? <div>
             <a href="/login" className={styles.btn}>Faça seu login</a>
-         </div>
+         </div> : <div>
+            <a href="/" className={styles.btn} onClick={Logout}>Sair</a>
+         </div>}
 
           <Link to="">
             <img src={logo} alt="" className={styles.logo}/>
