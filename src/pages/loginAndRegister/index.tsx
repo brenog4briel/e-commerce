@@ -10,7 +10,7 @@ import { useState } from "react";
 import { CircularProgress, Tab, Tabs } from "@mui/material";
 import { RegistroSchema, registroSchema } from "../../validations/register";
 import AxiosInstance from "../../axiosInstance";
-
+import { Popup } from "../../components/popup";
 
 export function LoginAndRegister() {
   
@@ -18,12 +18,28 @@ export function LoginAndRegister() {
   const {Authenticate} = useAuth();
   const [loginLoading,setLoginLoading] = useState<boolean>(false);
   const [registerLoading,setRegisterLoading] = useState<boolean>(false);
+  const [loginError,setLoginError] = useState<boolean>(false)
+  const [registroError,setRegistroError] = useState<boolean>(false)
+  const [loginErrorMensagem,setLoginErrorMensagem] = useState<string>("")
+  const [registroErrorMensagem,setRegistroErrorMensagem] = useState<string>("")
+
+
 
   const {register:loginRegister,handleSubmit:handleSubmitLogin,formState:{errors:login_errors}} = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
   });
 
+  function counterTimePopup() {
+    setTimeout(() => {
+      setLoginError(false);
+      setLoginLoading(false)
+      setRegisterLoading(false)
+      setRegistroError(false)
+    },3000)
+  }
+
   async function Auth({email,senha}: LoginSchema) {
+    setLoginError(false);
     setLoginLoading(true);
     Authenticate({email,senha})
     .then((res) => {
@@ -31,11 +47,13 @@ export function LoginAndRegister() {
       navigate("/")
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.response.data.message);
+      setLoginErrorMensagem(err.response.data.message)
+      setLoginError(true);
+      counterTimePopup()
     })
   }
 
-  
 const [tabValue, setTabValue] = useState<number>(0);
 
 const handleChange = (event: React.SyntheticEvent, tab: number) => {
@@ -48,6 +66,7 @@ const {register:signupRegister,handleSubmit:handleSubmitRegister,formState:{erro
 });
 
 async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
+  setRegistroError(false)
   setRegisterLoading(true);
   AxiosInstance.post('/usuarios', {nome,senha,email,endereco,CEP})
   .then(() => {
@@ -55,9 +74,12 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
     setRegisterLoading(false); 
     navigate("/")
   })
-  .catch((error) => {
-    console.error(error);
-    throw new Error("Houve um erro ao cadastrar o usuário")
+  .catch((err) => {
+    console.log(err.response.data.message);
+    setRegistroErrorMensagem(err.response.data.message)
+    setRegistroError(true)
+
+
   });
 }
 
@@ -109,8 +131,12 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
           </form>
         </>
       }
-             
-        </div>
+        </div>  
+        
+        {loginError && <Popup mensagem={loginErrorMensagem}/>}
+        {registroError && <Popup mensagem={registroErrorMensagem}/>}
+        
+
     </div>
   )
 }

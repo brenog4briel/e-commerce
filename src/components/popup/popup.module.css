@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    min-height: 50px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 100px;
+    right: 100px;
+    animation-duration: 2s;
+    animation-name: queda;
+    padding: 10px;
+}
+
+@keyframes queda {
+    from {
+        bottom: 1000px;
+    }
+    to {
+        bottom: 100px;
+    }
+}

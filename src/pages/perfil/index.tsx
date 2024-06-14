@@ -35,6 +35,7 @@ export function Perfil() {
     async function handleSubmitImage() {
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
+        console.log(file)
         AxiosInstance.post(`/upload/${usuario_id}`,{file},{headers:{"Content-Type":"multipart/form-data"}})
         .then(() => {
             console.log("Upload de imagem realizado com sucesso")
@@ -57,7 +58,7 @@ export function Perfil() {
             <div className={styles.user_profile}>
                 <div className={styles.user_photo}>
                     <img src={user_default} alt="" />
-                    <form action="" encType="multipart/form-data">
+                    <form action="" encType="multipart/form-data" method="post">
                         <input type="file" name="file" onChange={(e) => onChangeImage(e)}/>
                         <button type="button" onClick={handleSubmitImage}>Alterar foto</button>
                     </form>
