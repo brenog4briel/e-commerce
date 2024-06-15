@@ -17,10 +17,11 @@
 .user_photo {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     width: 50%;
     gap: 20px;
+    padding: 0 5px;
 }
 .user_photo form {
     display: flex;
@@ -34,10 +35,11 @@
     width: 30%;
     padding: 5px;
     margin-right: 20px;
+    cursor: pointer;
 
 }
 .user_photo input {
-    width: 100%;
+    width: 80%;
     font-size: 14px;
 }
 .user_info {

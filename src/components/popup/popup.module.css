@@ -1,4 +1,4 @@
-.container {
+.container_success,.container_error {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,6 +12,12 @@
     animation-duration: 2s;
     animation-name: queda;
     padding: 10px;
+    font-size: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 1px solid greenyellow;
+}
+.container_error {
+    border: 1px solid red;
 }
 
 @keyframes queda {

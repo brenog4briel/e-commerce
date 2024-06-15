@@ -12,6 +12,11 @@ import { RegistroSchema, registroSchema } from "../../validations/register";
 import AxiosInstance from "../../axiosInstance";
 import { Popup } from "../../components/popup";
 
+interface IRequestError {
+  mensagem:string;
+  sucesso:boolean;
+}
+
 export function LoginAndRegister() {
   
   const navigate = useNavigate();
@@ -20,10 +25,9 @@ export function LoginAndRegister() {
   const [registerLoading,setRegisterLoading] = useState<boolean>(false);
   const [loginError,setLoginError] = useState<boolean>(false)
   const [registroError,setRegistroError] = useState<boolean>(false)
-  const [loginErrorMensagem,setLoginErrorMensagem] = useState<string>("")
-  const [registroErrorMensagem,setRegistroErrorMensagem] = useState<string>("")
 
-
+  const [loginRequestError,setLoginRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
+  const [registerRequestError,setRegisterRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
 
   const {register:loginRegister,handleSubmit:handleSubmitLogin,formState:{errors:login_errors}} = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
@@ -48,7 +52,7 @@ export function LoginAndRegister() {
     })
     .catch((err) => {
       console.log(err.response.data.message);
-      setLoginErrorMensagem(err.response.data.message)
+      setLoginRequestError(prev => ({...prev,mensagem:err.response.data.message,sucesso:false}))
       setLoginError(true);
       counterTimePopup()
     })
@@ -71,12 +75,12 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
   AxiosInstance.post('/usuarios', {nome,senha,email,endereco,CEP})
   .then(() => {
     console.log("Usuário cadastrado com sucesso"); 
-    setRegisterLoading(false); 
+    setRegisterRequestError(prev => ({...prev,mensagem:"Usuário cadastrado com sucesso",sucesso:true}))
     navigate("/")
   })
   .catch((err) => {
     console.log(err.response.data.message);
-    setRegistroErrorMensagem(err.response.data.message)
+    setRegisterRequestError(prev => ({...prev,mensagem:err.response.data.message,sucesso:false}))
     setRegistroError(true)
 
 
@@ -133,8 +137,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
       }
         </div>  
         
-        {loginError && <Popup mensagem={loginErrorMensagem}/>}
-        {registroError && <Popup mensagem={registroErrorMensagem}/>}
+        {loginError && <Popup mensagem={loginRequestError.mensagem} sucesso={loginRequestError.sucesso}/>}
+        {registroError && <Popup mensagem={registerRequestError.mensagem} sucesso={registerRequestError.sucesso}/>}
         
 
     </div>
