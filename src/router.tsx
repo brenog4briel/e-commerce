@@ -7,6 +7,7 @@ import { Contato } from "./pages/contato";
 import { Categorias } from "./pages/categorias";
 import { LoginAndRegister } from "./pages/loginAndRegister";
 import { Perfil } from "./pages/perfil";
+import { CadastroProduto } from "./pages/cadastroProduto";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path:"/perfil",
                 element:<Perfil/>
+            },
+            {
+                path:"/novo-produto",
+                element: <CadastroProduto/>
             },
             {
                 path:"*",

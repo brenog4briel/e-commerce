@@ -6,7 +6,7 @@ import {  useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useMediaQuery } from "react-responsive";
 import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { Inbox, Mail } from "@mui/icons-material";
+import { Contrast,Login,Info ,ShoppingCart,Person,ShoppingBag} from "@mui/icons-material";
 import { GrMenu } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -23,7 +23,6 @@ export default function Header() {
   useEffect(() => {
 
     const storedUser = sessionStorage.getItem("@App:usuario");
-    const storedToken = sessionStorage.getItem("@App:token");
 
     if (storedUser) {
       setIsAuth(true)
@@ -35,29 +34,63 @@ export default function Header() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {['Meu perfil', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+
+        {isAuth && <ListItem disablePadding>
             <ListItemButton onClick={() => navigate("/perfil")}>
               <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
+                <Person />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary="Meu perfil" />
             </ListItemButton>
-          </ListItem>
-        ))}
+          </ListItem>}
+
+          {isAuth && <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                 <ShoppingBag />
+              </ListItemIcon>
+              <ListItemText primary="Lista de desejos" />
+            </ListItemButton>
+          </ListItem>}
+
+          {isAuth && <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShoppingCart /> 
+              </ListItemIcon>
+              <ListItemText primary="Carrinho" />
+            </ListItemButton>
+          </ListItem>}
+
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+         <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
+                <Contrast />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary="Tema" />
             </ListItemButton>
           </ListItem>
-        ))}
+
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => navigate("/sobre")}>
+              <ListItemIcon>
+                 <Info />
+              </ListItemIcon>
+              <ListItemText primary="Sobre" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Login /> 
+              </ListItemIcon>
+              {isAuth ? <ListItemText primary="Sair" onClick={Logout}/> : <ListItemText primary="Entrar" onClick={() => navigate("/login")}/>}
+            </ListItemButton>
+          </ListItem>
       </List>
     </Box>
   );
@@ -85,7 +118,6 @@ export default function Header() {
          <nav className={styles.menu_navegacao_desktop} >
             <Link className={styles.link} to="/" onClick={closeNavBarOptions}><p>Página inicial</p></Link>
             <Link className={styles.link}to="/categorias" onClick={closeNavBarOptions}><p>Categorias</p></Link>
-            <Link className={styles.link} to="/sobre" onClick={closeNavBarOptions}><p>Sobre</p></Link>
             <Link className={styles.link}to="/contato" onClick={closeNavBarOptions}><p>Contato</p></Link>
          </nav>
 
@@ -97,12 +129,9 @@ export default function Header() {
             <input type="search" name="" id="" placeholder="Ex.: Escova de dentes"/>
          </div>
          
-         {!isAuth ? <div>
-            <a href="/login" className={styles.btn}>Faça seu login</a>
-         </div> : <div>
-            <a href="/" className={styles.btn} onClick={Logout}>Sair</a>
-         </div>}
-
+        <div>
+          <a href={isAuth ? "/novo-produto" : "/login"} className={styles.btn}>Anuncie seu produto</a>
+        </div> 
           <Link to="">
             <img src={logo} alt="" className={styles.logo}/>
          </Link>
@@ -120,7 +149,6 @@ export default function Header() {
         <div className={isActive ? styles.navigation_mobile_online : styles.navigation_mobile_offline}>
             <Link className={styles.link} to="/" onClick={closeNavBarOptions}><p>Página inicial</p></Link>
             <Link className={styles.link} to="/categorias" onClick={closeNavBarOptions}><p>Categorias</p></Link>
-            <Link className={styles.link} to="/sobre" onClick={closeNavBarOptions}><p>Sobre</p></Link>
             <Link className={styles.link} to="/contato" onClick={closeNavBarOptions}><p>Contato</p></Link>
             <Link className={styles.link} to="#" onClick={closeNavBarOptions}><MdClose size={25} color="black">Fechar</MdClose></Link>                  
          </div>
