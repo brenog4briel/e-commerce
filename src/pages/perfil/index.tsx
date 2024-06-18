@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Popup } from "../../components/popup";
+import axios from "axios";
 
 interface IRequestError {
   mensagem:string;
@@ -63,20 +64,28 @@ export function Perfil() {
     async function handleSubmitImage() {
         setUploadImageError(false)
         setUploadImageLoading(true)
+
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
-        AxiosInstance.post(`/upload/${usuario_id}`,{file},{headers:{"Content-Type":"multipart/form-data"}})
-        .then(() => {
-            console.log("Upload de imagem realizado com sucesso")
-            setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
-            navigate("/")
-        })
-        .catch((err) => {
-            console.log(err);
-            setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
-            setUploadImageError(true)
-            counterTimePopup()
-        })
+
+        console.log(file)
+        // axios.post("https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",{file},{
+        //     headers:{"Content-Type":"multipart/form-data"}
+        // })
+        // .then((res) => console.log(res))
+        // .catch((err) => console.log(err))
+        // AxiosInstance.post(`/upload/${usuario_id}`,{file},{headers:{"Content-Type":"multipart/form-data"}})
+        // .then(() => {
+        //     console.log("Upload de imagem realizado com sucesso")
+        //     setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
+        //     navigate("/")
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        //     setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
+        //     setUploadImageError(true)
+        //     counterTimePopup()
+        // })
     }
 
     function onChangeImage(e:React.ChangeEvent<HTMLInputElement>) {
@@ -92,7 +101,7 @@ export function Perfil() {
                 <div className={styles.user_photo}>
                     <img src={user_default} alt="" />
                     <form action="" encType="multipart/form-data" method="post">
-                        <input type="file" name="file" onChange={(e) => onChangeImage(e)}/>
+                        <input type="file" name="image" onChange={(e) => onChangeImage(e)}/>
                         {!uploadImageLoading && <button type="submit" onClick={handleSubmitImage}>Alterar foto</button>}
                         {uploadImageLoading && <CircularProgress size={25}/>}
                     </form>
