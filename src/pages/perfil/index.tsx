@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Popup } from "../../components/popup";
-import axios from "axios";
 
 interface IRequestError {
   mensagem:string;
@@ -20,8 +19,7 @@ export function Perfil() {
     const navigate = useNavigate()
     const [userInfoLoading,setUserInfoLoading] = useState<boolean>(false);
     const [uploadImageLoading,setUploadImageLoading] = useState<boolean>(false);
-    const [file,setFile] = useState<File>();
-
+    const [file,setFile] = useState<Blob>();
     const [uploadImageError,setUploadImageError] = useState<boolean>(false);
     const [userInfoError,setUserInfoError] = useState<boolean>(false);
 
@@ -64,28 +62,38 @@ export function Perfil() {
     async function handleSubmitImage() {
         setUploadImageError(false)
         setUploadImageLoading(true)
-
+        
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
-
-        console.log(file)
-        // axios.post("https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",{file},{
-        //     headers:{"Content-Type":"multipart/form-data"}
-        // })
-        // .then((res) => console.log(res))
-        // .catch((err) => console.log(err))
-        // AxiosInstance.post(`/upload/${usuario_id}`,{file},{headers:{"Content-Type":"multipart/form-data"}})
-        // .then(() => {
-        //     console.log("Upload de imagem realizado com sucesso")
-        //     setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
-        //     navigate("/")
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        //     setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
-        //     setUploadImageError(true)
-        //     counterTimePopup()
-        // })
+        const data = new FormData();
+        if (file) {
+            const reader = new FileReader()
+            reader.readAsDataURL(file!);
+            reader.onloadend = () => {
+                const base64 = reader.result
+                const base64String = base64!.toString()
+                    .replace('data:', '')
+                    .replace(/^.+,/, '');
+            console.log(base64String)
+            data.append( "image", base64String );
+            fetch("https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",{body:data,method:"POST"})
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+            };
+            AxiosInstance.post(`/upload/imagem-usuario/${usuario_id}`,{data},{headers:{"Content-Type":"multipart/form-data"}})
+            .then(() => {
+                console.log("Upload de imagem realizado com sucesso")
+                setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
+                navigate("/")
+            })
+            .catch((err) => {
+                console.log(err);
+                setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
+                setUploadImageError(true)
+                counterTimePopup()
+            })
+        }
+ 
     }
 
     function onChangeImage(e:React.ChangeEvent<HTMLInputElement>) {
@@ -100,7 +108,7 @@ export function Perfil() {
             <div className={styles.user_profile}>
                 <div className={styles.user_photo}>
                     <img src={user_default} alt="" />
-                    <form action="" encType="multipart/form-data" method="post">
+                    <form>
                         <input type="file" name="image" onChange={(e) => onChangeImage(e)}/>
                         {!uploadImageLoading && <button type="submit" onClick={handleSubmitImage}>Alterar foto</button>}
                         {uploadImageLoading && <CircularProgress size={25}/>}
