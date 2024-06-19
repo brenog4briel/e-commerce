@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Popup } from "../../components/popup";
+import axios from "axios";
 
 interface IRequestError {
   mensagem:string;
@@ -76,7 +77,12 @@ export function Perfil() {
                     .replace(/^.+,/, '');
             console.log(base64String)
             data.append( "image", base64String );
-            fetch("https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",{body:data,method:"POST"})
+            axios({
+                method:"post",
+                url:"https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",
+                withCredentials:false,
+                data:data
+            })
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
             };

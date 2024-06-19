@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { novoProdutoSchema, NovoProdutoSchema } from "../../validations/novoProduto"
 import AxiosInstance from "../../axiosInstance"
 import { useState } from "react"
+import axios from "axios"
 
 export function CadastroProduto() {
 
@@ -35,6 +36,29 @@ export function CadastroProduto() {
     async function handleNovoProduto ({nome,preco,proprietario,categoria,qtd_estoque}:NovoProdutoSchema) {
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
+        const data = new FormData();
+
+         if (file) {
+            const reader = new FileReader()
+            reader.readAsDataURL(file!);
+            reader.onloadend = () => {
+            const base64 = reader.result
+            const base64String = base64!.toString()
+                .replace('data:', '')
+                .replace(/^.+,/, '');
+
+            data.append( "image", base64String );
+            axios({
+                method:"post",
+                url:"https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",
+                withCredentials:false,
+                data:data
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+            };
+        }
+
         AxiosInstance.post("/produto",{nome,preco,proprietario,categoria,qtd_estoque,imagem:file,usuario_id})
         .then((res) => {
             console.log(res)
