@@ -14,12 +14,6 @@ interface IRequestError {
   mensagem:string;
   sucesso:boolean;
 }
-interface IUsuario {
-    nome:string;
-    endereco:string;
-    CEP:string;
-    imagem:string
-}
 
 export function Perfil() {
 
@@ -29,7 +23,6 @@ export function Perfil() {
     const [file,setFile] = useState<Blob>();
     const [uploadImageError,setUploadImageError] = useState<boolean>(false);
     const [userInfoError,setUserInfoError] = useState<boolean>(false);
-    const [user,setUser] = useState<IUsuario>();
     const [nome,setNome] = useState<string>("")
     const [endereco,setEndereco] = useState<string>("")
     const [CEP,setCEP] = useState<string>("")
@@ -94,7 +87,8 @@ export function Perfil() {
             })
             .then((res) => {
                 const imgUrl = res.data.data.url;
-                AxiosInstance.post(`/upload/imagem-usuario/${usuario_id}`,{imgUrl},{headers:{"Content-Type":"multipart/form-data"}})
+                console.log(imgUrl)
+                AxiosInstance.post(`/upload/imagem-usuario/${usuario_id}`,{imgUrl})
                 .then(() => {
                     console.log("Upload de imagem realizado com sucesso")
                     setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
@@ -124,8 +118,12 @@ export function Perfil() {
         const storedUser = sessionStorage.getItem("@App:usuario");
         if (storedUser) {
             const email = JSON.parse(storedUser).email;
-            AxiosInstance.get(`/usuarios/email=${email}`)
-            .then((res) => console.log(res))
+            AxiosInstance.get(`/usuarios/usuario/${email}`)
+            .then((res) => {
+                setNome(res.data.nome)
+                setEndereco(res.data.endereco)
+                setCEP(res.data.CEP)
+            })
         }
     },[])
 
@@ -142,11 +140,11 @@ export function Perfil() {
                 </div>
                 <div className={styles.user_info}>
                     <form action="" method="post" onSubmit={handleSubmitChangeProfile(changeUserInfo)}>
-                        <input type="text" placeholder="Nome" {...changeProfileRegister("nome")}/>
+                        <input type="text" placeholder="Nome" {...changeProfileRegister("nome")} value={nome? nome : ""}/>
                         {changeProfileErrors.nome && <p className={styles.input_error_message}>{changeProfileErrors.nome.message}</p>}
-                        <input type="text" placeholder="Endereço" {...changeProfileRegister("endereco")}/>
+                        <input type="text" placeholder="Endereço" {...changeProfileRegister("endereco")} value={endereco? endereco : ""}/>
                         {changeProfileErrors.endereco && <p className={styles.input_error_message}>{changeProfileErrors.endereco.message}</p>}
-                        <input type="text" placeholder="CEP" {...changeProfileRegister("CEP")}/>
+                        <input type="text" placeholder="CEP" {...changeProfileRegister("CEP")} value={CEP? CEP : ""}/>
                         {changeProfileErrors.CEP && <p className={styles.input_error_message}>{changeProfileErrors.CEP.message}</p>}
                         {!userInfoLoading && <button type="submit">Alterar</button>}
                         {userInfoLoading && <CircularProgress size={25}/>}
