@@ -26,6 +26,7 @@ export function Perfil() {
     const [nome,setNome] = useState<string>("")
     const [endereco,setEndereco] = useState<string>("")
     const [CEP,setCEP] = useState<string>("")
+    const [image,setImage] = useState<string>("")
     
   const [uploadRequestError,setUploadRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
   const [userInfoRequestError,setUserInfoRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
@@ -48,7 +49,7 @@ export function Perfil() {
         const usuario_id = JSON.parse(storedUser!).usuario_id;
         setUserInfoError(false)
         setUserInfoLoading(true)
-        AxiosInstance.put(`/${usuario_id}`,{nome,endereco,CEP})
+        AxiosInstance.put(`/usuarios/${usuario_id}`,{nome,endereco,CEP})
         .then(() => {
             console.log("Informações do usuário alteradas com sucesso!")
             setUserInfoRequestError(prev => ({...prev, mensagem:"Informações do usuário alteradas com sucesso!",sucesso:true}))
@@ -86,9 +87,8 @@ export function Perfil() {
                 data:data
             })
             .then((res) => {
-                const imgUrl = res.data.data.url;
-                console.log(imgUrl)
-                AxiosInstance.post(`/upload/imagem-usuario/${usuario_id}`,{imgUrl})
+                const imagem : string = res.data.data.url;
+                AxiosInstance.post(`/upload/usuario/${usuario_id}`,{imagem})
                 .then(() => {
                     console.log("Upload de imagem realizado com sucesso")
                     setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
@@ -123,6 +123,7 @@ export function Perfil() {
                 setNome(res.data.nome)
                 setEndereco(res.data.endereco)
                 setCEP(res.data.CEP)
+                setImage(res.data.imagem)
             })
         }
     },[])
@@ -131,7 +132,7 @@ export function Perfil() {
         <div className={styles.container}>
             <div className={styles.user_profile}>
                 <div className={styles.user_photo}>
-                    <img src={user_default} alt="" />
+                    <img src={image ? image : user_default} alt="" />
                     <form>
                         <input type="file" name="image" onChange={(e) => onChangeImage(e)}/>
                         {!uploadImageLoading && <button type="submit" onClick={handleSubmitImage}>Alterar foto</button>}
@@ -140,11 +141,11 @@ export function Perfil() {
                 </div>
                 <div className={styles.user_info}>
                     <form action="" method="post" onSubmit={handleSubmitChangeProfile(changeUserInfo)}>
-                        <input type="text" placeholder="Nome" {...changeProfileRegister("nome")} value={nome? nome : ""}/>
+                        <input type="text" placeholder="Nome" {...changeProfileRegister("nome")} value={nome? nome : ""} onChange={(e) => setNome(e.target.value)}/>
                         {changeProfileErrors.nome && <p className={styles.input_error_message}>{changeProfileErrors.nome.message}</p>}
-                        <input type="text" placeholder="Endereço" {...changeProfileRegister("endereco")} value={endereco? endereco : ""}/>
+                        <input type="text" placeholder="Endereço" {...changeProfileRegister("endereco")} value={endereco? endereco : ""} onChange={(e) => setEndereco(e.target.value)}/>
                         {changeProfileErrors.endereco && <p className={styles.input_error_message}>{changeProfileErrors.endereco.message}</p>}
-                        <input type="text" placeholder="CEP" {...changeProfileRegister("CEP")} value={CEP? CEP : ""}/>
+                        <input type="text" placeholder="CEP" {...changeProfileRegister("CEP")} value={CEP? CEP : ""} onChange={(e) => setCEP(e.target.value)}/>
                         {changeProfileErrors.CEP && <p className={styles.input_error_message}>{changeProfileErrors.CEP.message}</p>}
                         {!userInfoLoading && <button type="submit">Alterar</button>}
                         {userInfoLoading && <CircularProgress size={25}/>}

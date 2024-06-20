@@ -46,8 +46,7 @@ export function LoginAndRegister() {
     setLoginError(false);
     setLoginLoading(true);
     Authenticate({email,senha})
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       navigate("/")
     })
     .catch((err) => {
