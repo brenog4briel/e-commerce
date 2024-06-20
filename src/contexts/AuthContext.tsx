@@ -29,8 +29,8 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({children}) =
 
   useEffect(() => {
 
-    const storedUser = sessionStorage.getItem("@App:usuario");
-    const storedToken = sessionStorage.getItem("@App:token");
+    const storedUser = sessionStorage.getItem("usuario");
+    const storedToken = sessionStorage.getItem("token");
 
     if (storedUser && storedToken) {
       setUsuario(JSON.parse(storedUser));
@@ -41,10 +41,9 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({children}) =
   async function Authenticate({email,senha}: LoginSchema) {
     const result = await AxiosInstance.post('/usuarios/login', {email,senha})
     setUsuario(result.data.usuario)
-    AxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${result.data.token}`;
 
-    sessionStorage.setItem("@App:usuario",JSON.stringify(result.data.usuario))
-    sessionStorage.setItem("@App:token",result.data.token)
+    sessionStorage.setItem("usuario",JSON.stringify(result.data.usuario))
+    sessionStorage.setItem("token",result.data.token)
   }
 
   function Logout() {

@@ -45,7 +45,7 @@ export function Perfil() {
   }
   
     async function changeUserInfo({nome,endereco,CEP}:ChangeProfileSchema) {
-        const storedUser = sessionStorage.getItem("@App:usuario");
+        const storedUser = sessionStorage.getItem("usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
         setUserInfoError(false)
         setUserInfoLoading(true)
@@ -53,6 +53,7 @@ export function Perfil() {
         .then(() => {
             console.log("Informações do usuário alteradas com sucesso!")
             setUserInfoRequestError(prev => ({...prev, mensagem:"Informações do usuário alteradas com sucesso!",sucesso:true}))
+            counterTimePopup()
             navigate("/")
         })
         .catch((err) => {
@@ -67,7 +68,7 @@ export function Perfil() {
         setUploadImageError(false)
         setUploadImageLoading(true)
         
-        const storedUser = sessionStorage.getItem("@App:usuario");
+        const storedUser = sessionStorage.getItem("usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
         const data = new FormData();
 

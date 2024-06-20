@@ -22,7 +22,7 @@ export default function Header() {
 
   useEffect(() => {
 
-    const storedUser = sessionStorage.getItem("@App:usuario");
+    const storedUser = sessionStorage.getItem("usuario");
 
     if (storedUser) {
       setIsAuth(true)
