@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ChangeProfileSchema, changeProfileSchema } from "../../validations/changeProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AxiosInstance from "../../axiosInstance";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Popup } from "../../components/popup";
@@ -13,6 +13,12 @@ import axios from "axios";
 interface IRequestError {
   mensagem:string;
   sucesso:boolean;
+}
+interface IUsuario {
+    nome:string;
+    endereco:string;
+    CEP:string;
+    imagem:string
 }
 
 export function Perfil() {
@@ -23,7 +29,10 @@ export function Perfil() {
     const [file,setFile] = useState<Blob>();
     const [uploadImageError,setUploadImageError] = useState<boolean>(false);
     const [userInfoError,setUserInfoError] = useState<boolean>(false);
-
+    const [user,setUser] = useState<IUsuario>();
+    const [nome,setNome] = useState<string>("")
+    const [endereco,setEndereco] = useState<string>("")
+    const [CEP,setCEP] = useState<string>("")
     
   const [uploadRequestError,setUploadRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
   const [userInfoRequestError,setUserInfoRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
@@ -40,7 +49,7 @@ export function Perfil() {
             setUserInfoError(false)
         },3000)
   }
-
+  
     async function changeUserInfo({nome,endereco,CEP}:ChangeProfileSchema) {
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
@@ -67,6 +76,7 @@ export function Perfil() {
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
         const data = new FormData();
+
         if (file) {
             const reader = new FileReader()
             reader.readAsDataURL(file!);
@@ -75,7 +85,6 @@ export function Perfil() {
                 const base64String = base64!.toString()
                     .replace('data:', '')
                     .replace(/^.+,/, '');
-            console.log(base64String)
             data.append( "image", base64String );
             axios({
                 method:"post",
@@ -83,21 +92,23 @@ export function Perfil() {
                 withCredentials:false,
                 data:data
             })
-            .then((res) => console.log(res))
+            .then((res) => {
+                const imgUrl = res.data.data.url;
+                AxiosInstance.post(`/upload/imagem-usuario/${usuario_id}`,{imgUrl},{headers:{"Content-Type":"multipart/form-data"}})
+                .then(() => {
+                    console.log("Upload de imagem realizado com sucesso")
+                    setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
+                    navigate("/")
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
+                    setUploadImageError(true)
+                    counterTimePopup()
+                })
+            })
             .catch((err) => console.log(err))
             };
-            AxiosInstance.post(`/upload/imagem-usuario/${usuario_id}`,{data},{headers:{"Content-Type":"multipart/form-data"}})
-            .then(() => {
-                console.log("Upload de imagem realizado com sucesso")
-                setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
-                navigate("/")
-            })
-            .catch((err) => {
-                console.log(err);
-                setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
-                setUploadImageError(true)
-                counterTimePopup()
-            })
         }
  
     }
@@ -108,6 +119,15 @@ export function Perfil() {
         const selectedFile = files as FileList;
         setFile(selectedFile?.[0]);
     }
+
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem("@App:usuario");
+        if (storedUser) {
+            const email = JSON.parse(storedUser).email;
+            AxiosInstance.get(`/usuarios/email=${email}`)
+            .then((res) => console.log(res))
+        }
+    },[])
 
     return (
         <div className={styles.container}>

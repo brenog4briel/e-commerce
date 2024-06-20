@@ -21,18 +21,6 @@ export function CadastroProduto() {
         setFile(selectedFile?.[0]);
     }
 
-    // async function handleSubmitImage() {
-    //     const storedUser = sessionStorage.getItem("@App:usuario");
-    //     const usuario_id = JSON.parse(storedUser!).usuario_id;
-    //     AxiosInstance.post(`/upload/${usuario_id}`,{file},{headers:{"Content-Type":"multipart/form-data"}})
-    //     .then(() => {
-    //         console.log("Upload de imagem realizado com sucesso")
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //     })
-    // }
-
     async function handleNovoProduto ({nome,preco,proprietario,categoria,qtd_estoque}:NovoProdutoSchema) {
         const storedUser = sessionStorage.getItem("@App:usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
