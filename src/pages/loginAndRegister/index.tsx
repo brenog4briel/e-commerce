@@ -109,7 +109,7 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
               {(tabValue === 0 && loginLoading) && <CircularProgress size={25} />}
           </form>
           <div className={styles.func_buttons}>
-            <Link className={styles.btn_forgot} to="#">Esqueceu sua senha?</Link>
+            <Link className={styles.btn_forgot} to="/recuperacao">Esqueceu sua senha?</Link>
             <Link className={styles.btn_register} to="/register">Registre-se</Link>
           </div>
         </>

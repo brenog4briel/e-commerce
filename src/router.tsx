@@ -8,6 +8,7 @@ import { Categorias } from "./pages/categorias";
 import { LoginAndRegister } from "./pages/loginAndRegister";
 import { Perfil } from "./pages/perfil";
 import { CadastroProduto } from "./pages/cadastroProduto";
+import { RecuperacaoSenha } from "./pages/recuperacaoSenha";
 
 const router = createBrowserRouter([
     {
@@ -47,7 +48,12 @@ const router = createBrowserRouter([
     {
         element:<LoginAndRegister/>,
         path:"/login"
+    },
+    {
+        element:<RecuperacaoSenha/>,
+        path:"/recuperacao"
     }
+
 ])
 
 export {router}
