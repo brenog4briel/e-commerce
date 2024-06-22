@@ -4,7 +4,7 @@ import AxiosInstance from "../../axiosInstance";
 import { CircularProgress } from "@mui/material";
 import { Popup } from "../../components/popup";
 
-const REGEX_EMAIL = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+const REGEX_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
 
 export function RecuperacaoSenha() {
     const [email,setEmail] = useState<string>("")
@@ -20,20 +20,23 @@ export function RecuperacaoSenha() {
 
     function handleSubmit(e:SyntheticEvent) {
         e.preventDefault()
+        setEmailError(false)
         const emailValido = ValidacaoEmail();
         if (emailValido) {
             setLoading(true)
             setEmailError(false)
-            AxiosInstance.post(`/recuperacao/${email}`)
+            AxiosInstance.post(`/usuarios/recuperacao/${email}`)
             .then((res) => {
                 console.log(res)
                 setPopUp(true)
                 counterTimePopup()
                 setLoading(false)
+                setEmail("")
             })
             .catch((err) => {
                 console.log(err)
                 setLoading(false)
+                setEmail("")
             })
         }
         else {setEmailError(true)}
