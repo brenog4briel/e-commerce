@@ -21,8 +21,8 @@ export function Perfil() {
     const [userInfoLoading,setUserInfoLoading] = useState<boolean>(false);
     const [uploadImageLoading,setUploadImageLoading] = useState<boolean>(false);
     const [file,setFile] = useState<Blob>();
-    const [uploadImageError,setUploadImageError] = useState<boolean>(false);
-    const [userInfoError,setUserInfoError] = useState<boolean>(false);
+    const [uploadImageError,setUploadImageError] = useState<boolean | undefined>(undefined);
+    const [userInfoError,setUserInfoError] = useState<boolean | undefined>(undefined);
     const [nome,setNome] = useState<string>("")
     const [endereco,setEndereco] = useState<string>("")
     const [CEP,setCEP] = useState<string>("")
@@ -37,22 +37,23 @@ export function Perfil() {
 
       function counterTimePopup() {
         setTimeout(() => {
-            setUploadImageError(false);
-            setUserInfoLoading(false)
-            setUploadImageLoading(false)
-            setUserInfoError(false)
+            setUploadImageError(undefined);
+            setUserInfoError(undefined)
         },3000)
   }
   
     async function changeUserInfo({nome,endereco,CEP}:ChangeProfileSchema) {
         const storedUser = sessionStorage.getItem("usuario");
         const usuario_id = JSON.parse(storedUser!).usuario_id;
+
         setUserInfoError(false)
         setUserInfoLoading(true)
+
         AxiosInstance.put(`/usuarios/${usuario_id}`,{nome,endereco,CEP})
         .then(() => {
             console.log("Informações do usuário alteradas com sucesso!")
             setUserInfoRequestError(prev => ({...prev, mensagem:"Informações do usuário alteradas com sucesso!",sucesso:true}))
+            setUserInfoLoading(false)
             counterTimePopup()
             navigate("/")
         })
@@ -60,7 +61,11 @@ export function Perfil() {
             console.log(err);
             setUserInfoError(true)
             setUserInfoRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
+            setUserInfoLoading(false)
             counterTimePopup()
+            setNome("")
+            setCEP("")
+            setEndereco("")
         })
     }
 
@@ -93,12 +98,15 @@ export function Perfil() {
                 .then(() => {
                     console.log("Upload de imagem realizado com sucesso")
                     setUploadRequestError(prev => ({...prev, mensagem:"Upload de imagem realizado com sucesso",sucesso:true}))
+                    setUploadImageLoading(false)
+                    counterTimePopup()
                     navigate("/")
                 })
                 .catch((err) => {
                     console.log(err);
                     setUploadRequestError(prev => ({...prev, mensagem:err.response.data.message,sucesso:false}))
                     setUploadImageError(true)
+                    setUploadImageLoading(false)
                     counterTimePopup()
                 })
             })
@@ -153,8 +161,8 @@ export function Perfil() {
                     </form>
                 </div>
             </div>
-                {uploadImageError && <Popup mensagem={uploadRequestError.mensagem} sucesso={uploadRequestError.sucesso}/>}
-                {userInfoError && <Popup mensagem={userInfoRequestError.mensagem} sucesso={userInfoRequestError.sucesso}/>}    
+                {((uploadImageError === true) || (uploadImageError === false)) && <Popup mensagem={uploadRequestError.mensagem} sucesso={uploadRequestError.sucesso}/>}
+                {((userInfoError === true) || (userInfoError === false)) && <Popup mensagem={userInfoRequestError.mensagem} sucesso={userInfoRequestError.sucesso}/>}    
         </div>
     );
 }
