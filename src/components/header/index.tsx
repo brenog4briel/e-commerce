@@ -30,6 +30,11 @@ export default function Header() {
   },[])
 
   const {Logout} = useAuth();
+
+  const handleLogout = () => {
+    Logout();
+    navigate("/login")
+  }
    
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -88,7 +93,7 @@ export default function Header() {
               <ListItemIcon>
                 <Login /> 
               </ListItemIcon>
-              {isAuth ? <ListItemText primary="Sair" onClick={Logout}/> : <ListItemText primary="Entrar" onClick={() => navigate("/login")}/>}
+              {isAuth ? <ListItemText primary="Sair" onClick={handleLogout}/> : <ListItemText primary="Entrar" onClick={() => navigate("/login")}/>}
             </ListItemButton>
           </ListItem>
       </List>

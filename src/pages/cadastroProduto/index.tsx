@@ -21,10 +21,11 @@ export function CadastroProduto() {
 
     const navigate = useNavigate();
     const [file,setFile] = useState<File>()
+    const [categoria,setCategoria] = useState<string>("tecnologia");
 
     const [productRequestError,setProductInfoRequestError] = useState<IRequestError>({mensagem:"",sucesso:false})
     const [productInfoLoading,setProductInfoLoading] = useState<boolean>(false);
-    const [productInfoError,setProductInfoError] = useState<boolean>(false);
+    const [productInfoError,setProductInfoError] = useState<boolean | undefined>(undefined);
 
     const [valor,setValor] = useState<string>("");
     const [valorError,setValorError] = useState<boolean>(false)
@@ -38,8 +39,7 @@ export function CadastroProduto() {
 
     function counterTimePopup() {
         setTimeout(() => {
-            setProductInfoLoading(false)
-            setProductInfoError(false)
+            setProductInfoError(undefined)
         },3000)
   }
     
@@ -50,11 +50,11 @@ export function CadastroProduto() {
         setFile(selectedFile?.[0]);
     }
 
-    async function handleNovoProduto ({nome,proprietario,categoria}:NovoProdutoSchema) {
+    async function handleNovoProduto ({nome,proprietario}:NovoProdutoSchema) {
         const numerosValidos = validateInputs()
-
+        
         if (numerosValidos && file) {
-
+            setProductInfoLoading(true)
             const storedUser = sessionStorage.getItem("usuario");
             const token = sessionStorage.getItem("token");
             const usuario_id = JSON.parse(storedUser!).usuario_id;
@@ -86,6 +86,7 @@ export function CadastroProduto() {
                 .then(() => {
                     console.log("Produto cadastrado com sucesso!")
                     setProductInfoRequestError(prev => ({...prev,mensagem:"Produto cadastrado com sucesso!",sucesso:true}))
+                    setProductInfoError(false)
                     counterTimePopup()
                     navigate("/")
 
@@ -93,6 +94,7 @@ export function CadastroProduto() {
                 .catch((err) => {
                     console.log(err)
                     setProductInfoRequestError(prev => ({...prev,mensagem:"Houve um erro ao cadastrar o produto!",sucesso:false}))
+                    setProductInfoError(true)
                     counterTimePopup()
                 })
             })
@@ -129,17 +131,23 @@ export function CadastroProduto() {
                     {valorError && <p className={styles.input_error_message}>Valor inválido! Ex: 23.50</p>}
                     <input type="text" placeholder="Proprietário" {...registerNovoProduto("proprietario")}/>
                     {novoProdutoErrors.proprietario && <p className={styles.input_error_message}>{novoProdutoErrors.proprietario.message}</p>}
-                    <input type="text" placeholder="Categoria" {...registerNovoProduto("categoria")}/>
-                    {novoProdutoErrors.categoria && <p className={styles.input_error_message}>{novoProdutoErrors.categoria.message}</p>}
+                    <select name="Categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="livros">Livros</option>
+                        <option value="vestimentas">Vestimentas</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="cama_mesa_banho">Cama, mesa e banho</option>
+                        <option value="eletrodomesticos">Eletrodomésticos</option>
+                    </select>
                     <input type="text" placeholder="Estoque" value={estoque} onChange={(e) => setEstoque(e.target.value)}/>
                     {estoqueError && <p className={styles.input_error_message}>Valor inválido! Ex: 20</p>}
                     {!productInfoLoading && <button type="submit">Cadastrar</button>}
-                    {productInfoLoading && <CircularProgress size={25}/>}
+                    {productInfoLoading && <CircularProgress size={25} sx={{alignSelf:"center"}}/>}
 
                 </form>
             </div>
         </div>
-                {productInfoError && <Popup mensagem={productRequestError.mensagem} sucesso={productRequestError.sucesso}/>}   
+                {((productInfoError === true) || (productInfoError === false)) && <Popup mensagem={productRequestError.mensagem} sucesso={productRequestError.sucesso}/>}   
     </div>
   )
 }

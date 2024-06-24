@@ -37,11 +37,12 @@
     flex-direction:column;
     width: 70%;
 }
-.info_form input,.info_form button {
+.info_form input,.info_form button, .info_form select {
     width: 100%;
     margin: 10px 0;
     padding: 10px 0;
     border-radius: 4px;
+    color: gray;
 }
 .info_form input {
     padding-left: 5px;

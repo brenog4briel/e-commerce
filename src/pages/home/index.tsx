@@ -43,9 +43,13 @@ export function Home() {
       {/* <Secao_Espacada data={TecnologiaImages} number_items={5}/>   */}
       <Secao_Continua title="Livros" data={LivrosImage}/>  
       {/* <Secao_Espacada data={LivrosImage} number_items={5}/>   */}
-      <Secao_Continua title="Mobília" data={MobiliaImages}/>  
+      <Secao_Continua title="Cama, mesa e banho" data={MobiliaImages}/>  
       {/* <Secao_Espacada data={MobiliaImages} number_items={5}/>   */}
-      <Secao_Continua title="Games" data={GamesImages}/>  
+      <Secao_Continua title="Eletrodomésticos" data={GamesImages}/>  
+      <Secao_Continua title="Alimentação" data={GamesImages}/>  
+
+      <Secao_Continua title="Vestimentas" data={GamesImages}/>  
+
       {/* <Secao_Espacada data={GamesImages} number_items={5}/>   */}
 
       

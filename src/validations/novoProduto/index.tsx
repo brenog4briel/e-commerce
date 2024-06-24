@@ -11,11 +11,6 @@ export const novoProdutoSchema = z.object({
         .trim()
         .min(10,{message:"Proprietário inválido"})
         .max(50,{message:"O Proprietário não pode possuir mais de 50 caracteres"}),
-    categoria: z
-        .string({required_error:"A categoria é obrigatória"})
-        .trim()
-        .min(3,{message:"Categoria inválida"})
-        .max(50,{message:"A categoria não pode possuir mais de 50 caracteres"}),
 })
 
 export type NovoProdutoSchema = z.infer<typeof novoProdutoSchema>;
