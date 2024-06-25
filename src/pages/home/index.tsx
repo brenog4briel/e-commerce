@@ -35,12 +35,8 @@ export function Home() {
 
   
   async function getImagesByCategoria(categoria : string) {
-    const storedToken = sessionStorage.getItem("token");
-    if (storedToken) {
       if ((categoria.length > 0) && (categoria.trim() !== "")) {
-      AxiosInstance.get(`/produtos/categorias/${categoria}`,{
-        headers:{"token":storedToken}
-      })
+      AxiosInstance.get(`/produtos/categorias/${categoria}`)
       .then((res) => {
         switch(categoria) {
           case "tecnologia":
@@ -64,7 +60,6 @@ export function Home() {
         }
       })
       .catch((err) => console.log(err))
-    } 
     } 
   }
 
