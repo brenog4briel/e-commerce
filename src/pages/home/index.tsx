@@ -1,9 +1,9 @@
 import styles from "./home.module.css"
 import { Secao } from "../../components/secao";
-// import { Secao_Espacada } from "../../components/secao/secao_espacada";
 import { SwiperItems } from "../../components/swiper";
 import AxiosInstance from "../../axiosInstance";
 import { useEffect, useState } from "react";
+import { BoxWrapper } from "../../components/boxWrapper";
 
 export interface IData {
   nome:string;
@@ -85,18 +85,20 @@ export function Home() {
       
       <SwiperItems altura="400px" slides={1} data={tecnologia} largura="95%" autoplay={true}/>
       
-      <Secao title="Tecnologia" data={tecnologia}/> 
-      <Secao title="Livros" data={livros}/>  
-      <Secao title="Cama, mesa e banho" data={camaMesaBanho}/>  
-      <Secao title="Eletrodomésticos" data={eletrodomesticos}/>  
-      <Secao title="Alimentação" data={alimentacao}/>  
-      <Secao title="Vestimentas" data={vestimentas}/>  
-
-
+      <Secao titulo="Tecnologia" data={tecnologia}/> 
+      <BoxWrapper data={tecnologia}/>
+      <Secao titulo="Livros" data={livros}/>  
+      <BoxWrapper data={livros}/>
+      <Secao titulo="Cama, mesa e banho" data={camaMesaBanho}/>  
+      <BoxWrapper data={camaMesaBanho}/>
+      <Secao titulo="Eletrodomésticos" data={eletrodomesticos}/>  
+      <BoxWrapper data={eletrodomesticos}/>
+      <Secao titulo="Alimentação" data={alimentacao}/>  
+      <BoxWrapper data={vestimentas}/>
+      <Secao titulo="Vestimentas" data={vestimentas}/>  
       
       <div className={styles.texts}>
         <h1>Mais vendidos da semana</h1>
-        {/* <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h4> */}
       </div>
 
       <div className={styles.list_products}>

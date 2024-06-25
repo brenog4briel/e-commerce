@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: gainsboro;
+    margin: 10px 0;
+    padding: 20px 0;
+    gap: 10px;
+}
+.container img{
+    height: 100%;
+    width: 90%;
+    object-fit: fill;
+}
+
+.container a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.container a:hover {
+    color: #ffffdd;
+}
