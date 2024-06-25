@@ -1,5 +1,5 @@
 import styles from "./home.module.css"
-import { Secao_Continua } from "../../components/secao/secao_continua";
+import { Secao } from "../../components/secao";
 // import { Secao_Espacada } from "../../components/secao/secao_espacada";
 import { SwiperItems } from "../../components/swiper";
 import AxiosInstance from "../../axiosInstance";
@@ -59,7 +59,9 @@ export function Home() {
             break
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+      })
     } 
   }
 
@@ -79,23 +81,17 @@ export function Home() {
     "https://static.bancointer.com.br/blog/images/4e2d0ffd95c447af877ce2dffbe80d5b_renault-kwid-zen-10_.png",
   ]
     return (
-    
     <div className={styles.container}>
       
       <SwiperItems altura="400px" slides={1} data={tecnologia} largura="95%" autoplay={true}/>
       
-      <Secao_Continua title="Tecnologia" data={tecnologia}/> 
-      {/* <Secao_Espacada data={TecnologiaImages} number_items={5}/>   */}
-      <Secao_Continua title="Livros" data={livros}/>  
-      {/* <Secao_Espacada data={LivrosImage} number_items={5}/>   */}
-      <Secao_Continua title="Cama, mesa e banho" data={camaMesaBanho}/>  
-      {/* <Secao_Espacada data={MobiliaImages} number_items={5}/>   */}
-      <Secao_Continua title="Eletrodomésticos" data={eletrodomesticos}/>  
-      <Secao_Continua title="Alimentação" data={alimentacao}/>  
+      <Secao title="Tecnologia" data={tecnologia}/> 
+      <Secao title="Livros" data={livros}/>  
+      <Secao title="Cama, mesa e banho" data={camaMesaBanho}/>  
+      <Secao title="Eletrodomésticos" data={eletrodomesticos}/>  
+      <Secao title="Alimentação" data={alimentacao}/>  
+      <Secao title="Vestimentas" data={vestimentas}/>  
 
-      <Secao_Continua title="Vestimentas" data={vestimentas}/>  
-
-      {/* <Secao_Espacada data={GamesImages} number_items={5}/>   */}
 
       
       <div className={styles.texts}>
