@@ -6,8 +6,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
+import { IData } from "../../pages/home";
 
-export const SwiperItems:React.FC<{data:Array<string>,altura:string,slides:number,largura:string,autoplay:boolean}> = ({data,altura,slides,largura,autoplay}) => {
+export const SwiperItems:React.FC<{data:Array<IData>,altura:string,slides:number,largura:string,autoplay:boolean}> = ({data,altura,slides,largura,autoplay}) => {
     return( 
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
@@ -19,10 +20,11 @@ export const SwiperItems:React.FC<{data:Array<string>,altura:string,slides:numbe
                 autoplay={autoplay ? {delay:2000} : autoplay}
                 className={styles.slider_wrapper}>
                 
-                {data.map((element,index) => (
-                    <SwiperSlide key={index}>
+                {data.map((element) => (
+                    <SwiperSlide key={element.produto_id}>
                         <div className={styles.slider_items}>
-                            <img src={element} alt=""/>
+                            <img src={element.imagem} alt=""/>
+                            <p>{element.nome}</p>
                         </div>
                     </SwiperSlide>))
                 }

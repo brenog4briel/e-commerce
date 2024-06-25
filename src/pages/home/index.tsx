@@ -2,14 +2,73 @@ import styles from "./home.module.css"
 import { Secao_Continua } from "../../components/secao/secao_continua";
 // import { Secao_Espacada } from "../../components/secao/secao_espacada";
 import { SwiperItems } from "../../components/swiper";
-import { GamesImages } from "../../assets/games";
-import { LivrosImage } from "../../assets/livros"
-import { MobiliaImages } from "../../assets/mobilia"
-import { TecnologiaImages } from '../../assets/tecnologia'
+import AxiosInstance from "../../axiosInstance";
+import { useEffect, useState } from "react";
 
+export interface IData {
+  nome:string;
+  imagem:string;
+  categoria:string;
+  produto_id:string;
+  usuario_id:string;
+}
 
 export function Home() {
   
+  const [tecnologia,setTecnologia] = useState<Array<IData>>([])
+  const [livros,setLivros] = useState<Array<IData>>([])
+  const [camaMesaBanho,setCamaMesaBanho] = useState<Array<IData>>([])
+  const [eletrodomesticos,setEletrodomesticos] = useState<Array<IData>>([])
+  const [alimentacao,setAlimentacao] = useState<Array<IData>>([])
+  const [vestimentas,setVestimentas] = useState<Array<IData>>([])
+
+  useEffect(() => {
+    Promise.all([
+      getImagesByCategoria("tecnologia"),
+      getImagesByCategoria("livros"),
+      getImagesByCategoria("cama_mesa_banho"),
+      getImagesByCategoria("eletrodomesticos"),
+      getImagesByCategoria("alimentacao"),
+      getImagesByCategoria("vestimentas"),
+    ])
+  },[])
+
+  
+  async function getImagesByCategoria(categoria : string) {
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      if ((categoria.length > 0) && (categoria.trim() !== "")) {
+      AxiosInstance.get(`/produtos/categorias/${categoria}`,{
+        headers:{"token":storedToken}
+      })
+      .then((res) => {
+        switch(categoria) {
+          case "tecnologia":
+            setTecnologia(res.data)
+            break
+          case "livros":
+            setLivros(res.data)
+            break
+          case "cama_mesa_banho":
+            setCamaMesaBanho(res.data)
+            break
+          case "eletrodomesticos":
+            setEletrodomesticos(res.data)
+            break
+          case "alimentacao":
+            setAlimentacao(res.data)
+            break
+          default:
+            setVestimentas(res.data)
+            break
+        }
+      })
+      .catch((err) => console.log(err))
+    } 
+    } 
+  }
+
+
   const carros = [
     "https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/09-images/onix-hatch-showroom-1920x960.jpg?imwidth=960",
     "https://storage.googleapis.com/movida-public-images/modelos/3210_image.jpg",
@@ -24,31 +83,22 @@ export function Home() {
     "https://midias.vrum.com.br/_midias/jpg/2023/12/29/740x420/1_renault_kardian-33797374.jpg",
     "https://static.bancointer.com.br/blog/images/4e2d0ffd95c447af877ce2dffbe80d5b_renault-kwid-zen-10_.png",
   ]
-
-  const carrosDestaques = [
-    "https://nxboats.com.br/wp-content/uploads/2023/11/bugatti.jpg",
-    "https://nxboats.com.br/wp-content/uploads/2023/11/Lamborghini.jpg",
-    "https://img.odcdn.com.br/wp-content/uploads/2021/06/Lamborghini-Aventador-SVJ-1-990x557-1.jpg",
-    "https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/03/639410.jpg?w=293",
-    "https://drivon.com.br/wp-content/uploads/2023/08/Mundo-dos-Carros-de-Luxo.png",
-    "https://fotos-jornaldocarro-estadao.nyc3.cdn.digitaloceanspaces.com/wp-content/uploads/2021/10/07143040/mercedes-amg_gt_43_4matic_4-door_coupe_35-1160x653.jpeg"]
-  
     return (
     
     <div className={styles.container}>
       
-      <SwiperItems altura="400px" slides={1} data={carrosDestaques} largura="95%" autoplay={true}/>
+      <SwiperItems altura="400px" slides={1} data={tecnologia} largura="95%" autoplay={true}/>
       
-      <Secao_Continua title="Tecnologia" data={TecnologiaImages}/> 
+      <Secao_Continua title="Tecnologia" data={tecnologia}/> 
       {/* <Secao_Espacada data={TecnologiaImages} number_items={5}/>   */}
-      <Secao_Continua title="Livros" data={LivrosImage}/>  
+      <Secao_Continua title="Livros" data={livros}/>  
       {/* <Secao_Espacada data={LivrosImage} number_items={5}/>   */}
-      <Secao_Continua title="Cama, mesa e banho" data={MobiliaImages}/>  
+      <Secao_Continua title="Cama, mesa e banho" data={camaMesaBanho}/>  
       {/* <Secao_Espacada data={MobiliaImages} number_items={5}/>   */}
-      <Secao_Continua title="Eletrodomésticos" data={GamesImages}/>  
-      <Secao_Continua title="Alimentação" data={GamesImages}/>  
+      <Secao_Continua title="Eletrodomésticos" data={eletrodomesticos}/>  
+      <Secao_Continua title="Alimentação" data={alimentacao}/>  
 
-      <Secao_Continua title="Vestimentas" data={GamesImages}/>  
+      <Secao_Continua title="Vestimentas" data={vestimentas}/>  
 
       {/* <Secao_Espacada data={GamesImages} number_items={5}/>   */}
 
