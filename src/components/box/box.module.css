@@ -12,6 +12,12 @@
     height: 100%;
     width: 90%;
     object-fit: fill;
+    transition: 0.1s transform ease-in;
+}
+
+.container img:hover{
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 .container a {

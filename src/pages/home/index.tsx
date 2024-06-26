@@ -83,7 +83,7 @@ export function Home() {
     return (
     <div className={styles.container}>
       
-      <SwiperItems altura="400px" slides={1} data={tecnologia} largura="95%" autoplay={true}/>
+      <SwiperItems altura="400px" slides={1} data={tecnologia} largura="100%" autoplay={true}/>
       
       <Secao titulo="Tecnologia" data={tecnologia}/> 
       <BoxWrapper data={tecnologia}/>

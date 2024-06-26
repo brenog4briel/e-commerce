@@ -19,6 +19,7 @@ export const SwiperItems:React.FC<{data:Array<IData>,altura:string,slides:number
                 scrollbar={{ draggable: true }}
                 autoplay={autoplay ? {delay:2000} : autoplay}
                 className={styles.slider_wrapper}>
+
                 
                 {data.map((element) => (
                     <SwiperSlide key={element.produto_id}>
