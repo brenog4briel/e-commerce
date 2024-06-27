@@ -9,6 +9,7 @@ import { LoginAndRegister } from "./pages/loginAndRegister";
 import { Perfil } from "./pages/perfil";
 import { CadastroProduto } from "./pages/cadastroProduto";
 import { RecuperacaoSenha } from "./pages/recuperacaoSenha";
+import { DetalhesProduto } from "./pages/detalhesProduto";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path:"/novo-produto",
                 element: <CadastroProduto/>
+            },
+            {
+                path:"/produto/:produto_id",
+                element:<DetalhesProduto/>
             },
             {
                 path:"*",

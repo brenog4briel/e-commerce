@@ -7,8 +7,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 import { IData } from "../../pages/home";
+import { useNavigate } from "react-router-dom";
 
 export const SwiperItems:React.FC<{data:Array<IData>,altura:string,slides:number,largura:string,autoplay:boolean}> = ({data,altura,slides,largura,autoplay}) => {
+    const navigate = useNavigate();
     return( 
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
@@ -23,7 +25,7 @@ export const SwiperItems:React.FC<{data:Array<IData>,altura:string,slides:number
                 
                 {data.map((element) => (
                     <SwiperSlide key={element.produto_id}>
-                        <div className={styles.slider_items}>
+                        <div className={styles.slider_items} onClick={() => navigate(`/produto/${element.produto_id}`)}>
                             <img src={element.imagem} alt=""/>
                             <p>{element.nome}</p>
                         </div>
