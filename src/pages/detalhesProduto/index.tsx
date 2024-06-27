@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styles from "./detalhesProduto.module.css"
 import { useEffect, useState } from "react";
 import AxiosInstance from "../../axiosInstance";
 import { useAuth } from "../../contexts/AuthContext";
 
-interface IProduto {
+export interface IProduto {
     nome: string;
     categoria: string;
     imagem: string;
@@ -17,6 +17,8 @@ export function DetalhesProduto() {
     const {autenticado} = useAuth();
     const {produto_id} = useParams();
     const [produto,setProduto] = useState<IProduto>();
+    const navigate = useNavigate()
+
     async function getProductData() {
         AxiosInstance.get(`/produtos/produto/${produto_id}`)
         .then((res) => {
@@ -38,7 +40,7 @@ export function DetalhesProduto() {
             <img src={produto?.imagem} alt="" />
             <div className={styles.product_info}>
                 <p>Nome: {produto?.nome}</p>
-                <p>Categoria: <span>{produto?.categoria}</span></p>
+                <p>Categoria: <span onClick={() => navigate(`/categorias/${produto?.categoria}`)}>{produto?.categoria}</span></p>
                 <p>Preço: R$ {produto?.preco}</p>
                 <p>Proprietário: <span>{produto?.proprietario}</span></p>
                 <p>Estoque: {produto?.qtd_estoque} unidades</p>
