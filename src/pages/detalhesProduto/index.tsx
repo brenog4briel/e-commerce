@@ -42,7 +42,10 @@ export function DetalhesProduto() {
                 <p>Preço: {produto?.preco}</p>
                 <p>Proprietário: {produto?.proprietario}</p>
                 <p>Estoque: {produto?.qtd_estoque}</p>
+                <div className={styles.buttons}>
                 <a href={autenticado ? "#" : "#"}>Adicionar a lista de desejos</a>
+                <a href={autenticado ? "#" : "#"}>Comprar</a>
+                </div>
             </div>
         </div>
     </div>
