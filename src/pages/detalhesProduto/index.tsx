@@ -40,6 +40,7 @@ export function DetalhesProduto() {
                 <p>Preço: {produto?.preco}</p>
                 <p>Proprietário: {produto?.proprietario}</p>
                 <p>Estoque: {produto?.qtd_estoque}</p>
+                <a href="">Adicionar a lista de desejos</a>
             </div>
         </div>
     </div>
