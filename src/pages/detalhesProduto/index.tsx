@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import styles from "./detalhesProduto.module.css"
 import { useEffect, useState } from "react";
 import AxiosInstance from "../../axiosInstance";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface IProduto {
     nome: string;
@@ -13,6 +14,7 @@ interface IProduto {
 }
 
 export function DetalhesProduto() {
+    const {autenticado} = useAuth();
     const {produto_id} = useParams();
     const [produto,setProduto] = useState<IProduto>();
     async function getProductData() {
@@ -40,7 +42,7 @@ export function DetalhesProduto() {
                 <p>Preço: {produto?.preco}</p>
                 <p>Proprietário: {produto?.proprietario}</p>
                 <p>Estoque: {produto?.qtd_estoque}</p>
-                <a href="">Adicionar a lista de desejos</a>
+                <a href={autenticado ? "#" : "#"}>Adicionar a lista de desejos</a>
             </div>
         </div>
     </div>

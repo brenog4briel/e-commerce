@@ -14,22 +14,12 @@ export default function Header() {
 
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [isAuth,setIsAuth] = useState<boolean>(false)
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
-  useEffect(() => {
-
-    const storedUser = sessionStorage.getItem("usuario");
-
-    if (storedUser) {
-      setIsAuth(true)
-    }
-  },[])
-
-  const {Logout} = useAuth();
+  const {Logout,autenticado} = useAuth();
 
   const handleLogout = () => {
     Logout();
@@ -40,7 +30,7 @@ export default function Header() {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
 
-        {isAuth && <ListItem disablePadding>
+        {autenticado && <ListItem disablePadding>
             <ListItemButton onClick={() => navigate("/perfil")}>
               <ListItemIcon>
                 <Person />
@@ -49,7 +39,7 @@ export default function Header() {
             </ListItemButton>
           </ListItem>}
 
-          {isAuth && <ListItem disablePadding>
+          {autenticado && <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                  <ShoppingBag />
@@ -58,7 +48,7 @@ export default function Header() {
             </ListItemButton>
           </ListItem>}
 
-          {isAuth && <ListItem disablePadding>
+          {autenticado && <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <ShoppingCart /> 
@@ -93,7 +83,7 @@ export default function Header() {
               <ListItemIcon>
                 <Login /> 
               </ListItemIcon>
-              {isAuth ? <ListItemText primary="Sair" onClick={handleLogout}/> : <ListItemText primary="Entrar" onClick={() => navigate("/login")}/>}
+              {autenticado ? <ListItemText primary="Sair" onClick={handleLogout}/> : <ListItemText primary="Entrar" onClick={() => navigate("/login")}/>}
             </ListItemButton>
           </ListItem>
       </List>
@@ -135,7 +125,7 @@ export default function Header() {
          </div>
          
         <div>
-          <a href={isAuth ? "/novo-produto" : "/login"} className={styles.btn}>Anuncie seu produto</a>
+          <a href={autenticado ? "/novo-produto" : "/login"} className={styles.btn}>Anuncie seu produto</a>
         </div> 
           <Link to="">
             <img src={logo} alt="" className={styles.logo}/>
