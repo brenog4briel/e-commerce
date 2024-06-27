@@ -10,6 +10,12 @@ import { Perfil } from "./pages/perfil";
 import { CadastroProduto } from "./pages/cadastroProduto";
 import { RecuperacaoSenha } from "./pages/recuperacaoSenha";
 import { DetalhesProduto } from "./pages/detalhesProduto";
+import { Eletrodomesticos } from "./pages/categorias/eletrodomesticos";
+import { Livros } from "./pages/categorias/livros";
+import { Cama_Mesa_Banho } from "./pages/categorias/cama_mesa_banho";
+import { Vestimentas } from "./pages/categorias/vestimentas";
+import { Alimentacao } from "./pages/categorias/alimentacao";
+import { Tecnologia } from "./pages/categorias/tecnologia";
 
 const router = createBrowserRouter([
     {
@@ -29,7 +35,35 @@ const router = createBrowserRouter([
             },
             {
                 path:"/categorias",
-                element:<Categorias/>
+                children:
+                    [{
+                        path:"",
+                        element:<Categorias/>
+                    },
+                    {
+                        path:"tecnologia",
+                        element:<Tecnologia/>
+                    },
+                    {
+                        path:"alimentacao",
+                        element:<Alimentacao/>
+                    },
+                    {
+                        path:"vestimentas",
+                        element:<Vestimentas/>
+                    },
+                    {
+                        path:"cama_mesa_banho",
+                        element:<Cama_Mesa_Banho/>
+                    },
+                    {
+                        path:"livros",
+                        element:<Livros/>
+                    },
+                    {
+                        path:"eletrodomesticos",
+                        element:<Eletrodomesticos/>
+                    }]
             },
             {
                 path:"/perfil",

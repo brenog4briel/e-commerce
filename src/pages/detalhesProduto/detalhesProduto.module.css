@@ -31,6 +31,10 @@
     height: 400px;
     gap: 30px;
 }
+.product_info span:hover {
+    cursor: pointer;
+    font-weight: 600;
+}
 .buttons {
     display: flex;
     flex-direction: column;
@@ -49,5 +53,5 @@
     width: 100%;
 }
 .buttons a:hover {
-    opacity: 0.8;
+    color: #eeeeee;
 }

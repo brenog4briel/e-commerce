@@ -38,10 +38,10 @@ export function DetalhesProduto() {
             <img src={produto?.imagem} alt="" />
             <div className={styles.product_info}>
                 <p>Nome: {produto?.nome}</p>
-                <p>Categoria: {produto?.categoria}</p>
-                <p>Preço: {produto?.preco}</p>
-                <p>Proprietário: {produto?.proprietario}</p>
-                <p>Estoque: {produto?.qtd_estoque}</p>
+                <p>Categoria: <span>{produto?.categoria}</span></p>
+                <p>Preço: R$ {produto?.preco}</p>
+                <p>Proprietário: <span>{produto?.proprietario}</span></p>
+                <p>Estoque: {produto?.qtd_estoque} unidades</p>
                 <div className={styles.buttons}>
                 <a href={autenticado ? "#" : "#"}>Adicionar a lista de desejos</a>
                 <a href={autenticado ? "#" : "#"}>Comprar</a>
