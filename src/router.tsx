@@ -16,6 +16,7 @@ import { Cama_Mesa_Banho } from "./pages/categorias/cama_mesa_banho";
 import { Vestimentas } from "./pages/categorias/vestimentas";
 import { Alimentacao } from "./pages/categorias/alimentacao";
 import { Tecnologia } from "./pages/categorias/tecnologia";
+import { ProdutosPorProprietario } from "./pages/produtosPorProprietario";
 
 const router = createBrowserRouter([
     {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
             {
                 path:"/produto/:produto_id",
                 element:<DetalhesProduto/>
+            },
+            {
+                path:"/produto/:proprietario",
+                element:<ProdutosPorProprietario/>
             },
             {
                 path:"*",

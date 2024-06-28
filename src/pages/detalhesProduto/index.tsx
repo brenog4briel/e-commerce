@@ -42,7 +42,7 @@ export function DetalhesProduto() {
                 <p>Nome: {produto?.nome}</p>
                 <p>Categoria: <span onClick={() => navigate(`/categorias/${produto?.categoria}`)}>{produto?.categoria}</span></p>
                 <p>Preço: R$ {produto?.preco}</p>
-                <p>Proprietário: <span>{produto?.proprietario}</span></p>
+                <p>Proprietário: <span onClick={() => navigate(`/categorias/${produto?.proprietario}`)}>{produto?.proprietario}</span></p>
                 <p>Estoque: {produto?.qtd_estoque} unidades</p>
                 <div className={styles.buttons}>
                 <a href={autenticado ? "#" : "#"}>Adicionar a lista de desejos</a>

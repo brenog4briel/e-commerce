@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react"
-import styles from "./alimentacao.module.css"
-import AxiosInstance from "../../../axiosInstance"
-import { IProduto } from "../../detalhesProduto"
+import styles from "./produtosPorProprietario.module.css"
+import AxiosInstance from "../../axiosInstance"
+import { IProduto } from "../detalhesProduto"
+import { useParams } from "react-router-dom"
 
-export function Alimentacao() {
+export function ProdutosPorProprietario() {
 
+  const {proprietario} = useParams()
   const [produtos,setProdutos] = useState<Array<IProduto>>()
 
   async function getData() {
-    AxiosInstance.get("/produtos/categorias/alimentacao")
+    AxiosInstance.get(`/produtos/${proprietario}`)
     .then((res) => {
       console.log(res)
       setProdutos(res.data);
@@ -24,7 +26,7 @@ export function Alimentacao() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Alimentação</h1>
+      <h1 className={styles.title}>{proprietario}</h1>
         <div className={styles.grid_container}>
           {produtos?.map((element) => (
             <div className={styles.grid_element}>
