@@ -10,7 +10,7 @@ export function ProdutosPorProprietario() {
   const [produtos,setProdutos] = useState<Array<IProduto>>()
 
   async function getData() {
-    AxiosInstance.get(`/produtos/${proprietario}`)
+    AxiosInstance.get(`/produtos/proprietario/${proprietario}`)
     .then((res) => {
       console.log(res)
       setProdutos(res.data);

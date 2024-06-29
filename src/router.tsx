@@ -79,7 +79,7 @@ const router = createBrowserRouter([
                 element:<DetalhesProduto/>
             },
             {
-                path:"/produto/:proprietario",
+                path:"/produto/proprietario/:proprietario",
                 element:<ProdutosPorProprietario/>
             },
             {
