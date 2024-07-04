@@ -17,6 +17,7 @@ import { Vestimentas } from "./pages/categorias/vestimentas";
 import { Alimentacao } from "./pages/categorias/alimentacao";
 import { Tecnologia } from "./pages/categorias/tecnologia";
 import { ProdutosPorProprietario } from "./pages/produtosPorProprietario";
+import { PedidoDeCompra } from "./pages/pedidoCompra";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             {
                 path:"/produto/proprietario/:proprietario",
                 element:<ProdutosPorProprietario/>
+            },
+            {
+                path:"/pedido_de_compra/:pedido_de_compra_id",
+                element:<PedidoDeCompra/>
             },
             {
                 path:"*",
