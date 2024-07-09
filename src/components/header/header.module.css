@@ -13,9 +13,7 @@
     border: 1px solid gainsboro;
     margin: 0 10px;
 }
-.logo:hover {
-    transform: scale(1.1);
-}
+
 .drawer {
     display: flex;
     align-items: center;

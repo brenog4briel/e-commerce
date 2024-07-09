@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const backUrl = "https://e-commerce-api-5sxy.onrender.com"; 
-const backUrl = "http://localhost:3500"
+const backUrl = "https://e-commerce-api-5sxy.onrender.com"; 
+// const backUrl = "http://localhost:3500"
 
 const AxiosInstance = axios.create({
   baseURL: backUrl,
