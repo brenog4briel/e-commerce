@@ -4,11 +4,14 @@ import { SwiperItems } from "../../components/swiper";
 import AxiosInstance from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../components/boxWrapper";
+import { IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 
 export interface IData {
   nome:string;
   imagem:string;
   categoria:string;
+  proprietario:string;
   produto_id:string;
   usuario_id:string;
 }
@@ -65,7 +68,6 @@ export function Home() {
     } 
   }
 
-
   const carros = [
     "https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/09-images/onix-hatch-showroom-1920x960.jpg?imwidth=960",
     "https://storage.googleapis.com/movida-public-images/modelos/3210_image.jpg",
@@ -97,23 +99,35 @@ export function Home() {
       <BoxWrapper data={vestimentas}/>
       <Secao titulo="Vestimentas" data={vestimentas}/>  
       
-      <div className={styles.texts}>
-        <h1>Mais vendidos da semana</h1>
-      </div>
 
-      <div className={styles.list_products}>
-        {
-          carros.map((carro,index) => (
-            <div className={styles.products} key={index}>
-             <img src={carro} alt="" />
-             <div>
-             <p>Produto {index}</p>
-             <p>Preço 1</p>
-             </div>
-            </div>
-          ))
-        }
-      </div>
+      <ImageList sx={{ width: "80%", height: 600 }}>
+      <ImageListItem key="Subheader" cols={3}>
+        <ListSubheader component="div">Mais vendidos da semana</ListSubheader>
+      </ImageListItem>
+      {tecnologia.map((item) => (
+        <ImageListItem key={item.imagem} style={{height:"400px"}}>
+          <img
+            srcSet={`${item.imagem}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${item.imagem}?w=248&fit=crop&auto=format`}
+            alt={item.nome}
+            loading="lazy"
+            
+          />
+          <ImageListItemBar
+            title={item.nome}
+            subtitle={item.proprietario}
+            actionIcon={
+              <IconButton
+                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                aria-label={`info about ${item.nome}`}
+              >
+                <InfoIcon />
+              </IconButton>
+            }
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
     </div>
     )
 }
