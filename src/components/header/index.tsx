@@ -1,7 +1,7 @@
 import logo from "../../assets/header/mercearia-logo.png"
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { AppBar, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, Toolbar, Typography } from "@mui/material";
 import { Contrast,Login,Info ,ShoppingCart,Person,ShoppingBag} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -104,43 +104,12 @@ export default function Header() {
 
   return (
    <>
-     {/* <header className={styles.header}>
-
-         <nav className={styles.menu_navegacao_desktop} >
-            <Link className={styles.link} to="/" onClick={closeNavBarOptions}><p>Página inicial</p></Link>
-            <Link className={styles.link}to="/categorias" onClick={closeNavBarOptions}><p>Categorias</p></Link>
-            <Link className={styles.link}to="/contato" onClick={closeNavBarOptions}><p>Contato</p></Link>
-         </nav>
-
-         <div className={styles.menu_navegacao_mobile}>
-            <FiAlignJustify size={30} cursor="pointer" onClick={() => openDrawerNavBarOptions()}/>
-         </div>
-      
-         <div className={styles.search}>
-            <input type="search" name="" id="" placeholder="Ex.: Escova de dentes"/>
-         </div>
-         
-        <div>
-          <a href={autenticado ? "/novo-produto" : "/login"} className={styles.btn}>Anuncie seu produto</a>
-        </div> 
-          <Link to="">
-            <img src={logo} alt="" className={styles.logo}/>
-         </Link>
-
-     </header> */}
-{/* 
-        <div className={isActive ? styles.navigation_mobile_online : styles.navigation_mobile_offline}>
-            <Link className={styles.link} to="/" onClick={closeNavBarOptions}><p>Página inicial</p></Link>
-            <Link className={styles.link} to="/categorias" onClick={closeNavBarOptions}><p>Categorias</p></Link>
-            <Link className={styles.link} to="/contato" onClick={closeNavBarOptions}><p>Contato</p></Link>
-            <Link className={styles.link} to="#" onClick={closeNavBarOptions}><MdClose size={25} color="black">Fechar</MdClose></Link>                  
-         </div> */}
          <AppBar position="static" sx={{backgroundColor:"ghostwhite"}}>
             <Toolbar>
               <IconButton size="large" edge="start" color="inherit" sx={{"&:hover":{
                 backgroundColor:"inherit"
               }}} onClick={() => navigate("/")}>
-                <img src={logo} style={{borderRadius:"50%"}}></img>
+                <Avatar src={logo}></Avatar>
               </IconButton>
 
               <Typography variant="h6" component="div" sx={{flexGrow:1,color:"#222222"}}>E-commerce</Typography>

@@ -88,6 +88,9 @@
     color: #0000ee;
     border-radius: 7px;
 }
+.btn_forgot:hover {
+    color: #0000ee; 
+}
 .upload_container {
     display: flex;
     flex-direction: column;

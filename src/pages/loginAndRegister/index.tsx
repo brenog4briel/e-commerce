@@ -1,16 +1,19 @@
-import { Link } from "react-router-dom";
 import styles from "./loginAndRegister.module.css"
-import logo from "../../assets/header/mercearia-logo.png"
 import {useForm} from "react-hook-form"
 import { LoginSchema,loginSchema } from "../../validations/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { CircularProgress, Tab, Tabs } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, InputAdornment, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { RegistroSchema, registroSchema } from "../../validations/register";
 import AxiosInstance from "../../axiosInstance";
 import { Popup } from "../../components/popup";
+import EmailIcon from '@mui/icons-material/Email';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import HomeIcon from '@mui/icons-material/Home';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 interface IRequestError {
   mensagem:string;
@@ -50,6 +53,12 @@ export function LoginAndRegister() {
     },3000)
   }
 
+  const [isPasswordVisible,setIsPaswordVisible] = useState<boolean>(false)
+
+  const handlePasswordVisibility = () => {
+    setIsPaswordVisible((oldValue => !oldValue))
+  }
+
   async function Auth({email,senha}: LoginSchema) {
     setLoginLoading(true);
     Authenticate({email,senha})
@@ -71,8 +80,9 @@ export function LoginAndRegister() {
 
 const [tabValue, setTabValue] = useState<number>(0);
 
-const handleChange = (event: React.SyntheticEvent, tab: number) => {
+const handleChangeTab = (event: React.SyntheticEvent, tab: number) => {
   setTabValue(tab);
+  setIsPaswordVisible(false)
 };
 
 
@@ -107,49 +117,146 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
     <div className={styles.container}>
         <div className={styles.containerUser}>
 
-        <Tabs value={tabValue} onChange={handleChange}>
+        <Tabs value={tabValue} onChange={handleChangeTab}>
           <Tab label="Entrar" sx={{width:"50%"}}/>
           <Tab label="Registrar" sx={{width:"50%"}}/>
         </Tabs>
+          <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",margin:"30px 0"}}>
+            <Typography variant="h5" sx={{fontWeight:"800"}}>Bem vindo ao E-commerce</Typography>
+          </Box>
         {tabValue === 0 ? 
-        <>
-          <div className={styles.containerUserTitle}>
-          <p className={styles.userTitle}>Bem vindo ao E-commerce</p>
-          <img src={logo} alt="" className={styles.logo}/>
-          </div>
-          <form className={styles.form} method="post" onSubmit={handleSubmitLogin(Auth)}>
-              <input type="text" placeholder="Email" {...loginRegister("email")} value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)}/>
-              {login_errors.email && <p className={styles.input_error_message}>{login_errors.email.message}</p>}
-              <input type="password" placeholder="Senha" {...loginRegister("senha")} value={senhaLogin} onChange={(e) => setSenhaLogin(e.target.value)}/>
-              {login_errors.senha && <p className={styles.input_error_message}>{login_errors.senha.message}</p>}
-              {(tabValue === 0 && !loginLoading) && <button type="submit" name="Entrar">Entrar</button>} 
+          <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px"}}>
+            
+            <TextField 
+              fullWidth 
+              placeholder="Email" 
+              {...loginRegister("email")} 
+              value={emailLogin} 
+              onChange={(e) => setEmailLogin(e.target.value)} 
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                            <EmailIcon sx={{cursor:"pointer"}}/>
+                        </InputAdornment>,
+                }}/>
+
+              {login_errors.email && <Typography component="p" className={styles.input_error_message}>{login_errors.email.message}</Typography>}
+            <TextField 
+              fullWidth
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="Senha" 
+              {...loginRegister("senha")} 
+              value={senhaLogin} 
+              onChange={(e) => setSenhaLogin(e.target.value)} 
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordVisibility}>
+                            <VisibilityIcon sx={{cursor:"pointer"}}/>
+                          </IconButton>
+                        </InputAdornment>,
+                }}
+                />
+              {login_errors.senha && <Typography component="p" className={styles.input_error_message}>{login_errors.senha.message}</Typography>}
+
+              <Box sx={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+                <Typography component="a" sx={{textDecoration:"none", cursor:"pointer",color:"#006ca5"}} onClick={() => navigate("/recuperacao")}>Esqueceu sua senha?</Typography>
+              </Box>
+              {(tabValue === 0 && !loginLoading) && <Button type="submit" variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} name="Entrar" onClick={handleSubmitLogin(Auth)}>Entrar</Button>} 
               {(tabValue === 0 && loginLoading) && <CircularProgress size={25} />}
-          </form>
-          <div className={styles.func_buttons}>
-            <Link className={styles.btn_forgot} to="/recuperacao">Esqueceu sua senha?</Link>
-            <Link className={styles.btn_register} to="/register">Registre-se</Link>
-          </div>
-        </>
+          </Box>
         :
-        <>
-          <div className={styles.containerUserTitle}>
-            <p className={styles.userTitle}>Cadastro</p>
-          </div>
-          <form className={styles.form} method="post" onSubmit={handleSubmitRegister(RegisterUser)}>
-              <input type="text" placeholder="Nome" {...signupRegister("nome")} value={nome} onChange={(e) => setNome(e.target.value)}/>
+              
+        <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px"}}>
+               <TextField 
+              fullWidth
+              type="text"
+              placeholder="Nome" 
+              {...signupRegister("nome")} 
+              value={nome} 
+              onChange={(e) => setNome(e.target.value)} 
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordVisibility}>
+                            <PermIdentityIcon sx={{cursor:"pointer"}}/>
+                          </IconButton>
+                        </InputAdornment>,
+                }}
+                />
               {register_errors.nome && <p className={styles.input_error_message}>{register_errors.nome.message}</p>}
-              <input type="password" placeholder="Senha" {...signupRegister("senha")} value={senhaRegistro} onChange={(e) => setSenhaRegistro(e.target.value)}/>
+               <TextField 
+              fullWidth
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="Senha" 
+              {...signupRegister("senha")} 
+              value={senhaRegistro} 
+              onChange={(e) => setSenhaRegistro(e.target.value)} 
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordVisibility}>
+                            <VisibilityIcon sx={{cursor:"pointer"}}/>
+                          </IconButton>
+                        </InputAdornment>,
+                }}
+                />
               {register_errors.senha && <p className={styles.input_error_message}>{register_errors.senha.message}</p>}
-              <input type="email" placeholder="Email" {...signupRegister("email")} value={emailRegistro} onChange={(e) => setEmailRegistro(e.target.value)}/>
+               <TextField 
+              fullWidth
+              type="email"
+              placeholder="Email" 
+              {...signupRegister("email")} 
+              value={emailRegistro} 
+              onChange={(e) => setEmailRegistro(e.target.value)}
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordVisibility}>
+                            <EmailIcon sx={{cursor:"pointer"}}/>
+                          </IconButton>
+                        </InputAdornment>,
+                }}
+                />
               {register_errors.email && <p className={styles.input_error_message}>{register_errors.email.message}</p>}
-              <input type="text" placeholder="Endereço" {...signupRegister("endereco")} value={endereco} onChange={(e) => setEndereco(e.target.value)}/>
+              <TextField 
+              fullWidth
+              type="text"
+              placeholder="Endereço" 
+              {...signupRegister("endereco")} 
+              value={endereco} 
+              onChange={(e) => setEndereco(e.target.value)}
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordVisibility}>
+                            <HomeIcon sx={{cursor:"pointer"}}/>
+                          </IconButton>
+                        </InputAdornment>,
+                }}
+                />
               {register_errors.endereco && <p className={styles.input_error_message}>{register_errors.endereco.message}</p>}
-              <input type="text" placeholder="CEP" {...signupRegister("CEP")} value={CEP} onChange={(e) => setCEP(e.target.value)}/>
-              {register_errors.CEP && <p className={styles.input_error_message}>{register_errors.CEP.message}</p>}
-              {(tabValue === 1 && !registerLoading) && <button type="submit">Registrar</button>} 
+              {/* <input type="text" placeholder="CEP" {...signupRegister("CEP")} value={CEP} onChange={(e) => setCEP(e.target.value)}/> */}
+               <TextField 
+              fullWidth
+              type="text"
+              placeholder="CEP" 
+              {...signupRegister("CEP")} 
+              value={CEP} 
+              onChange={(e) => setCEP(e.target.value)}
+              InputProps={
+                {endAdornment: 
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordVisibility}>
+                            <LocationCityIcon sx={{cursor:"pointer"}}/>
+                          </IconButton>
+                        </InputAdornment>,
+                }}
+                />
+              {register_errors.CEP && <Typography component="p" className={styles.input_error_message}>{register_errors.CEP.message}</Typography>}
+              {(tabValue === 1 && !registerLoading) && <Button type="submit" variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} onClick={handleSubmitRegister(RegisterUser)}>Registrar</Button>} 
               {(tabValue === 1 && registerLoading) && <CircularProgress size={25} />}
-          </form>
-        </>
+        </Box>
       }
         </div>  
         
