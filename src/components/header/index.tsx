@@ -104,7 +104,7 @@ export default function Header() {
 
   return (
    <>
-         <AppBar position="static" sx={{backgroundColor:"ghostwhite"}}>
+         <AppBar position="static" sx={{backgroundColor:"#eeeeee"}}>
             <Toolbar>
               <IconButton size="large" edge="start" color="inherit" sx={{"&:hover":{
                 backgroundColor:"inherit"
@@ -145,7 +145,7 @@ export default function Header() {
             </Toolbar>
          </AppBar>
 
-        <Box sx={{padding:"5px 20px"}}>
+        <Box sx={{padding:"5px 20px",backgroundColor:"white"}}>
             <IconButton size="large" edge="start" color="inherit" onClick={handleOpenDrawer}>
                 <MenuOpenIcon sx={{cursor:"pointer"}}/>
               </IconButton>
