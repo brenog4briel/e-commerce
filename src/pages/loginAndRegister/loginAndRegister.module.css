@@ -4,8 +4,12 @@
     background-color: ghostwhite;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    background-image: url("../../assets/ecommerce_wallpaper.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left bottom;
 }
 .containerUser {
     display: flex;
@@ -13,24 +17,9 @@
     padding: 10px;
     width: 500px;
     border-radius: 5px;
+    margin-right: 10%;
     background-color: #e2e2e2;
-}
-.logo {
-    border-radius: 50%;
-    width: 15%;
-}
-.containerUserTitle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.userTitle {
-    text-align: center;
-    font-weight: 800;
-    font-size: 32px;
-    padding: 20px 0;
-}
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
 .input_error_message {
     color: red;
     font-size: 12px;
@@ -38,90 +27,8 @@
     margin-left: 24px;
 }
 
-
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-.form input {
-    width: 90%;
-    padding: 8px 2px;
-    border-radius: 4px;
-    margin: 5px 0;
-    outline: none;
-    border: 1px solid black;
-}
-.form button[type=submit] {
-    width: 50%;
-    padding: 8px 2px;
-    border-radius: 4px;
-    margin: 5px 0;
-    outline: none;
-    border: 1px solid black;
-    cursor: pointer;
-}
-.form a {
-    width: 50%;
-    text-align: center;
-    font-size: 18px;
-    padding: 10px 0;
-    border-radius: 4px;
-    text-decoration: none;
-    color: gainsboro;
-    background-color: black;
-}
-.form a:hover{
-    opacity: 0.8;
-}
-.func_buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-.btn_forgot {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #0000ee;
-    border-radius: 7px;
-}
-.btn_forgot:hover {
-    color: #0000ee; 
-}
-.upload_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-}
-.upload_container input {
-    width: 100%;
-}
-.btn_register {
-    padding: 10px 0;
-    width: 25%;
-    text-decoration: none;
-    color: #222222;
-    border-radius: 7px;
-    text-align: center;
-    background-color: #b2b2b2;
-}
-
 @media (width < 600px) {
     .containerUser{
         width: 90%;
-    }
-    .logo {
-        width: 25%;
-    }
-    .containerUserTitle{
-        font-size: 26px;
-    }
-    .btn_register {
-        width: 45%;
     }
 }

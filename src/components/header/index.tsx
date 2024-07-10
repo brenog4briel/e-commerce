@@ -89,11 +89,11 @@ export default function Header() {
           </ListItem>
 
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate("/login")}>
               <ListItemIcon>
                 <Login /> 
               </ListItemIcon>
-              {autenticado ? <ListItemText primary="Sair" onClick={handleLogout}/> : <ListItemText primary="Entrar" onClick={() => navigate("/login")}/>}
+              {autenticado ? <ListItemText primary="Sair" onClick={handleLogout}/> : <ListItemText primary="Entrar"/>}
             </ListItemButton>
           </ListItem>
       </List>
