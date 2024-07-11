@@ -9,6 +9,10 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Popup } from "../../components/popup"
 import { Box, Button, CircularProgress, IconButton, InputAdornment, MenuItem, TextField } from "@mui/material"
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import DomainIcon from '@mui/icons-material/Domain';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
 
 interface IRequestError {
   mensagem:string;
@@ -27,7 +31,6 @@ export function CadastroProduto() {
     const [productInfoLoading,setProductInfoLoading] = useState<boolean>(false);
     const [productInfoError,setProductInfoError] = useState<boolean | undefined>(undefined);
 
-    const [valor,] = useState<string>("");
     const [valorError,setValorError] = useState<boolean>(false)
 
     const [estoque,setEstoque] = useState<string>("");
@@ -83,9 +86,9 @@ export function CadastroProduto() {
 
             .then((res) => {
                 const imagem : string = res.data.data.url;
-                const preco = Number(valor)
+                const valor = Number(preco)
                 const qtd_estoque = Number(estoque)
-                AxiosInstance.post("/produtos",{nome,preco,proprietario,categoria,qtd_estoque,imagem,usuario_id},{
+                AxiosInstance.post("/produtos",{nome,valor,proprietario,categoria,qtd_estoque,imagem,usuario_id},{
                     headers:{"Authorization":`Bearer ${token}`}
                 })
                 .then(() => {
@@ -109,10 +112,9 @@ export function CadastroProduto() {
     }
 
     function validateInputs() {
-
-        const precoValido = REGEX_NUMBER_VALIDATION.test(valor)
+        console.log(REGEX_NUMBER_VALIDATION.test(preco))
+        const precoValido = REGEX_NUMBER_VALIDATION.test(preco)
         const quantidadeValida = REGEX_NUMBER_VALIDATION.test(estoque)
-
         precoValido ? setValorError(false) : setValorError(true)
         quantidadeValida ? setEstoqueError(false) : setEstoqueError(true)
 
@@ -144,7 +146,7 @@ export function CadastroProduto() {
                         {endAdornment: 
                             <InputAdornment position="end">
                                 <IconButton>
-                                
+                                    <TextFieldsIcon/>
                                 </IconButton>
                             </InputAdornment>,
                         }}/>
@@ -157,12 +159,12 @@ export function CadastroProduto() {
                     type="text"
                     placeholder="Preço" 
                     value={preco} 
-                    onChange={(e) => setPreco(e.target.value)} 
+                    onChange={(e) => setPreco(e.target.value)}
                     InputProps={
                         {endAdornment: 
                             <InputAdornment position="end">
                                 <IconButton>
-                                
+                                    <AttachMoneyIcon/>
                                 </IconButton>
                             </InputAdornment>,
                         }}/>
@@ -181,7 +183,7 @@ export function CadastroProduto() {
                         {endAdornment: 
                             <InputAdornment position="end">
                                 <IconButton>
-                                
+                                    <DomainIcon/>
                                 </IconButton>
                             </InputAdornment>,
                         }}/>
@@ -214,11 +216,12 @@ export function CadastroProduto() {
                     InputProps={{endAdornment: 
                         <InputAdornment position="end">
                             <IconButton>
+                                <InventoryIcon/>
                             </IconButton>
                         </InputAdornment>,
                 }}/>
 
-                {!productInfoLoading && <Button type="submit" variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} name="Entrar" onClick={handleSubmitNovoProduto(handleNovoProduto)}>Entrar</Button>}
+                {!productInfoLoading && <Button type="submit" variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} onClick={handleSubmitNovoProduto(handleNovoProduto)}>Cadastrar</Button>}
                 {productInfoLoading && <CircularProgress size={25} sx={{alignSelf:"center"}}/>}
         </Box>
 

@@ -68,58 +68,83 @@ export function Home() {
     } 
   }
 
-  const carros = [
-    {"title":"carro 1","author":"author 1","img":"https://www.chevrolet.com.br/content/dam/chevrolet/mercosur/brazil/portuguese/index/cars/cars-subcontent/09-images/onix-hatch-showroom-1920x960.jpg?imwidth=960"},
-    {"title":"carro 2","author":"author 2","img":"https://storage.googleapis.com/movida-public-images/modelos/3210_image.jpg"},
-    {"title":"carro 3","author":"author 3","img":"https://jeep.grupoamazonas.com.br/wp-content/uploads/2022/04/img-compass-4xe.png"},
-    {"title":"carro 4","author":"author 4","img":"https://s2-autoesporte.glbimg.com/69yw9-dcpdP8GA63Jmdh5ycMIhQ=/0x0:1600x1067/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_cf9d035bf26b4646b105bd958f32089d/internal_photos/bs/2023/b/B/eeIuI3RtAmvEAZHA3NoA/polo-track-7.jpg"},
-    {"title":"carro 5","author":"author 5","img":"https://fotos-jornaldocarro-estadao.nyc3.cdn.digitaloceanspaces.com/uploads/2018/12/12155721/43797884-1160x773.jpg"},
-    {"title":"carro 6","author":"author 6","img":"https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/02/dolphin.jpeg?w=800"},
-    {"title":"carro 7","author":"author 7","img":"https://www.hondacaiuas.com.br/wp-content/uploads/2022/08/tipos-de-carro-hatch-new-city-hatchback.jpg"},
-    {"title":"carro 8","author":"author 8","img":"https://t.ctcdn.com.br/zvkHhq85Nyb_EnOulpGNc_EJQDM=/640x360/smart/i617059.jpeg"},
-    {"title":"carro 9","author":"author 9","img":"https://www.autoo.com.br/fotos/2023/6/1280_960/fiat_mobi_2023_1_07062023_74796_1280_960.jpg"},
-    {"title":"carro 10","author":"author 10","img":"https://fdr.com.br/wp-content/uploads/2023/08/novo-fiat-fastback-limited-edition-ficha-tecnica-e-preco-1536x961-1-750x469.jpg"},
-    {"title":"carro 11","author":"author 11","img":"https://midias.vrum.com.br/_midias/jpg/2023/12/29/740x420/1_renault_kardian-33797374.jpg"},
-    {"title":"carro 12","author":"author 12","img":"https://static.bancointer.com.br/blog/images/4e2d0ffd95c447af877ce2dffbe80d5b_renault-kwid-zen-10_.png"},
-    ]
+    const [bestSellers,setBestSellers] = useState<IData[]>([])
+
+    const fetchBestSellers = async() => {
+      AxiosInstance.get("/produtos/mais-vendidos")
+      .then((res) => {
+        setBestSellers(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+
+    useEffect(() => {
+      fetchBestSellers()
+    },[])
 
     return (
     <div className={styles.container}>
       
       <SwiperItems altura="400px" slides={1} data={tecnologia} largura="100%" autoplay={true}/>
       
-      <Secao titulo="Tecnologia" data={tecnologia}/> 
-      <BoxWrapper data={tecnologia}/>
-      <Secao titulo="Livros" data={livros}/>  
-      <BoxWrapper data={livros}/>
-      <Secao titulo="Cama, mesa e banho" data={camaMesaBanho}/>  
-      <BoxWrapper data={camaMesaBanho}/>
-      <Secao titulo="Eletrodomésticos" data={eletrodomesticos}/>  
-      <BoxWrapper data={eletrodomesticos}/>
-      <Secao titulo="Alimentação" data={alimentacao}/>  
-      <BoxWrapper data={vestimentas}/>
-      <Secao titulo="Vestimentas" data={vestimentas}/>  
-      
+      {tecnologia.length > 0 && (
+        <>
+        <Secao titulo="Tecnologia" data={tecnologia}/> 
+        <BoxWrapper data={tecnologia}/>
+        </>
+      )}
+      {livros.length > 0 && (
+        <>
+        <Secao titulo="Livros" data={livros}/> 
+        <BoxWrapper data={livros}/>
+        </>
+      )}
+      {alimentacao.length > 0 && (
+        <>
+        <Secao titulo="Alimentação" data={alimentacao}/> 
+        <BoxWrapper data={alimentacao}/>
+        </>
+      )}
+      {camaMesaBanho.length > 0 && (
+        <>
+        <Secao titulo="Cama, mesa e banho" data={camaMesaBanho}/> 
+        <BoxWrapper data={camaMesaBanho}/>
+        </>
+      )}
+      {eletrodomesticos.length > 0 && (
+        <>
+        <Secao titulo="Eletrodomésticos" data={eletrodomesticos}/> 
+        <BoxWrapper data={eletrodomesticos}/>
+        </>
+      )}
+      {vestimentas.length > 0 && (
+        <>
+        <Secao titulo="Vestimentas" data={vestimentas}/> 
+        <BoxWrapper data={vestimentas}/>
+        </>
+      )}
 
       <ImageList sx={{ width: "80%", borderRadius:5 }}>
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div" sx={{fontWeight:800,fontSize:"20px",textAlign:"center"}}>Mais vendidos</ListSubheader>
       </ImageListItem>
-      {carros.map((item) => (
-        <ImageListItem key={item.img} sx={{objectFit:"fill"}}>
+      {bestSellers.map((item) => (
+        <ImageListItem key={item.imagem} sx={{objectFit:"fill"}}>
           <img
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            alt={item.title}
+            srcSet={`${item.imagem}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${item.imagem}?w=248&fit=crop&auto=format`}
+            alt={item.nome}
             loading="lazy"
           />
           <ImageListItemBar
-            title={item.title}
-            subtitle={item.author}
+            title={item.nome}
+            subtitle={item.proprietario}
             actionIcon={
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                aria-label={`info about ${item.title}`}
+                aria-label={`info about ${item.nome}`}
               >
                 <InfoIcon />
               </IconButton>
