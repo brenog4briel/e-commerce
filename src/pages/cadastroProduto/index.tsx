@@ -38,7 +38,7 @@ export function CadastroProduto() {
 
     const [proprietario,setProprietario] = useState<string>("")
     const [nome,setNome] = useState<string>("")
-    const [preco,setPreco] = useState<string>("")
+    const [valor,setValor] = useState<string>("")
 
 
     const {register:registerNovoProduto,handleSubmit:handleSubmitNovoProduto,formState:{errors:novoProdutoErrors}} = useForm<NovoProdutoSchema>({
@@ -64,7 +64,6 @@ export function CadastroProduto() {
         if (numerosValidos && file) {
             setProductInfoLoading(true)
             const storedUser = sessionStorage.getItem("usuario");
-            const token = sessionStorage.getItem("token");
             const usuario_id = JSON.parse(storedUser!).usuario_id;
             const data = new FormData();
 
@@ -86,16 +85,16 @@ export function CadastroProduto() {
 
             .then((res) => {
                 const imagem : string = res.data.data.url;
-                const valor = Number(preco)
-                const qtd_estoque = Number(estoque)
-                AxiosInstance.post("/produtos",{nome,valor,proprietario,categoria,qtd_estoque,imagem,usuario_id},{
-                    headers:{"Authorization":`Bearer ${token}`}
-                })
+                const preco = parseFloat(valor)
+                const qtd_estoque = parseInt(estoque)
+                const numero_vendas = 0
+                AxiosInstance.post("/produtos",{nome,preco,proprietario,numero_vendas,categoria,qtd_estoque,imagem,usuario_id})
                 .then(() => {
                     console.log("Produto cadastrado com sucesso!")
                     setProductInfoRequestError(prev => ({...prev,mensagem:"Produto cadastrado com sucesso!",sucesso:true}))
                     setProductInfoError(false)
                     counterTimePopup()
+                    setProductInfoLoading(false)
                     navigate("/")
 
                 })
@@ -103,6 +102,7 @@ export function CadastroProduto() {
                     console.log(err)
                     setProductInfoRequestError(prev => ({...prev,mensagem:"Houve um erro ao cadastrar o produto!",sucesso:false}))
                     setProductInfoError(true)
+                    setProductInfoLoading(false)
                     counterTimePopup()
                 })
             })
@@ -112,8 +112,7 @@ export function CadastroProduto() {
     }
 
     function validateInputs() {
-        console.log(REGEX_NUMBER_VALIDATION.test(preco))
-        const precoValido = REGEX_NUMBER_VALIDATION.test(preco)
+        const precoValido = REGEX_NUMBER_VALIDATION.test(valor)
         const quantidadeValida = REGEX_NUMBER_VALIDATION.test(estoque)
         precoValido ? setValorError(false) : setValorError(true)
         quantidadeValida ? setEstoqueError(false) : setEstoqueError(true)
@@ -132,7 +131,8 @@ export function CadastroProduto() {
             
             
             <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px",padding:5}}>
-               <TextField 
+               <TextField
+                    autoComplete="off" 
                     sx={{width:"80%"}}
                     error={novoProdutoErrors.nome ? true:  false}
                     helperText={novoProdutoErrors.nome? novoProdutoErrors.nome.message : ""}
@@ -151,15 +151,16 @@ export function CadastroProduto() {
                             </InputAdornment>,
                         }}/>
 
-                <TextField 
+                <TextField
+                    autoComplete="off" 
                     sx={{width:"80%"}}
                     error={valorError}
                     helperText={valorError ? "Valor inválido! Ex: 23.50" : ""}
                     size="small"
                     type="text"
                     placeholder="Preço" 
-                    value={preco} 
-                    onChange={(e) => setPreco(e.target.value)}
+                    value={valor} 
+                    onChange={(e) => setValor(e.target.value)}
                     InputProps={
                         {endAdornment: 
                             <InputAdornment position="end">
@@ -169,7 +170,8 @@ export function CadastroProduto() {
                             </InputAdornment>,
                         }}/>
                 
-                <TextField 
+                <TextField
+                    autoComplete="off" 
                     sx={{width:"80%"}}
                     error={novoProdutoErrors.proprietario ? true:  false}
                     helperText={novoProdutoErrors.proprietario? novoProdutoErrors.proprietario.message : ""}
@@ -205,7 +207,8 @@ export function CadastroProduto() {
                         <MenuItem value="eletrodomesticos">Eletrodomesticos</MenuItem>
                     </TextField>
 
-               <TextField 
+               <TextField
+                    autoComplete="off" 
                     sx={{width:"80%"}}
                     error={estoqueError}
                     helperText={estoqueError ? "Valor inválido! Ex: 20" : ""}

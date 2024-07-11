@@ -127,7 +127,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
         {tabValue === 0 ? 
           <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px"}}>
             
-            <TextField 
+            <TextField
+              autoComplete="off" 
               fullWidth
               size="small"
               error={login_errors.email ? true:  false}
@@ -143,7 +144,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}/>
 
-            <TextField 
+            <TextField
+              autoComplete="off" 
               fullWidth
               size="small"
               error={login_errors.senha ? true:  false}
@@ -171,7 +173,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
         :
               
         <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px"}}>
-               <TextField 
+               <TextField
+                 autoComplete="off" 
               fullWidth
               error={register_errors.nome ? true:  false}
               helperText={register_errors.nome? register_errors.nome.message : ""}
@@ -190,7 +193,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-               <TextField 
+               <TextField
+                 autoComplete="off" 
               fullWidth
               error={register_errors.senha ? true:  false}
               helperText={register_errors.senha? register_errors.senha.message : ""}
@@ -209,7 +213,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-               <TextField 
+               <TextField
+                 autoComplete="off" 
               fullWidth
               error={register_errors.email ? true:  false}
               helperText={register_errors.email? register_errors.email.message : ""}
@@ -228,7 +233,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              <TextField 
+              <TextField
+                autoComplete="off" 
               fullWidth
               error={register_errors.endereco ? true:  false}
               helperText={register_errors.endereco? register_errors.endereco.message : ""}
@@ -247,7 +253,8 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-               <TextField 
+               <TextField
+                 autoComplete="off" 
               fullWidth
               error={register_errors.CEP ? true:  false}
               helperText={register_errors.CEP? register_errors.CEP.message : ""}
