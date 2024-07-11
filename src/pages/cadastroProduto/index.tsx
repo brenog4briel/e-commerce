@@ -65,6 +65,7 @@ export function CadastroProduto() {
             setProductInfoLoading(true)
             const storedUser = sessionStorage.getItem("usuario");
             const usuario_id = JSON.parse(storedUser!).usuario_id;
+            const token = sessionStorage.getItem("token")
             const data = new FormData();
 
             const reader = new FileReader()
@@ -88,7 +89,9 @@ export function CadastroProduto() {
                 const preco = parseFloat(valor)
                 const qtd_estoque = parseInt(estoque)
                 const numero_vendas = 0
-                AxiosInstance.post("/produtos",{nome,preco,proprietario,numero_vendas,categoria,qtd_estoque,imagem,usuario_id})
+                AxiosInstance.post("/produtos",{nome,preco,proprietario,numero_vendas,categoria,qtd_estoque,imagem,usuario_id},{
+                    headers: { Authorization: `Bearer ${token}` }
+                })
                 .then(() => {
                     console.log("Produto cadastrado com sucesso!")
                     setProductInfoRequestError(prev => ({...prev,mensagem:"Produto cadastrado com sucesso!",sucesso:true}))
