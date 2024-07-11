@@ -128,7 +128,10 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
           <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px"}}>
             
             <TextField 
-              fullWidth 
+              fullWidth
+              size="small"
+              error={login_errors.email ? true:  false}
+              helperText={login_errors.email? login_errors.email.message : ""}
               placeholder="Email" 
               {...loginRegister("email")} 
               value={emailLogin} 
@@ -140,9 +143,11 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}/>
 
-              {login_errors.email && <Typography component="p" className={styles.input_error_message}>{login_errors.email.message}</Typography>}
             <TextField 
               fullWidth
+              size="small"
+              error={login_errors.senha ? true:  false}
+              helperText={login_errors.senha? login_errors.senha.message : ""}
               type={isPasswordVisible ? "text" : "password"}
               placeholder="Senha" 
               {...loginRegister("senha")} 
@@ -157,8 +162,6 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              {login_errors.senha && <Typography component="p" className={styles.input_error_message}>{login_errors.senha.message}</Typography>}
-
               <Box sx={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                 <Typography component="a" sx={{textDecoration:"none", cursor:"pointer",color:"#006ca5"}} onClick={() => navigate("/recuperacao")}>Esqueceu sua senha?</Typography>
               </Box>
@@ -170,6 +173,9 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
         <Box sx={{display:"flex",flexDirection:"column", justifyItems:"center",alignItems:"center",gap:"20px"}}>
                <TextField 
               fullWidth
+              error={register_errors.nome ? true:  false}
+              helperText={register_errors.nome? register_errors.nome.message : ""}
+              size="small"
               type="text"
               placeholder="Nome" 
               {...signupRegister("nome")} 
@@ -184,9 +190,11 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              {register_errors.nome && <p className={styles.input_error_message}>{register_errors.nome.message}</p>}
                <TextField 
               fullWidth
+              error={register_errors.senha ? true:  false}
+              helperText={register_errors.senha? register_errors.senha.message : ""}
+              size="small"
               type={isPasswordVisible ? "text" : "password"}
               placeholder="Senha" 
               {...signupRegister("senha")} 
@@ -201,9 +209,11 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              {register_errors.senha && <p className={styles.input_error_message}>{register_errors.senha.message}</p>}
                <TextField 
               fullWidth
+              error={register_errors.email ? true:  false}
+              helperText={register_errors.email? register_errors.email.message : ""}
+              size="small"
               type="email"
               placeholder="Email" 
               {...signupRegister("email")} 
@@ -218,9 +228,11 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              {register_errors.email && <p className={styles.input_error_message}>{register_errors.email.message}</p>}
               <TextField 
               fullWidth
+              error={register_errors.endereco ? true:  false}
+              helperText={register_errors.endereco? register_errors.endereco.message : ""}
+              size="small"
               type="text"
               placeholder="Endereço" 
               {...signupRegister("endereco")} 
@@ -235,10 +247,11 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              {register_errors.endereco && <p className={styles.input_error_message}>{register_errors.endereco.message}</p>}
-              {/* <input type="text" placeholder="CEP" {...signupRegister("CEP")} value={CEP} onChange={(e) => setCEP(e.target.value)}/> */}
                <TextField 
               fullWidth
+              error={register_errors.CEP ? true:  false}
+              helperText={register_errors.CEP? register_errors.CEP.message : ""}
+              size="small"
               type="text"
               placeholder="CEP" 
               {...signupRegister("CEP")} 
@@ -253,7 +266,6 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
                         </InputAdornment>,
                 }}
                 />
-              {register_errors.CEP && <Typography component="p" className={styles.input_error_message}>{register_errors.CEP.message}</Typography>}
               {(tabValue === 1 && !registerLoading) && <Button type="submit" variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} onClick={handleSubmitRegister(RegisterUser)}>Registrar</Button>} 
               {(tabValue === 1 && registerLoading) && <CircularProgress size={25} />}
         </Box>

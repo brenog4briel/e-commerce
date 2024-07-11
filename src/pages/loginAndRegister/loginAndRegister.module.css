@@ -24,7 +24,6 @@
     color: red;
     font-size: 12px;
     align-self: flex-start;
-    margin-left: 24px;
 }
 
 @media (width < 600px) {
