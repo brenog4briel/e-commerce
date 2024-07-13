@@ -17,7 +17,9 @@ import { Vestimentas } from "./pages/categorias/vestimentas";
 import { Alimentacao } from "./pages/categorias/alimentacao";
 import { Tecnologia } from "./pages/categorias/tecnologia";
 import { ProdutosPorProprietario } from "./pages/produtosPorProprietario";
-import { PedidoDeCompra } from "./pages/pedidoCompra";
+import { Pedido_de_compra } from "./pages/pedidoDeCompra";
+import { Historico_de_compra } from "./pages/historicoDeCompra";
+import { Lista_de_desejos } from "./pages/listaDeDesejos";
 
 const router = createBrowserRouter([
     {
@@ -84,8 +86,16 @@ const router = createBrowserRouter([
                 element:<ProdutosPorProprietario/>
             },
             {
-                path:"/pedido_de_compra/:pedido_de_compra_id",
-                element:<PedidoDeCompra/>
+                path:"/pedido_de_compra/:usuario_id",
+                element:<Pedido_de_compra/>
+            },
+            {
+                path:"/historico_de_compra/:usuario_id",
+                element:<Historico_de_compra/>
+            },
+            {
+                path:"/lista_de_desejos/:usuario_id",
+                element:<Lista_de_desejos/>
             },
             {
                 path:"*",

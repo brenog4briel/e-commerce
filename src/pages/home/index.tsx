@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../components/boxWrapper";
 import { Box, CircularProgress, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from "react-router-dom";
 
 export interface IData {
   nome:string;
@@ -24,6 +25,8 @@ export function Home() {
   const [eletrodomesticos,setEletrodomesticos] = useState<Array<IData>>([])
   const [alimentacao,setAlimentacao] = useState<Array<IData>>([])
   const [vestimentas,setVestimentas] = useState<Array<IData>>([])
+
+  const navigate = useNavigate()
 
   const [loading,setLoading] = useState<boolean>(false);
 
@@ -143,7 +146,7 @@ export function Home() {
         <ListSubheader component="div" sx={{fontWeight:800,fontSize:"20px",textAlign:"center"}}>Mais vendidos</ListSubheader>
       </ImageListItem>
       {bestSellers.map((item) => (
-        <ImageListItem key={item.imagem} sx={{objectFit:"fill"}}>
+        <ImageListItem key={item.imagem} sx={{objectFit:"fill",cursor:"pointer"}} onClick={() => navigate(`/produto/${item.produto_id}`)}>
           <img
             srcSet={`${item.imagem}?w=248&fit=crop&auto=format&dpr=2 2x`}
             src={`${item.imagem}?w=248&fit=crop&auto=format`}

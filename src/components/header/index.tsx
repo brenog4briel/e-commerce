@@ -21,7 +21,7 @@ export default function Header() {
     setOpenDrawer(false);
   };
 
-  const {Logout,autenticado} = useAuth();
+  const {Logout,autenticado,usuario} = useAuth();
 
   const handleLogout = () => {
     Logout();
@@ -50,7 +50,7 @@ export default function Header() {
           </ListItem>}
 
           {autenticado && <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate(`/lista_de_desejos/${usuario?.usuario_id}`)}>
               <ListItemIcon>
                  <ShoppingBag />
               </ListItemIcon>
@@ -59,11 +59,11 @@ export default function Header() {
           </ListItem>}
 
           {autenticado && <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate(`/pedido_de_compra/${usuario?.usuario_id}`)}>
               <ListItemIcon>
                 <ShoppingCart /> 
               </ListItemIcon>
-              <ListItemText primary="Carrinho" />
+              <ListItemText primary="Carrinho"/>
             </ListItemButton>
           </ListItem>}
 
@@ -71,7 +71,7 @@ export default function Header() {
       <Divider />
       <List>
          <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate(`/historico_de_compra/${usuario?.usuario_id}`)}>
               <ListItemIcon>
                 <WorkHistory />
               </ListItemIcon>
