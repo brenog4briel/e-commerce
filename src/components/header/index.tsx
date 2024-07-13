@@ -2,7 +2,7 @@ import logo from "../../assets/header/mercearia-logo.png"
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, Toolbar, Typography } from "@mui/material";
-import { Contrast,Login,Info ,ShoppingCart,Person,ShoppingBag} from "@mui/icons-material";
+import { WorkHistory,Login,Info ,ShoppingCart,Person,ShoppingBag} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -73,9 +73,9 @@ export default function Header() {
          <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Contrast />
+                <WorkHistory />
               </ListItemIcon>
-              <ListItemText primary="Tema" />
+              <ListItemText primary="Histórico de compras" />
             </ListItemButton>
           </ListItem>
 
@@ -117,7 +117,7 @@ export default function Header() {
               {!mobileNavBar ? 
               <Stack direction="row" spacing={2}>
                 <Button sx={{color:"#222222",fontSize:"12px"}} href="/">Página inicial</Button>
-                <Button sx={{color:"#222222",fontSize:"12px"}} href="/categorias">Categoria</Button>
+                <Button sx={{color:"#222222",fontSize:"12px"}} href="/categorias">Categorias</Button>
                 <Button sx={{color:"#222222",fontSize:"12px"}} href="/contato">Contato</Button>
                 <Button sx={{color:"#444444",fontSize:"12px",backgroundColor:"#dedede","&:hover":{backgroundColor:"#dedede"}}} href={autenticado ? "/novo-produto" : "/login"}>Anuncie o seu produto</Button>
               </Stack>

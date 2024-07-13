@@ -4,12 +4,14 @@ import AxiosInstance from "../../../axiosInstance"
 import { IProduto } from "../../detalhesProduto"
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material"
 import transtorno from "../../../assets/desculpe_o_transtorno.jpg"
+import { useNavigate } from "react-router-dom"
 
 export function Alimentacao() {
 
   const [produtos,setProdutos] = useState<Array<IProduto>>([])
   const [loading,setLoading] = useState<boolean>(false)
-
+  const navigate = useNavigate()
+  
   async function getData() {
     setLoading(true)
     AxiosInstance.get("/produtos/categorias/alimentacao")
@@ -29,7 +31,7 @@ export function Alimentacao() {
 
   return (
     <div className={styles.container}>
-      <Typography component="h1" sx={{fontSize:50}}>Alimentação</Typography>
+      <Typography component="h1" sx={{fontSize:50, fontFamily:"Inknut Antiqua,serif", fontWeight:"500"}}>Alimentação</Typography>
           {loading ? 
           <Box sx={{display:"flex",alignItems:"center",justifyContent:'center'}}>
             <CircularProgress/> 
@@ -39,7 +41,7 @@ export function Alimentacao() {
             {(produtos.length > 0) ? 
             <div className={styles.grid_container}>
               {produtos?.map((element) => (
-                <div className={styles.grid_element}>
+                <div key={element.produto_id} className={styles.grid_element} onClick={() => navigate(`/produto/${element.produto_id}`)}>
                   <img src={element.imagem} alt="" />
                   <div className={styles.product_info}>
                     <p>Nome: {element.nome}</p>

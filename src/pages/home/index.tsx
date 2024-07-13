@@ -4,7 +4,7 @@ import { SwiperItems } from "../../components/swiper";
 import AxiosInstance from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../components/boxWrapper";
-import { IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader } from "@mui/material";
+import { Box, CircularProgress, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 
 export interface IData {
@@ -25,6 +25,8 @@ export function Home() {
   const [alimentacao,setAlimentacao] = useState<Array<IData>>([])
   const [vestimentas,setVestimentas] = useState<Array<IData>>([])
 
+  const [loading,setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     Promise.all([
       getImagesByCategoria("tecnologia"),
@@ -38,33 +40,36 @@ export function Home() {
 
   
   async function getImagesByCategoria(categoria : string) {
-      if ((categoria.length > 0) && (categoria.trim() !== "")) {
-      AxiosInstance.get(`/produtos/categorias/${categoria}`)
-      .then((res) => {
-        switch(categoria) {
-          case "tecnologia":
-            setTecnologia(res.data)
-            break
-          case "livros":
-            setLivros(res.data)
-            break
-          case "cama_mesa_banho":
-            setCamaMesaBanho(res.data)
-            break
-          case "eletrodomesticos":
-            setEletrodomesticos(res.data)
-            break
-          case "alimentacao":
-            setAlimentacao(res.data)
-            break
-          default:
-            setVestimentas(res.data)
-            break
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    setLoading(true)
+    if ((categoria.length > 0) && (categoria.trim() !== "")) {
+    AxiosInstance.get(`/produtos/categorias/${categoria}`)
+    .then((res) => {
+      switch(categoria) {
+        case "tecnologia":
+          setTecnologia(res.data)
+          break
+        case "livros":
+          setLivros(res.data)
+          break
+        case "cama_mesa_banho":
+          setCamaMesaBanho(res.data)
+          break
+        case "eletrodomesticos":
+          setEletrodomesticos(res.data)
+          break
+        case "alimentacao":
+          setAlimentacao(res.data)
+          break
+        default:
+          setVestimentas(res.data)
+          break
+      }
+      setLoading(false)
+    })
+    .catch((err) => {
+      console.log(err)
+      setLoading(false)
+    })
     } 
   }
 
@@ -87,6 +92,13 @@ export function Home() {
     return (
     <div className={styles.container}>
       
+      {loading ? 
+        <Box sx={{display:"flex",flexDirection:"column",width:"100%",alignItems:"center",justifyContent:"center",minHeight:"100vh",backgroundColor:"white"}}>
+          <CircularProgress/>
+        </Box> 
+      : 
+      <>
+
       <SwiperItems altura="400px" slides={1} data={tecnologia} largura="100%" autoplay={true}/>
       
       {tecnologia.length > 0 && (
@@ -126,7 +138,7 @@ export function Home() {
         </>
       )}
 
-      <ImageList sx={{ width: "80%", borderRadius:5 }}>
+      <ImageList sx={{ width: "80%", borderRadius:5,boxShadow:"rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;" }}>
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div" sx={{fontWeight:800,fontSize:"20px",textAlign:"center"}}>Mais vendidos</ListSubheader>
       </ImageListItem>
@@ -153,6 +165,7 @@ export function Home() {
         </ImageListItem>
       ))}
     </ImageList>
+    </>}
     </div>
     )
 }

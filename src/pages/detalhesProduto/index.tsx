@@ -12,6 +12,7 @@ export interface IProduto {
     proprietario: string;
     qtd_estoque: string;
     usuario_id:string;
+    produto_id?:string;
 }
 
 export function DetalhesProduto() {
