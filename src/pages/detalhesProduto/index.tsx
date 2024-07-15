@@ -3,6 +3,8 @@ import styles from "./detalhesProduto.module.css"
 import { useEffect, useState } from "react";
 import AxiosInstance from "../../axiosInstance";
 import { useAuth } from "../../contexts/AuthContext";
+import { Popup } from "../../components/popup";
+import { IRequestError } from "../loginAndRegister";
 
 export interface IProduto {
     nome: string;
@@ -22,6 +24,11 @@ export function DetalhesProduto() {
     const [produto,setProduto] = useState<IProduto>();
     const {usuario} = useAuth()
 
+    const [pedidoDeCompraErro,setPedidoDeCompraErro] = useState<boolean | null>(null)
+    const [listaDeDesejosErro,setListaDeDesejosErro] = useState<boolean | null>(null)
+    
+  const [erroRequest,setErroRequest] = useState<IRequestError>({mensagem:"",sucesso:false})
+
     const navigate = useNavigate()
 
     async function getProductData() {
@@ -39,24 +46,18 @@ export function DetalhesProduto() {
     },[])
 
     function handleListaDeDesejos() {
-        const produtoData = {
-            nome: produto?.nome,
-            preco: produto?.preco,
-            proprietario: produto?.proprietario,
-            categoria:produto?.categoria,
-            qtd_estoque: produto?.qtd_estoque,
-            numero_vendas: produto?.numero_vendas,
-            imagem:produto?.imagem,
-            usuario_id:produto?.usuario_id
-        }
         AxiosInstance.get(`/lista_de_desejos/lista/${usuario?.usuario_id}`)
         .then((res) => {
-            AxiosInstance.put("/lista_de_desejos/adiciona-produto",{lista_de_desejos_id:res.data.lista_de_desejos_id,produto:produtoData})
+            AxiosInstance.put("/lista_de_desejos/adiciona-produto",{lista_de_desejos_id:res.data.lista_de_desejos_id,produto:produto})
             .then((res) => {
                 console.log(res)
+                setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado a lista de desejos com sucesso!",sucesso:true}))
+                setListaDeDesejosErro(false)
             })
             .catch((err) => {
                 console.log(err)
+                setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao adicionar o produto a sua lista de desejos!",sucesso:false}))
+                setListaDeDesejosErro(true)
             })
         })
     }
@@ -73,16 +74,34 @@ export function DetalhesProduto() {
                 AxiosInstance.put("/pedido_de_compra/adiciona-produto",{pedido_de_compra_id:res.data.pedido_de_compra_id,produto:produto})
                     .then((res) => {
                         console.log(res)
+                        setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado com sucesso ao seu pedido de compras!",sucesso:true}))
+                        setPedidoDeCompraErro(false)
                     })
                     .catch((err) => {
                         console.log(err)
+                        setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao adicionar o produto ao seu pedido de compras!",sucesso:false}))
+                        setPedidoDeCompraErro(true)
                     })
                     })
             .catch((err) => {
                 console.log(err)
                 return err
-            })
-}
+            })  
+        }
+
+        else {
+            AxiosInstance.put("/pedido_de_compra/adiciona-produto",{pedido_de_compra_id:result.data.pedido_de_compra_id,produto:produto})
+                    .then((res) => {
+                        console.log(res)
+                        setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado com sucesso ao seu pedido de compras!",sucesso:true}))
+                        setPedidoDeCompraErro(false)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao adicionar o produto ao seu pedido de compras!",sucesso:false}))
+                        setPedidoDeCompraErro(true)
+                    })
+        }
     }
 
   return (
@@ -97,10 +116,12 @@ export function DetalhesProduto() {
                 <p>Estoque: {produto?.qtd_estoque} unidades</p>
                 <div className={styles.buttons}>
                 <a href={autenticado ? "#" : "/login"} onClick={handleListaDeDesejos}>Adicionar a lista de desejos</a>
-                <a href={autenticado ? "#" : "/login"} onClick={handlePedidoDeCompra}>Comprar</a>
+                <a href={autenticado ? "#" : "/login"} onClick={handlePedidoDeCompra}>Adicionar ao meus pedidos</a>
                 </div>
             </div>
         </div>
+        {((pedidoDeCompraErro === true) || (pedidoDeCompraErro === false)) && <Popup mensagem={erroRequest.mensagem} sucesso={erroRequest.sucesso}/>}
+        {((listaDeDesejosErro === true) || (listaDeDesejosErro === false)) && <Popup mensagem={erroRequest.mensagem} sucesso={erroRequest.sucesso}/>}
     </div>
   )
 }

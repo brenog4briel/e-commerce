@@ -15,7 +15,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
-interface IRequestError {
+export interface IRequestError {
   mensagem:string;
   sucesso:boolean;
 }
