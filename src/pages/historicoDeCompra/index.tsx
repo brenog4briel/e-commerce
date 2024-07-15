@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import styles from "./alimentacao.module.css"
+import styles from "./historico_de_compra.module.css"
 import AxiosInstance from "../../axiosInstance"
 import { IProduto } from "../detalhesProduto"
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material"
-import transtorno from "../../../assets/desculpe_o_transtorno.jpg"
+import transtorno from "../../assets/desculpe_o_transtorno.jpg"
 import { useNavigate, useParams } from "react-router-dom"
 
 interface IHistoricoDeCompra {
