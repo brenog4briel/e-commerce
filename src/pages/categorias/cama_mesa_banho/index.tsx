@@ -3,7 +3,7 @@ import styles from "./cama_mesa_banho.module.css"
 import AxiosInstance from "../../../axiosInstance"
 import { IProduto } from "../../detalhesProduto"
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material"
-import transtorno from "../../../assets/desculpe_o_transtorno.jpg"
+import estoque_vazio from "../../../assets/estoque_vazio.png"
 import { useNavigate } from "react-router-dom"
 
 export function Cama_Mesa_Banho() {
@@ -57,7 +57,7 @@ export function Cama_Mesa_Banho() {
                 Infelizmente não há produtos desta categoria no estoque. Desculpe o transtorno!
               </Typography>
 
-              <Avatar src={transtorno} sx={{objectFit:"fill",width:"25%",height:"20%"}}/>
+              <Avatar src={estoque_vazio} sx={{objectFit:"fill",width:"25%",height:"20%"}}/>
 
             </Box>
             }

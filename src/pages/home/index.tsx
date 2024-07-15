@@ -4,9 +4,10 @@ import { SwiperItems } from "../../components/swiper";
 import AxiosInstance from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../components/boxWrapper";
-import { Box, CircularProgress, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader } from "@mui/material";
+import { Avatar, Box, CircularProgress, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from "react-router-dom";
+import estoque_vazio from "../../assets/estoque_vazio.png"
 
 export interface IData {
   nome:string;
@@ -19,12 +20,14 @@ export interface IData {
 
 export function Home() {
   
-  const [tecnologia,setTecnologia] = useState<Array<IData>>([])
-  const [livros,setLivros] = useState<Array<IData>>([])
-  const [camaMesaBanho,setCamaMesaBanho] = useState<Array<IData>>([])
-  const [eletrodomesticos,setEletrodomesticos] = useState<Array<IData>>([])
-  const [alimentacao,setAlimentacao] = useState<Array<IData>>([])
-  const [vestimentas,setVestimentas] = useState<Array<IData>>([])
+  const [tecnologia,setTecnologia] = useState<IData[]>([])
+  const [livros,setLivros] = useState<IData[]>([])
+  const [camaMesaBanho,setCamaMesaBanho] = useState<IData[]>([])
+  const [eletrodomesticos,setEletrodomesticos] = useState<IData[]>([])
+  const [alimentacao,setAlimentacao] = useState<IData[]>([])
+  const [vestimentas,setVestimentas] = useState<IData[]>([])
+
+  const [sliderData,setSliderData] = useState<IData[]>([])
 
   const navigate = useNavigate()
 
@@ -41,7 +44,6 @@ export function Home() {
     ])
   },[])
 
-  
   async function getImagesByCategoria(categoria : string) {
     setLoading(true)
     if ((categoria.length > 0) && (categoria.trim() !== "")) {
@@ -68,6 +70,7 @@ export function Home() {
           break
       }
       setLoading(false)
+      getSliderData()
     })
     .catch((err) => {
       console.log(err)
@@ -92,6 +95,28 @@ export function Home() {
       fetchBestSellers()
     },[])
 
+    function getSliderData() {
+      const tmpAlimentacao = [...alimentacao]
+      const tmpVestimentas = [...vestimentas]
+      const tmpTecnologia = [...tecnologia]
+      const tmpCamaMesaBanho = [...camaMesaBanho]
+      const tmpEletrodomesticos = [...eletrodomesticos]
+      const tmpLivros = [...livros]
+      
+      tmpAlimentacao.splice(0,2)
+      tmpVestimentas.splice(0,2)
+      tmpTecnologia.splice(0,2)
+      tmpCamaMesaBanho.splice(0,2)
+      tmpEletrodomesticos.splice(0,2)
+      tmpLivros.splice(0,2)
+
+      const tmp = []
+    
+      tmp.push(tmpAlimentacao,tmpVestimentas,tmpTecnologia,tmpCamaMesaBanho,tmpEletrodomesticos,tmpLivros)
+      const newTmp = tmp.flat()
+      setSliderData(newTmp)
+    }
+
     return (
     <div className={styles.container}>
       
@@ -102,7 +127,7 @@ export function Home() {
       : 
       <>
 
-      <SwiperItems altura="400px" slides={1} data={tecnologia} largura="100%" autoplay={true}/>
+      {sliderData.length > 0 && <SwiperItems altura="400px" slides={1} data={sliderData} largura="100%" autoplay={true}/>}
       
       {tecnologia.length > 0 && (
         <>
@@ -141,6 +166,7 @@ export function Home() {
         </>
       )}
 
+      {(bestSellers.length > 0) && 
       <ImageList sx={{ width: "80%", borderRadius:5,boxShadow:"rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;" }}>
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div" sx={{fontWeight:800,fontSize:"20px",textAlign:"center"}}>Mais vendidos</ListSubheader>
@@ -168,7 +194,17 @@ export function Home() {
         </ImageListItem>
       ))}
     </ImageList>
+    }
     </>}
+
+      {(tecnologia.length + alimentacao.length + bestSellers.length + vestimentas.length + camaMesaBanho.length + eletrodomesticos.length + livros.length) === 0 && 
+        <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:'center',textAlign:"center",minHeight:"100vh"}}>
+          <Typography component="h2" sx={{fontSize:25}}>
+            Infelizmente não há produtos no estoque. Desculpe o transtorno!
+          </Typography>
+          <Avatar src={estoque_vazio} sx={{objectFit:"fill",width:"25%",height:"20%"}}/>
+        </Box>}
+      
     </div>
     )
 }
