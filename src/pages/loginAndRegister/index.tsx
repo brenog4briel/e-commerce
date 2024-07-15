@@ -99,6 +99,7 @@ async function RegisterUser({nome,senha,email,endereco,CEP} : RegistroSchema) {
     setRegistroError(false)
     setRegisterLoading(false);
     counterTimePopup()
+    Authenticate({email,senha})
     navigate("/")
   })
   .catch((err) => {
