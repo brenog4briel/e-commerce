@@ -3,7 +3,7 @@ import styles from "./lista_de_desejos.module.css"
 import AxiosInstance from "../../axiosInstance"
 import { IProduto } from "../detalhesProduto"
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material"
-import transtorno from "../../assets/desculpe_o_transtorno.jpg"
+import infelizmente from "../../assets/infelizmente.jpg"
 import { useNavigate, useParams } from "react-router-dom"
 
 
@@ -38,14 +38,14 @@ export function Lista_de_desejos() {
 
   return (
     <div className={styles.container}>
-      <Typography component="h1" sx={{fontSize:50, fontFamily:"Inknut Antiqua,serif", fontWeight:"500"}}>Alimentação</Typography>
+        <Typography component="h1" sx={{fontSize:50, fontFamily:"Inknut Antiqua,serif", fontWeight:"500"}}>Lista de desejos</Typography>
           {loading ? 
           <Box sx={{display:"flex",alignItems:"center",justifyContent:'center'}}>
             <CircularProgress/> 
           </Box>
           : 
           <>
-            {(listaDeDesejos!.produtos.length > 0) ? 
+          {listaDeDesejos ? 
             <div className={styles.grid_container}>
               {listaDeDesejos!.produtos.map((element) => (
                 <div key={element.produto_id} className={styles.grid_element} onClick={() => navigate(`/produto/${element.produto_id}`)}>
@@ -57,18 +57,16 @@ export function Lista_de_desejos() {
                   </div>
                 </div>
               ))}
-            </div>
-            : 
+            </div> : 
             <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:'center',textAlign:"center",marginBottom:10, gap:5}}>
               <Typography component="h2" sx={{fontSize:25}}>
-                Infelizmente não há produtos desta categoria no estoque. Desculpe o transtorno!
+                Infelizmente você ainda não se interessou por nenhum dos nossos produtos
               </Typography>
-              <Avatar src={transtorno} sx={{objectFit:"fill",width:"25%",height:"20%"}}/>
+              <Avatar src={infelizmente} sx={{objectFit:"fill",width:"25%",height:"20%"}}/>
             </Box>
             }
           </>
           }
-          
       </div>  
       )
 }

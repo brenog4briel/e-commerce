@@ -42,7 +42,7 @@ export function Vestimentas() {
             {(produtos.length > 0) ? 
             <div className={styles.grid_container}>
               {produtos?.map((element) => (
-                <div className={styles.grid_element} onClick={() => navigate(`/produto/${element.produto_id}`)}>
+                <div key={element.produto_id} className={styles.grid_element} onClick={() => navigate(`/produto/${element.produto_id}`)}>
                   <img src={element.imagem} alt="" />
                   <div className={styles.product_info}>
                     <p>Nome: {element.nome}</p>

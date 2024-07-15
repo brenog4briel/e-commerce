@@ -11,6 +11,7 @@ export interface IProduto {
     imagem: string;
     proprietario: string;
     qtd_estoque: string;
+    numero_vendas:string;
     usuario_id:string;
     produto_id?:string;
 }
@@ -44,12 +45,13 @@ export function DetalhesProduto() {
             proprietario: produto?.proprietario,
             categoria:produto?.categoria,
             qtd_estoque: produto?.qtd_estoque,
+            numero_vendas: produto?.numero_vendas,
             imagem:produto?.imagem,
             usuario_id:produto?.usuario_id
         }
         AxiosInstance.get(`/lista_de_desejos/lista/${usuario?.usuario_id}`)
         .then((res) => {
-            AxiosInstance.put("/lista_de_desejos/adiciona-produto",{lista_de_desejos_id:res.data,produto:produtoData})
+            AxiosInstance.put("/lista_de_desejos/adiciona-produto",{lista_de_desejos_id:res.data.lista_de_desejos_id,produto:produtoData})
             .then((res) => {
                 console.log(res)
             })
@@ -68,32 +70,19 @@ export function DetalhesProduto() {
                 usuario:usuario
             })
             .then((res) => {
-                console.log(res.data)
-            })
+                AxiosInstance.put("/pedido_de_compra/adiciona-produto",{pedido_de_compra_id:res.data.pedido_de_compra_id,produto:produto})
+                    .then((res) => {
+                        console.log(res)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                    })
             .catch((err) => {
                 console.log(err)
                 return err
             })
-        }
-
-        const produtoData = {
-            nome: produto?.nome,
-            preco: produto?.preco,
-            proprietario: produto?.proprietario,
-            categoria:produto?.categoria,
-            qtd_estoque: produto?.qtd_estoque,
-            imagem:produto?.imagem,
-            usuario_id:produto?.usuario_id
-        }
-        
-        AxiosInstance.put("/pedido_de_compra/adiciona-produto",{pedido_de_compra_id:result.data,produto:produtoData})
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-
+}
     }
 
   return (

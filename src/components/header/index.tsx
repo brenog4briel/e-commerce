@@ -70,7 +70,7 @@ export default function Header() {
       </List>
       <Divider />
       <List>
-         <ListItem disablePadding>
+         {autenticado && <ListItem disablePadding>
             <ListItemButton onClick={() => navigate(`/historico_de_compra/${usuario?.usuario_id}`)}>
               <ListItemIcon>
                 <WorkHistory />
@@ -78,6 +78,7 @@ export default function Header() {
               <ListItemText primary="Histórico de compras" />
             </ListItemButton>
           </ListItem>
+          }
 
           <ListItem disablePadding>
             <ListItemButton onClick={() => navigate("/sobre")}>

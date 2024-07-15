@@ -9,7 +9,6 @@ export const novoProdutoSchema = z.object({
     proprietario: z
         .string({required_error:"O proprietário é obrigatório"})
         .trim()
-        .min(10,{message:"Proprietário inválido"})
         .max(50,{message:"O Proprietário não pode possuir mais de 50 caracteres"}),
 })
 

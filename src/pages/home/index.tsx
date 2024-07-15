@@ -167,17 +167,17 @@ export function Home() {
       )}
 
       {(bestSellers.length > 0) && 
-      <ImageList sx={{ width: "80%", borderRadius:5,boxShadow:"rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;" }}>
+      <ImageList sx={{ width: "70%", borderRadius:5,boxShadow:"rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;"}}>
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div" sx={{fontWeight:800,fontSize:"20px",textAlign:"center"}}>Mais vendidos</ListSubheader>
       </ImageListItem>
       {bestSellers.map((item) => (
-        <ImageListItem key={item.imagem} sx={{objectFit:"fill",cursor:"pointer"}} onClick={() => navigate(`/produto/${item.produto_id}`)}>
+        <ImageListItem key={item.imagem} sx={{cursor:"pointer",padding:10}} onClick={() => navigate(`/produto/${item.produto_id}`)}>
           <img
-            srcSet={`${item.imagem}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            src={`${item.imagem}?w=248&fit=crop&auto=format`}
+            src={item.imagem}
             alt={item.nome}
             loading="lazy"
+            style={{objectFit:"fill"}}
           />
           <ImageListItemBar
             title={item.nome}
@@ -197,7 +197,7 @@ export function Home() {
     }
     </>}
 
-      {(tecnologia.length + alimentacao.length + bestSellers.length + vestimentas.length + camaMesaBanho.length + eletrodomesticos.length + livros.length) === 0 && 
+      {!(tecnologia && alimentacao && bestSellers && vestimentas && camaMesaBanho && eletrodomesticos && livros) && 
         <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:'center',textAlign:"center",minHeight:"100vh"}}>
           <Typography component="h2" sx={{fontSize:25}}>
             Infelizmente não há produtos no estoque. Desculpe o transtorno!
