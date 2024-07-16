@@ -27,7 +27,7 @@ export function DetalhesProduto() {
     const [pedidoDeCompraErro,setPedidoDeCompraErro] = useState<boolean | null>(null)
     const [listaDeDesejosErro,setListaDeDesejosErro] = useState<boolean | null>(null)
     
-  const [erroRequest,setErroRequest] = useState<IRequestError>({mensagem:"",sucesso:false})
+    const [erroRequest,setErroRequest] = useState<IRequestError>({mensagem:"",sucesso:false})
 
     const navigate = useNavigate()
 

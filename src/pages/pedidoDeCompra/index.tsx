@@ -6,6 +6,8 @@ import { Avatar, Box, Button, CircularProgress, IconButton, ImageList, ImageList
 import infelizmente from "../../assets/infelizmente.jpg"
 import { useParams } from "react-router-dom"
 import InfoIcon from '@mui/icons-material/Info';
+import { Popup } from "../../components/popup"
+import { IRequestError } from "../loginAndRegister"
 
 interface IPedidoDeCompra {
     pedido_de_compra_id:string;
@@ -21,6 +23,10 @@ export function Pedido_de_compra() {
 
   const [pedidoDeCompra,setPedidoDeCompra] = useState<IPedidoDeCompra>()
   const [loading,setLoading] = useState<boolean>(false)
+
+  const [pedidoDeCompraErro,setPedidoDeCompraErro] = useState<boolean | null>(null)
+  const [erroRequest,setErroRequest] = useState<IRequestError>({mensagem:"",sucesso:false})
+
   const {usuario_id} = useParams()
   
   async function getData() {
@@ -39,6 +45,48 @@ export function Pedido_de_compra() {
    useEffect(() => {
     getData()
   },[])
+
+
+  async function handleHistoricoDeCompra() {
+        
+        const result = await AxiosInstance.get(`/historico_de_compras/historico/${usuario_id}`)
+
+        if (!result.data) {
+            AxiosInstance.post("/historico_de_compras",{usuario_id})
+            .then((res) => {
+                AxiosInstance.put("/historico_de_compras/adiciona-produto",{historico_de_compras_id:res.data.historico_de_compras_id,produto:pedidoDeCompra?.produtos})
+                    .then((res) => {
+                        console.log(res)
+                        setErroRequest(prev => ({...prev,mensagem:"Compra realizada com sucesso!",sucesso:true}))
+                        setPedidoDeCompraErro(false)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao realizar a compra!",sucesso:false}))
+                        setPedidoDeCompraErro(true)
+                    })
+                    })
+            .catch((err) => {
+                console.log(err)
+                return err
+            })  
+        }
+
+        else {
+
+                AxiosInstance.put("/historico_de_compras/adiciona-produto",{historico_de_compras_id:result.data.historico_de_compras_id,produto:pedidoDeCompra?.produtos})
+                    .then((res) => {
+                        console.log(res)
+                        setErroRequest(prev => ({...prev,mensagem:"Compra realizada com sucesso!",sucesso:true}))
+                        setPedidoDeCompraErro(false)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao realizar a compra!",sucesso:false}))
+                        setPedidoDeCompraErro(true)
+                    })
+        }
+    }
 
   return (
     <div className={styles.container}>
@@ -95,7 +143,7 @@ export function Pedido_de_compra() {
             </Stack>
 
             <Stack direction="row" display="flex" justifyContent="flex-end" width="100%" margin={2} paddingRight={5}>
-              <Button variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}}>Finalizar compra</Button>
+              <Button variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} onClick={handleHistoricoDeCompra}>Finalizar compra</Button>
             </Stack>
     
           </Box> :
@@ -108,6 +156,7 @@ export function Pedido_de_compra() {
             }
           </>
           }
+          {((pedidoDeCompraErro === true) || (pedidoDeCompraErro === false)) && <Popup mensagem={erroRequest.mensagem} sucesso={erroRequest.sucesso}/>}
       </div>  
   )
 }
