@@ -46,6 +46,7 @@ export function Historico_de_compra() {
           : 
           <>
           {historicoDeCompra ? 
+          <Box sx={{display:"flex",flexDirection:"column", alignItems:"center",justifyContent:"center", minHeight:"600px",width:"90%", backgroundColor:"#eeeeee"}}>
             <div className={styles.grid_container}>
               {historicoDeCompra!.produtos.map((element) => (
                 <div key={element.produto_id} className={styles.grid_element} onClick={() => navigate(`/produto/${element.produto_id}`)}>
@@ -57,7 +58,8 @@ export function Historico_de_compra() {
                   </div>
                 </div>
               ))}
-            </div> : 
+            </div> 
+          </Box> : 
             <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:'center',textAlign:"center",marginBottom:10, gap:5}}>
               <Typography component="h2" sx={{fontSize:25}}>
                 Infelizmente você ainda não realizou nenhuma compra

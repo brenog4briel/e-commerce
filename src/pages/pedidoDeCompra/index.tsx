@@ -4,7 +4,7 @@ import AxiosInstance from "../../axiosInstance"
 import { IProduto } from "../detalhesProduto"
 import { Avatar, Box, Button, CircularProgress, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Stack, Typography } from "@mui/material"
 import infelizmente from "../../assets/infelizmente.jpg"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import InfoIcon from '@mui/icons-material/Info';
 import { Popup } from "../../components/popup"
 import { IRequestError } from "../loginAndRegister"
@@ -27,6 +27,7 @@ export function Pedido_de_compra() {
   const [pedidoDeCompraErro,setPedidoDeCompraErro] = useState<boolean | null>(null)
   const [erroRequest,setErroRequest] = useState<IRequestError>({mensagem:"",sucesso:false})
 
+  const navigate = useNavigate()
   const {usuario_id} = useParams()
   
   async function getData() {
@@ -57,6 +58,7 @@ export function Pedido_de_compra() {
                 AxiosInstance.put("/historico_de_compras/adiciona-produto",{historico_de_compras_id:res.data.historico_de_compras_id,produto:pedidoDeCompra?.produtos})
                     .then((res) => {
                         console.log(res)
+                        handleClearPedido()
                         setErroRequest(prev => ({...prev,mensagem:"Compra realizada com sucesso!",sucesso:true}))
                         setPedidoDeCompraErro(false)
                     })
@@ -74,19 +76,41 @@ export function Pedido_de_compra() {
 
         else {
 
-                AxiosInstance.put("/historico_de_compras/adiciona-produto",{historico_de_compras_id:result.data.historico_de_compras_id,produto:pedidoDeCompra?.produtos})
-                    .then((res) => {
-                        console.log(res)
-                        setErroRequest(prev => ({...prev,mensagem:"Compra realizada com sucesso!",sucesso:true}))
-                        setPedidoDeCompraErro(false)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao realizar a compra!",sucesso:false}))
-                        setPedidoDeCompraErro(true)
-                    })
+            AxiosInstance.put("/historico_de_compras/adiciona-produto",{historico_de_compras_id:result.data.historico_de_compras_id,produto:pedidoDeCompra?.produtos})
+                .then((res) => {
+                    console.log(res)
+                    handleClearPedido()
+                    setErroRequest(prev => ({...prev,mensagem:"Compra realizada com sucesso!",sucesso:true}))
+                    setPedidoDeCompraErro(false)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao realizar a compra!",sucesso:false}))
+                    setPedidoDeCompraErro(true)
+                })
         }
     }
+
+
+    const handleClearPedido = async() => {
+      setLoading(true)
+      AxiosInstance.delete(`/pedido_de_compra/remove-all/${pedidoDeCompra?.pedido_de_compra_id}`)
+            .then((res) => {
+                console.log(res)
+                setErroRequest(prev => ({...prev,mensagem:"A lista foi descartada com sucesso!",sucesso:true}))
+                setPedidoDeCompraErro(false)
+                setLoading(false)
+                navigate("/")
+
+            })
+            .catch((err) => {
+                console.log(err)
+                setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao descartar a lista de desejos!",sucesso:false}))
+                setPedidoDeCompraErro(true)
+                setLoading(false)
+                navigate("/")
+            })
+  }
 
   return (
     <div className={styles.container}>
@@ -142,8 +166,9 @@ export function Pedido_de_compra() {
               <Typography component="p" fontWeight="500">Valor total a ser pago: R$ {pedidoDeCompra?.total_a_pagar - (pedidoDeCompra?.desconto || 0)}</Typography>
             </Stack>
 
-            <Stack direction="row" display="flex" justifyContent="flex-end" width="100%" margin={2} paddingRight={5}>
+            <Stack direction="row" display="flex" justifyContent="space-around" width="100%" margin={2}>
               <Button variant="contained" sx={{backgroundColor:"green","&:hover":{backgroundColor:"green"}}} onClick={handleHistoricoDeCompra}>Finalizar compra</Button>
+              <Button variant="contained" sx={{backgroundColor:"red","&:hover":{backgroundColor:"red"}}} onClick={handleClearPedido}>Limpar pedido de compras</Button>
             </Stack>
     
           </Box> :

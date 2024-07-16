@@ -70,7 +70,7 @@ const router = createBrowserRouter([
                     }]
             },
             {
-                path:"/perfil",
+                path:"/perfil/:email",
                 element:<Perfil/>
             },
             {

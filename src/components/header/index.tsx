@@ -41,7 +41,7 @@ export default function Header() {
     <Box sx={{ width: 250 }} role="presentation" onClick={handleOpenDrawer}>
       <List>
         {autenticado && <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate("/perfil")}>
+            <ListItemButton onClick={() => navigate(`/perfil/${usuario?.email}`)}>
               <ListItemIcon>
                 <Person />
               </ListItemIcon>

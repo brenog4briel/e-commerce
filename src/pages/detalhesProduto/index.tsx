@@ -24,8 +24,8 @@ export function DetalhesProduto() {
     const [produto,setProduto] = useState<IProduto>();
     const {usuario} = useAuth()
 
-    const [pedidoDeCompraErro,setPedidoDeCompraErro] = useState<boolean | null>(null)
-    const [listaDeDesejosErro,setListaDeDesejosErro] = useState<boolean | null>(null)
+    const [pedidoDeCompraErro,setPedidoDeCompraErro] = useState<boolean | undefined>(undefined)
+    const [listaDeDesejosErro,setListaDeDesejosErro] = useState<boolean | undefined>(undefined)
     
     const [erroRequest,setErroRequest] = useState<IRequestError>({mensagem:"",sucesso:false})
 
@@ -45,6 +45,13 @@ export function DetalhesProduto() {
         getProductData()
     },[])
 
+    function counterTimePopup() {
+        setTimeout(() => {
+        setPedidoDeCompraErro(undefined);
+        setListaDeDesejosErro(undefined)
+        },3000)
+    }
+
     function handleListaDeDesejos() {
         AxiosInstance.get(`/lista_de_desejos/lista/${usuario?.usuario_id}`)
         .then((res) => {
@@ -53,11 +60,13 @@ export function DetalhesProduto() {
                 console.log(res)
                 setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado a lista de desejos com sucesso!",sucesso:true}))
                 setListaDeDesejosErro(false)
+                counterTimePopup()
             })
             .catch((err) => {
                 console.log(err)
                 setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao adicionar o produto a sua lista de desejos!",sucesso:false}))
                 setListaDeDesejosErro(true)
+                counterTimePopup()
             })
         })
     }
@@ -76,11 +85,13 @@ export function DetalhesProduto() {
                         console.log(res)
                         setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado com sucesso ao seu pedido de compras!",sucesso:true}))
                         setPedidoDeCompraErro(false)
+                        counterTimePopup()
                     })
                     .catch((err) => {
                         console.log(err)
                         setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao adicionar o produto ao seu pedido de compras!",sucesso:false}))
                         setPedidoDeCompraErro(true)
+                        counterTimePopup()
                     })
                     })
             .catch((err) => {
@@ -95,11 +106,13 @@ export function DetalhesProduto() {
                         console.log(res)
                         setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado com sucesso ao seu pedido de compras!",sucesso:true}))
                         setPedidoDeCompraErro(false)
+                        counterTimePopup()
                     })
                     .catch((err) => {
                         console.log(err)
                         setErroRequest(prev => ({...prev,mensagem:"Houve um erro ao adicionar o produto ao seu pedido de compras!",sucesso:false}))
                         setPedidoDeCompraErro(true)
+                        counterTimePopup()
                     })
         }
     }
