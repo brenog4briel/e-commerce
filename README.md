@@ -1,30 +1,45 @@
-# React + TypeScript + Vite
+<!-- ABOUT THE PROJECT -->
+## Sobre o projeto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+É um protótipo de E-commerce com o simples intuito de melhorar as minhas habilidades como desenvolvedor.
 
-Currently, two official plugins are available:
+Neste projeto o usuário será capaz de criar uma conta, realizar autenticação, criar produtos, observar produtos já cadastrados por outros usuários, adicionar produtos na lista de desejos e comprar produtos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Observações: 
+1. As compras são fictícias, visto que não houve uma integração com algum serviço de pagamentos como o Paypal. Portanto, os itens comprados ficam somente no histórico de compras de cada usuário.
+2. A funcionalidade de recuperação de senha foi implementada, porém como o serviço de email (no plano gratuito) é limitado e somente permite que emails pré-cadastrados na plataforma recebam emails.
 
-## Expanding the ESLint configuration
+### Tecnologias
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Este projeto foi desenvolvido utilizando React juntamente com Material UI para uma maior agilidade no desenvolvimento das interfaces
 
-- Configure the top-level `parserOptions` property like this:
+* [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)]([https://react.dev/])
+* [![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)]([https://mui.com/material-ui/)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Início
+
+
+### Instalação
+
+Para configurar localmente, basta apenas seguir os seguintes passos:
+
+1. Clone o repositório
+   ```sh
+   git clone https://github.com/brenog4briel/e-commerce.git
+   ```
+2. Instale os pacotes NPM
+   ```sh
+   npm install
+   ```
+3. Execute o projeto
+   ```js
+   npm run dev
+   ```
+
+<!-- CONTACT -->
+## Contato
+
+Breno Gabriel - brenosacerdotr@gmail.com
+
+[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]([https://](https://www.linkedin.com/in/breno-gabriel-da-silva-sacerdote))
