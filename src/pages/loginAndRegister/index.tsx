@@ -80,7 +80,7 @@ export function LoginAndRegister() {
 
 const [tabValue, setTabValue] = useState<number>(0);
 
-const handleChangeTab = (event: React.SyntheticEvent, tab: number) => {
+const handleChangeTab = (_event: React.SyntheticEvent, tab: number) => {
   setTabValue(tab);
   setIsPaswordVisible(false)
 };
