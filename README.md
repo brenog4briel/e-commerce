@@ -9,12 +9,15 @@ Observações:
 1. As compras são fictícias, visto que não houve uma integração com algum serviço de pagamentos como o Paypal. Portanto, os itens comprados ficam somente no histórico de compras de cada usuário.
 2. A funcionalidade de recuperação de senha foi implementada, porém como o serviço de email (no plano gratuito) é limitado e somente permite que emails pré-cadastrados na plataforma recebam emails.
 
+Link para acessar o projeto: [e-commerce-cs49fg8zd-breno-gabriels-projects.vercel.app](https://e-commerce-cs49fg8zd-breno-gabriels-projects.vercel.app/)
+
 ### Tecnologias
 
 Este projeto foi desenvolvido utilizando React juntamente com Material UI para uma maior agilidade no desenvolvimento das interfaces
 
 * [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)]([https://react.dev/])
 * [![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)]([https://mui.com/material-ui/)
+* O deploy foi realizado na Vercel - https://vercel.com/
 
 
 ## Início
