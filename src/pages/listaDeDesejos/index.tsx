@@ -59,7 +59,7 @@ export function Lista_de_desejos() {
   async function handleDeleteItemListaDeDesejos(produto:IProduto) {
     setLoading(true)
     AxiosInstance.put("/lista_de_desejos/remove-produto",{lista_de_desejos_id: listaDeDesejos?.lista_de_desejos_id ,produto:produto})
-          .then((res) => {
+          .then(() => {
               setErroRequest(prev => ({...prev,mensagem:"O produto foi removido da lista de desejos com sucesso!",sucesso:true}))
               setListaDeDesejosErro(false)
               counterTimePopup()
@@ -85,7 +85,7 @@ export function Lista_de_desejos() {
         })
         .then((res) => {
             AxiosInstance.put("/pedido_de_compra/adiciona-produto",{pedido_de_compra_id:res.data.pedido_de_compra_id,produto:produto})
-                .then((res) => {
+                .then(() => {
                     setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado com sucesso ao seu pedido de compras!",sucesso:true}))
                     setPedidoDeCompraErro(false)
                     counterTimePopup()
@@ -105,7 +105,7 @@ export function Lista_de_desejos() {
 
     else {
         AxiosInstance.put("/pedido_de_compra/adiciona-produto",{pedido_de_compra_id:result.data.pedido_de_compra_id,produto:produto})
-                .then((res) => {
+                .then(() => {
                     setErroRequest(prev => ({...prev,mensagem:"O produto foi adicionado com sucesso ao seu pedido de compras!",sucesso:true}))
                     setPedidoDeCompraErro(false)
                     counterTimePopup()
@@ -122,7 +122,7 @@ export function Lista_de_desejos() {
   const handleClearList = async() => {
     setLoading(true)
     AxiosInstance.put("/lista_de_desejos/remove-all",{lista_de_desejos_id: listaDeDesejos?.lista_de_desejos_id})
-          .then((res) => {
+          .then(() => {
               setErroRequest(prev => ({...prev,mensagem:"A lista foi esvaziada com sucesso!",sucesso:true}))
               setListaDeDesejosErro(false)
               navigate(0)

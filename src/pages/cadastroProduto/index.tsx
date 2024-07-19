@@ -65,7 +65,6 @@ export function CadastroProduto() {
             setProductInfoLoading(true)
             const storedUser = sessionStorage.getItem("usuario");
             const usuario_id = JSON.parse(storedUser!).usuario_id;
-            const token = sessionStorage.getItem("token")
             const data = new FormData();
 
             const reader = new FileReader()
