@@ -26,8 +26,23 @@
     align-self: flex-start;
 }
 
-@media (width < 600px) {
-    .containerUser{
+@media (width < 900px) {
+    .container {
+        align-items: center;
+    }
+    .containerUser {
+        width: 60%;
+        margin-right:0;
+    }
+}
+
+@media (width < 400px) {
+    .container {
+        align-items: center;
+    }
+    .containerUser {
         width: 90%;
+        margin-right:0;
+        text-align: center;
     }
 }
