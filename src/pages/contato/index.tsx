@@ -2,7 +2,7 @@ import { Box, Button, Stack } from "@mui/material";
 
 export function Contato() {
   return (
-    <Box sx={{display:"flex",flexDirection:"column",alignItems:"center", justifyContent:"space-evenly",padding:10,minHeight:"50vh", textAlign:"flex-start",backgroundColor:"#eeeeee"}}>
+    <Box sx={{display:"flex",flexDirection:"column",alignItems:"center", justifyContent:"space-evenly",padding:10,minHeight:"100vh", textAlign:"flex-start",backgroundColor:"#eeeeee"}}>
       <h4>Olá, me chamo Breno Gabriel, sou um graduando em Ciência da Computação pela Universidade Federal de Sergipe</h4> <br/>
       <h4>Sempre entusiasta de games, possivelmente surgiu daí a inspiração para seguir a carreira na área de TI </h4>
       <Stack direction="row" width='50%' display="flex" justifyContent="space-evenly" alignItems='center'>
