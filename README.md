@@ -9,7 +9,7 @@ Observações:
 1. As compras são fictícias, visto que não houve uma integração com algum serviço de pagamentos como o Paypal. Portanto, os itens comprados ficam somente no histórico de compras de cada usuário.
 2. A funcionalidade de recuperação de senha foi implementada, porém como o serviço de email (no plano gratuito) é limitado e somente permite que emails pré-cadastrados na plataforma recebam emails.
 
-Link para acessar o projeto: [e-commerce-cs49fg8zd-breno-gabriels-projects.vercel.app](https://e-commerce-cs49fg8zd-breno-gabriels-projects.vercel.app/)
+Link para acessar o projeto: https://e-commerce-six-rust-71.vercel.app/
 
 ### Tecnologias
 
