@@ -86,15 +86,15 @@ const router = createBrowserRouter([
                 element:<ProdutosPorProprietario/>
             },
             {
-                path:"/pedido_de_compra/:usuario_id",
+                path:"/pedido_de_compra",
                 element:<Pedido_de_compra/>
             },
             {
-                path:"/historico_de_compra/:usuario_id",
+                path:"/historico_de_compra",
                 element:<Historico_de_compra/>
             },
             {
-                path:"/lista_de_desejos/:usuario_id",
+                path:"/lista_de_desejos",
                 element:<Lista_de_desejos/>
             },
             {

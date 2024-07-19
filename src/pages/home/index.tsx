@@ -1,6 +1,5 @@
 import styles from "./home.module.css"
 import { Secao } from "../../components/secao";
-import { SwiperItems } from "../../components/swiper";
 import AxiosInstance from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../components/boxWrapper";
@@ -26,8 +25,6 @@ export function Home() {
   const [eletrodomesticos,setEletrodomesticos] = useState<IData[]>([])
   const [alimentacao,setAlimentacao] = useState<IData[]>([])
   const [vestimentas,setVestimentas] = useState<IData[]>([])
-
-  const [sliderData,setSliderData] = useState<IData[]>([])
 
   const navigate = useNavigate()
 
@@ -70,7 +67,6 @@ export function Home() {
           break
       }
       setLoading(false)
-      getSliderData()
     })
     .catch((err) => {
       console.log(err)
@@ -95,39 +91,14 @@ export function Home() {
       fetchBestSellers()
     },[])
 
-    function getSliderData() {
-      const tmpAlimentacao = [...alimentacao]
-      const tmpVestimentas = [...vestimentas]
-      const tmpTecnologia = [...tecnologia]
-      const tmpCamaMesaBanho = [...camaMesaBanho]
-      const tmpEletrodomesticos = [...eletrodomesticos]
-      const tmpLivros = [...livros]
-      
-      tmpAlimentacao.splice(0,2)
-      tmpVestimentas.splice(0,2)
-      tmpTecnologia.splice(0,2)
-      tmpCamaMesaBanho.splice(0,2)
-      tmpEletrodomesticos.splice(0,2)
-      tmpLivros.splice(0,2)
-
-      const tmp = []
-    
-      tmp.push(tmpAlimentacao,tmpVestimentas,tmpTecnologia,tmpCamaMesaBanho,tmpEletrodomesticos,tmpLivros)
-      const newTmp = tmp.flat()
-      setSliderData(newTmp)
-    }
-
     return (
     <div className={styles.container}>
-      
       {loading ? 
         <Box sx={{display:"flex",flexDirection:"column",width:"100%",alignItems:"center",justifyContent:"center",minHeight:"100vh",backgroundColor:"white"}}>
           <CircularProgress/>
         </Box> 
       : 
       <>
-
-      {sliderData.length > 0 && <SwiperItems altura="400px" slides={1} data={sliderData} largura="100%" autoplay={true}/>}
       
       {tecnologia.length > 0 && (
         <>

@@ -50,7 +50,7 @@ export default function Header() {
           </ListItem>}
 
           {autenticado && <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate(`/lista_de_desejos/${usuario?.usuario_id}`)}>
+            <ListItemButton onClick={() => navigate(`/lista_de_desejos`)}>
               <ListItemIcon>
                  <ShoppingBag />
               </ListItemIcon>
@@ -59,7 +59,7 @@ export default function Header() {
           </ListItem>}
 
           {autenticado && <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate(`/pedido_de_compra/${usuario?.usuario_id}`)}>
+            <ListItemButton onClick={() => navigate(`/pedido_de_compra`)}>
               <ListItemIcon>
                 <ShoppingCart /> 
               </ListItemIcon>
@@ -71,7 +71,7 @@ export default function Header() {
       <Divider />
       <List>
          {autenticado && <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate(`/historico_de_compra/${usuario?.usuario_id}`)}>
+            <ListItemButton onClick={() => navigate(`/historico_de_compra`)}>
               <ListItemIcon>
                 <WorkHistory />
               </ListItemIcon>

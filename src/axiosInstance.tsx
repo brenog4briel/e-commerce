@@ -12,4 +12,17 @@ const AxiosInstance = axios.create({
 },
 });
 
+AxiosInstance.interceptors.request.use(
+  function (config) {
+    const token = `Bearer ${sessionStorage.getItem("token")}`; // o token sempre sera puxado do localStorage, e a funcao setToken() do AuthContext, com o segundo parametro como true, salva o token no localStorage
+    config.headers.Authorization = token;
+
+    return config;
+  },
+
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
 export default AxiosInstance;

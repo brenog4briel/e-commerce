@@ -89,9 +89,7 @@ export function CadastroProduto() {
                 const preco = parseFloat(valor)
                 const qtd_estoque = parseInt(estoque)
                 const numero_vendas = 0
-                AxiosInstance.post("/produtos",{nome,preco,proprietario,numero_vendas,categoria,qtd_estoque,imagem,usuario_id},{
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                AxiosInstance.post("/produtos",{nome,preco,proprietario,numero_vendas,categoria,qtd_estoque,imagem,usuario_id})
                 .then(() => {
                     console.log("Produto cadastrado com sucesso!")
                     setProductInfoRequestError(prev => ({...prev,mensagem:"Produto cadastrado com sucesso!",sucesso:true}))
