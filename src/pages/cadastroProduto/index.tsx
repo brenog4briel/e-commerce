@@ -14,7 +14,7 @@ import DomainIcon from '@mui/icons-material/Domain';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 
-const UPLOAD_KEY = "ff768351aebfc6f8abff671529fcd33f"
+const UPLOAD_KEY = "39ac12420e84248cd5a88e3ed7bcc598"
 
 interface IRequestError {
   mensagem:string;
