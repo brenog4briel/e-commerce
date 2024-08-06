@@ -10,6 +10,8 @@ import { Box, CircularProgress } from "@mui/material";
 import { Popup } from "../../components/popup";
 import axios from "axios";
 
+const UPLOAD_KEY = "ff768351aebfc6f8abff671529fcd33f"
+
 interface IRequestError {
   mensagem:string;
   sucesso:boolean;
@@ -107,7 +109,7 @@ export function Perfil() {
             data.append( "image", base64String );
             axios({
                 method:"post",
-                url:"https://api.imgbb.com/1/upload?key=39ac12420e84248cd5a88e3ed7bcc598",
+                url:`https://api.imgbb.com/1/upload?key=${UPLOAD_KEY}`,,
                 withCredentials:false,
                 data:data
             })
